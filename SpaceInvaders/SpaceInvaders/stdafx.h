@@ -18,12 +18,21 @@
 #include <tchar.h>
 #include <cstdio>
 #include <string>
+#include <vector>
+#include <map>
 
 #include <SDL.h>
 #include <SDL_image.h>
 
 #include "SDL_Manager.h"
+#include "Asset.h"
+#include "AssetManager.h"
 #include "Texture.h"
+#include "Sprite.h"
+#include "BackgroundTexture.h"
+#include "Audio.h"
+#include "Sfx.h"
+#include "Music.h"
 
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2_image.lib")

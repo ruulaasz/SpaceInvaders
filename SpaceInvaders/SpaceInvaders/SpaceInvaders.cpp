@@ -4,12 +4,30 @@
 #include "SpaceInvaders.h"
 
 SDL_Manager g_sdlManager;
+AssetManager g_assetManager;
+
 bool g_quit;
 float g_deltaTime;
-Texture g_testTexture;
+Asset* g_testTexture;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+
+void render()
+{
+	SDL_SetRenderDrawColor(g_sdlManager.m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(g_sdlManager.m_renderer);
+
+	reinterpret_cast<Texture*>(g_testTexture)->render(400, 225, g_sdlManager.m_renderer);
+
+	SDL_RenderPresent(g_sdlManager.m_renderer);
+}
+
+void renderDebugConsole()
+{
+	system("cls");
+	printf("Assets Loaded: %d", g_assetManager.m_allAssets.size());
+}
 
 void handleKeyboardEvents()
 {
@@ -33,7 +51,8 @@ void handleKeyboardEvents()
 		{
 			switch (g_sdlManager.m_events.key.keysym.sym)
 			{
-			case SDLK_e:
+			case SDLK_ESCAPE:
+				g_quit = true;
 				break;
 			}
 		}
@@ -47,7 +66,9 @@ int _tmain(int, _TCHAR**)
 		float thisTime = 0.f;
 		float lastTime = 0.f;
 
-		g_testTexture.loadFromFile("..\\resources\\hakai.png", g_sdlManager.m_renderer);
+		g_assetManager.init(g_sdlManager.m_renderer);
+		g_assetManager.loadAsset("hakai", AT_TEXTURE);
+		g_testTexture = g_assetManager.m_allAssets["hakai"];
 
 		while (!g_quit)
 		{
@@ -57,12 +78,8 @@ int _tmain(int, _TCHAR**)
 
 			handleKeyboardEvents();
 
-			SDL_SetRenderDrawColor(g_sdlManager.m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderClear(g_sdlManager.m_renderer);
-
-			g_testTexture.render(400, 225, g_sdlManager.m_renderer);
-
-			SDL_RenderPresent(g_sdlManager.m_renderer);
+			render();
+			renderDebugConsole();
 		}
 	}
 
