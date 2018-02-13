@@ -5,27 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpaceInvaders", "SpaceInvaders\SpaceInvaders.vcxproj", "{3C83C9AA-D43C-40DB-9CE3-3D8F1BA23227}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -42,14 +21,6 @@ Global
 		{3C83C9AA-D43C-40DB-9CE3-3D8F1BA23227}.Release|x64.Build.0 = Release|x64
 		{3C83C9AA-D43C-40DB-9CE3-3D8F1BA23227}.Release|x86.ActiveCfg = Release|Win32
 		{3C83C9AA-D43C-40DB-9CE3-3D8F1BA23227}.Release|x86.Build.0 = Release|Win32
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Debug|x64.ActiveCfg = Debug|x64
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Debug|x64.Build.0 = Debug|x64
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Debug|x86.ActiveCfg = Debug|Win32
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Debug|x86.Build.0 = Debug|Win32
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Release|x64.ActiveCfg = Release|x64
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Release|x64.Build.0 = Release|x64
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Release|x86.ActiveCfg = Release|Win32
-		{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
