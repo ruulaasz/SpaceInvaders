@@ -42,7 +42,7 @@ void handleKeyboardEvents()
 
 int _tmain(int, _TCHAR**)
 {
-	if (g_sdlManager.init("SpaceInvaders", 1600, 900))
+	if (g_sdlManager.init("SpaceInvaders2", 1600, 900))
 	{
 		float thisTime = 0.f;
 		float lastTime = 0.f;
