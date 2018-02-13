@@ -7,6 +7,25 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpaceInvaders", "SpaceInvad
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
