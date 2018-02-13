@@ -18,7 +18,7 @@ void render()
 	SDL_SetRenderDrawColor(g_sdlManager.m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(g_sdlManager.m_renderer);
 
-	reinterpret_cast<Texture*>(g_testTexture)->render(100, 100, g_sdlManager.m_renderer);
+	reinterpret_cast<Texture*>(g_testTexture)->render(400, 225, g_sdlManager.m_renderer);
 
 	SDL_RenderPresent(g_sdlManager.m_renderer);
 }
