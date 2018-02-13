@@ -46,7 +46,7 @@ Asset * AssetManager::loadAsset(std::string _name, AssetType _type)
 Asset * AssetManager::searchAsset(std::string _name)
 {
 	std::map<std::string, Asset*>::iterator it;
-	it = m_allAssets.find(_name);
+	//it = m_allAssets.find(_name);
 
 	if (it != m_allAssets.end())	
 	{
