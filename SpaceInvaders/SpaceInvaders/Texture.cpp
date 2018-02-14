@@ -47,6 +47,12 @@ bool Texture::loadFromFile(std::string _path,SDL_Renderer* _renderer)
 	return m_sdlTexture != nullptr;
 }
 
+void Texture::renderEx(int _x, int _y, float _w, float _h, double _angle, SDL_Renderer * _renderer)
+{
+	SDL_Rect renderQuad = { _x, _y, m_width * _w, m_height * _h };
+	SDL_RenderCopyEx(_renderer, m_sdlTexture, nullptr, &renderQuad, _angle, nullptr, SDL_FLIP_NONE);
+}
+
 void Texture::free()
 {
 	if (m_sdlTexture != nullptr)
@@ -62,4 +68,14 @@ void Texture::render(int _x, int _y, SDL_Renderer* _renderer)
 {
 	SDL_Rect renderQuad = { _x, _y, m_width, m_height };
 	SDL_RenderCopy(_renderer, m_sdlTexture, nullptr, &renderQuad);
+}
+
+void Texture::render(SDL_Rect* _dstRect, SDL_Rect* _srcRect, SDL_Renderer* _renderer)
+{
+	SDL_RenderCopy(_renderer, m_sdlTexture, _srcRect, _dstRect);
+}
+
+void Texture::renderEx(SDL_Rect * _dstRect, SDL_Rect * _srcRect, double _angle, SDL_Renderer * _renderer)
+{
+	SDL_RenderCopyEx(_renderer, m_sdlTexture, _srcRect, _dstRect, _angle, nullptr, SDL_FLIP_NONE);
 }

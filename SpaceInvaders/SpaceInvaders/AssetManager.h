@@ -2,7 +2,9 @@
 
 enum AssetType
 {
-	AT_TEXTURE = 0
+	AT_TEXTURE = 0,
+	AT_BACKGROUNDTEXTURE,
+	AT_SPRITE
 };
 
 class Asset;

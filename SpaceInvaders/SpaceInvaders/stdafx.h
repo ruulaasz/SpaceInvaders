@@ -20,6 +20,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stdexcept>
 
 #include <SDL.h>
 #include <SDL_image.h>

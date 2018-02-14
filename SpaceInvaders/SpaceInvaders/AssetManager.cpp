@@ -25,15 +25,41 @@ Asset * AssetManager::loadAsset(std::string _name, AssetType _type)
 		case AT_TEXTURE:
 			newAsset = new Texture();
 
-			path += "img\\";
+			path += "textures\\";
 			path += _name;
 			path += ".png";
 
-			reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer);
-			newAsset->m_name = _name;
-
-			if (reinterpret_cast<Texture*>(newAsset)->m_sdlTexture)
+			if (reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer))
 			{
+				newAsset->m_name = _name;
+				m_allAssets[_name] = newAsset;
+			}
+			break;
+
+		case AT_BACKGROUNDTEXTURE:
+			newAsset = new BackgroundTexture();
+
+			path += "background_textures\\";
+			path += _name;
+			path += ".png";
+
+			if (reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer))
+			{
+				newAsset->m_name = _name;
+				m_allAssets[_name] = newAsset;
+			}
+			break;
+
+		case AT_SPRITE:
+			newAsset = new Sprite();
+
+			path += "sprites\\";
+			path += _name;
+			path += ".png";
+
+			if (reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
+			{
+				newAsset->m_name = _name;
 				m_allAssets[_name] = newAsset;
 			}
 			break;
