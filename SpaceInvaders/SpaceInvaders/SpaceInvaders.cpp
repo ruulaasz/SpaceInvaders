@@ -14,6 +14,7 @@ float g_scalation;
 Texture* g_testTexture;
 BackgroundTexture* g_testBackgroundTexture;
 Sprite* g_testSprite;
+CWorld g_world;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

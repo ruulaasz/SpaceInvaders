@@ -24,6 +24,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <World.h>
 
 #include "SDL_Manager.h"
 #include "Asset.h"
@@ -37,3 +38,4 @@
 
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2_image.lib")
+#pragma comment(lib, "LCFramework.lib")
