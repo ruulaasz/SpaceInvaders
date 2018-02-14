@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Asset.h"
 
 Asset::Asset()
 {

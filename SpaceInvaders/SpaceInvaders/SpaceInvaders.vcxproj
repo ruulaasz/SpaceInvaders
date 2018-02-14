@@ -151,25 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Asset.cpp" />
-    <ClCompile Include="AssetManager.cpp" />
-    <ClCompile Include="Audio.cpp" />
-    <ClCompile Include="BackgroundTexture.cpp" />
-    <ClCompile Include="Music.cpp" />
-    <ClCompile Include="SDL_Manager.cpp" />
-    <ClCompile Include="Sfx.cpp" />
     <ClCompile Include="SpaceInvaders.cpp" />
-    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SpaceInvaders.rc" />
@@ -179,19 +167,10 @@
     <Image Include="SpaceInvaders.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Asset.h" />
-    <ClInclude Include="AssetManager.h" />
-    <ClInclude Include="Audio.h" />
-    <ClInclude Include="BackgroundTexture.h" />
-    <ClInclude Include="Music.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SDL_Manager.h" />
-    <ClInclude Include="Sfx.h" />
     <ClInclude Include="SpaceInvaders.h" />
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

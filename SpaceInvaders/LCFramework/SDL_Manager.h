@@ -1,5 +1,10 @@
 #pragma once
-#include "stdafx.h"
+
+#pragma comment(lib, "SDL2.lib")
+#pragma comment(lib, "SDL2_image.lib")
+
+#include <SDL.h>
+#include <SDL_image.h>
 
 /**
 * Manager class for SDL 2.0.

@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "SDL_Manager.h"
+#include <cstdio>
 
 SDL_Manager::SDL_Manager()
 {

@@ -1,4 +1,8 @@
-#include "stdafx.h"
+#include "AssetManager.h"
+#include "Asset.h"
+#include "Texture.h"
+#include "BackgroundTexture.h"
+#include "Sprite.h"
 
 AssetManager::AssetManager()
 {

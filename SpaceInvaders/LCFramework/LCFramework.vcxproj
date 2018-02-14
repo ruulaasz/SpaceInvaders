@@ -73,8 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)\externals\LCFramework\lib\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_image\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\SDL2_image\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)\externals\LCFramework\lib\$(Platform)\$(Configuration)\</OutDir>
@@ -158,12 +158,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="Asset.h" />
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="Audio.h" />
+    <ClInclude Include="BackgroundTexture.h" />
+    <ClInclude Include="LCFramework.h" />
+    <ClInclude Include="Music.h" />
+    <ClInclude Include="SDL_Manager.h" />
+    <ClInclude Include="Sfx.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Asset.cpp" />
+    <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="BackgroundTexture.cpp" />
+    <ClCompile Include="Music.cpp" />
+    <ClCompile Include="SDL_Manager.cpp" />
+    <ClCompile Include="Sfx.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

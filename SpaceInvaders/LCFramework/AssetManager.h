@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+#include <map>
+#include "SDL_Manager.h"
+
 enum AssetType
 {
 	AT_TEXTURE = 0,

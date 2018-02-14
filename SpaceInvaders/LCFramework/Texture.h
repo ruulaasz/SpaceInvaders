@@ -1,4 +1,6 @@
 #pragma once
+#include "Asset.h"
+#include "SDL_Manager.h"
 
 /**
 * Container class for a SDL 2.0 texture.

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "Sfx.h"
 
 Sfx::Sfx()
 {
