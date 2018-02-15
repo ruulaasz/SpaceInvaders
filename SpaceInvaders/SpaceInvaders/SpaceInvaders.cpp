@@ -21,6 +21,7 @@ Music* g_testMusic;
 
 World g_World;
 testActor g_Actor;
+LCF::Controller<testActor> g_Controller;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -77,6 +78,8 @@ void loadContent()
 	g_Actor.m_posX = 500;
 	g_Actor.m_posY = 225;
 
+	g_Controller.addObject(&g_Actor);
+	g_Controller.addFunction('A', &testActor::move);
 	g_World.registerActor(&g_Actor);
 
 	assetName = "background";
@@ -145,6 +148,9 @@ void handleKeyboardEvents()
 			case SDLK_SPACE:
 				g_testSfx->playFadeIn(-1, 1500);
 				break;
+				
+			case SDLK_a:
+				g_Controller.checkInput('A');
 			}
 		}
 		else if (g_sdlManager.m_events.type == SDL_KEYUP && g_sdlManager.m_events.key.repeat == 0)

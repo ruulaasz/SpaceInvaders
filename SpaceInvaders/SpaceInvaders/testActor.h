@@ -8,5 +8,7 @@ public:
 	Texture* m_texture;
 
 	virtual void render(SDL_Renderer* _renderer);
+
+	void move();
 };
 

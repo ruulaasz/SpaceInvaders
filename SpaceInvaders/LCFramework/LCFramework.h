@@ -18,5 +18,6 @@
 #include "World.h"
 #include "Actor.h"
 #include "Driver.h"
+#include "Controller.h"
 
 #include "InputManager.h"
