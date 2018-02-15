@@ -4,7 +4,7 @@
 #include "SpaceInvaders.h"
 
 SDL_Manager g_sdlManager;
-AssetManager g_assetManager;
+//AssetManager g_assetManager;
 AudioManager g_audioManager;
 InputManager g_inputManager;
 
@@ -61,7 +61,7 @@ void render()
 void renderDebugConsole()
 {
 	system("cls");
-	printf("Assets Loaded: %d", g_assetManager.m_allAssets.size());
+	printf("Assets Loaded: %d", AssetManager::GetInstance().m_allAssets.size());
 	printf("\nCurrent Jump: %d", g_testSprite->m_currentJump);
 	printf("\n\nCurrent sfx Volume: %d", g_audioManager.SetSfxVolume(1, -1));
 	printf("\n\nCurrent music Volume: %d", g_audioManager.SetMusicVolume(-1));
@@ -71,8 +71,8 @@ void loadContent()
 {
 	std::string assetName = "hakai";
 
-	g_assetManager.loadAsset(assetName, AT_TEXTURE);
-	g_testTexture = reinterpret_cast<Texture*>(g_assetManager.searchAsset(assetName));
+	AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+	g_testTexture = reinterpret_cast<Texture*>(AssetManager::GetInstance().searchAsset(assetName));
 
 	g_Actor.m_texture = g_testTexture;
 	g_Actor.m_posX = 500;
@@ -85,23 +85,23 @@ void loadContent()
 
 	assetName = "background";
 
-	g_assetManager.loadAsset(assetName, AT_BACKGROUNDTEXTURE);
-	g_testBackgroundTexture = reinterpret_cast<BackgroundTexture*>(g_assetManager.searchAsset(assetName));
+	AssetManager::GetInstance().loadAsset(assetName, AT_BACKGROUNDTEXTURE);
+	g_testBackgroundTexture = reinterpret_cast<BackgroundTexture*>(AssetManager::GetInstance().searchAsset(assetName));
 
 	assetName = "numbers";
 
-	g_assetManager.loadAsset(assetName, AT_SPRITE);
-	g_testSprite = reinterpret_cast<Sprite*>(g_assetManager.searchAsset(assetName));
+	AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+	g_testSprite = reinterpret_cast<Sprite*>(AssetManager::GetInstance().searchAsset(assetName));
 
 	assetName = "bass";
 
-	g_assetManager.loadAsset(assetName, AT_SFX);
-	g_testSfx = reinterpret_cast<Sfx*>(g_assetManager.searchAsset(assetName));
+	AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+	g_testSfx = reinterpret_cast<Sfx*>(AssetManager::GetInstance().searchAsset(assetName));
 
 	assetName = "song";
 
-	g_assetManager.loadAsset(assetName, AT_MUSIC);
-	g_testMusic = reinterpret_cast<Music*>(g_assetManager.searchAsset(assetName));
+	AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
+	g_testMusic = reinterpret_cast<Music*>(AssetManager::GetInstance().searchAsset(assetName));
 }
 
 void handleKeyboardEvents()
@@ -185,7 +185,8 @@ int _tmain(int, _TCHAR**)
 		float thisTime = 0.f;
 		float lastTime = 0.f;
 
-		g_assetManager.init(g_sdlManager.m_renderer);
+		AssetManager::StartModule();
+		AssetManager::GetInstance().init(g_sdlManager.m_renderer);
 		
 		loadContent();
 

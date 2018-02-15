@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include "SDL_Manager.h"
+#include "Module.h"
 
 enum AssetType
 {
@@ -15,7 +16,7 @@ enum AssetType
 
 class Asset;
 
-class AssetManager
+class AssetManager : public LFC::Module<AssetManager>
 {
 public:
 	AssetManager();
