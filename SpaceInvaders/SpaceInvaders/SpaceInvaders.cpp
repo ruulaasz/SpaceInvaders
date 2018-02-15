@@ -153,7 +153,7 @@ void handleKeyboardEvents()
 			case SDLK_a:
 			{
 				testStruct inputValue;
-				inputValue.value = -1;
+				inputValue.value = -10;
 				g_Controller.checkInput('A', inputValue);
 				
 			}
@@ -161,7 +161,7 @@ void handleKeyboardEvents()
 			case SDLK_d:
 			{
 				testStruct inputValue;
-				inputValue.value = 1;
+				inputValue.value = 10;
 				g_Controller.checkInput('D', inputValue);
 			}
 			}
