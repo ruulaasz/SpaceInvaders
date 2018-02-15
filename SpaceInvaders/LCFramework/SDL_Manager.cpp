@@ -22,12 +22,26 @@ bool SDL_Manager::initSubSystems()
 		return false;
 	}
 	
+	int imgFlags = IMG_INIT_PNG;
+
+	if (!(IMG_Init(imgFlags)& imgFlags))
+	{
+		printf("Failed to load PNG module");
+	}
 
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 	{
 		printf("SDL failed to initialize the audio system: %s\n", SDL_GetError());
 		return false;
 	}
+
+	//Initialize SDL_mixer
+	if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048 ) < 0 )
+	{ 
+		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+	}
+
+	Mix_AllocateChannels(16);
 
 	return true;
 }
@@ -52,13 +66,6 @@ void SDL_Manager::createRenderer()
 	m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	
 	SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-
-	int imgFlags = IMG_INIT_PNG;
-
-	if (!(IMG_Init(imgFlags)& imgFlags))
-	{
-		printf("Failed to load PNG module");
-	}
 }
 
 bool SDL_Manager::init()
@@ -96,4 +103,5 @@ void SDL_Manager::destroy()
 
 	IMG_Quit();
 	SDL_Quit();
+	Mix_Quit();
 }

@@ -5,6 +5,7 @@
 
 SDL_Manager g_sdlManager;
 AssetManager g_assetManager;
+AudioManager g_audioManager;
 
 bool g_quit;
 float g_deltaTime;
@@ -14,7 +15,8 @@ float g_scalation;
 Texture* g_testTexture;
 BackgroundTexture* g_testBackgroundTexture;
 Sprite* g_testSprite;
-CWorld g_world;
+Sfx* g_testSfx;
+Music* g_testMusic;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -54,6 +56,8 @@ void renderDebugConsole()
 	system("cls");
 	printf("Assets Loaded: %d", g_assetManager.m_allAssets.size());
 	printf("\nCurrent Jump: %d", g_testSprite->m_currentJump);
+	printf("\n\nCurrent sfx Volume: %d", g_audioManager.SetSfxVolume(1, -1));
+	printf("\n\nCurrent music Volume: %d", g_audioManager.SetMusicVolume(-1));
 }
 
 void loadContent()
@@ -72,6 +76,16 @@ void loadContent()
 
 	g_assetManager.loadAsset(assetName, AT_SPRITE);
 	g_testSprite = reinterpret_cast<Sprite*>(g_assetManager.searchAsset(assetName));
+
+	assetName = "bass";
+
+	g_assetManager.loadAsset(assetName, AT_SFX);
+	g_testSfx = reinterpret_cast<Sfx*>(g_assetManager.searchAsset(assetName));
+
+	assetName = "song";
+
+	g_assetManager.loadAsset(assetName, AT_MUSIC);
+	g_testMusic = reinterpret_cast<Music*>(g_assetManager.searchAsset(assetName));
 }
 
 void handleKeyboardEvents()
@@ -89,6 +103,33 @@ void handleKeyboardEvents()
 			{
 			case SDLK_ESCAPE:
 				g_quit = true;
+				break;
+
+			case SDLK_m:
+				if (g_audioManager.PausedChannel(-1))
+				{
+					g_audioManager.ResumeChannel(-1);
+				}
+				else
+				{
+					g_audioManager.PauseChannel(-1);
+				}
+				break;
+
+			case SDLK_s:
+				g_audioManager.StopChannelFadeOut(-1, 300);
+				break;
+
+			case SDLK_d:
+				g_audioManager.SetSfxVolume(-1, 1);
+				break;
+
+			case SDLK_f:
+				g_audioManager.SetSfxVolume(-1, MIX_MAX_VOLUME);
+				break;
+
+			case SDLK_SPACE:
+				g_testSfx->playFadeIn(-1, 1500);
 				break;
 			}
 		}
@@ -114,6 +155,10 @@ int _tmain(int, _TCHAR**)
 		g_assetManager.init(g_sdlManager.m_renderer);
 		
 		loadContent();
+
+		g_audioManager.SetMusicVolume(50);
+		g_testMusic->playFadeIn(3000);
+		g_audioManager.SetSfxVolume(-1, 20);
 
 		while (!g_quit)
 		{

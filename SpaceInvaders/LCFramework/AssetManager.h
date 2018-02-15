@@ -8,7 +8,9 @@ enum AssetType
 {
 	AT_TEXTURE = 0,
 	AT_BACKGROUNDTEXTURE,
-	AT_SPRITE
+	AT_SPRITE,
+	AT_SFX,
+	AT_MUSIC
 };
 
 class Asset;

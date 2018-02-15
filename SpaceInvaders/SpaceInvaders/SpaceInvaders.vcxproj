@@ -73,8 +73,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_image\include;$(SolutionDir)\LCFramework;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\externals\SDL2_image\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(SolutionDir)\externals\LCFramework\lib\Win32\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\LCFramework;$(SolutionDir)\externals\SDL2_image\include;$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_mixer\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\LCFramework\lib\Win32\Debug;$(SolutionDir)\externals\SDL2_image\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(SolutionDir)\externals\SDL2_mixer\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

@@ -3,6 +3,8 @@
 #include "Texture.h"
 #include "BackgroundTexture.h"
 #include "Sprite.h"
+#include "Sfx.h"
+#include "Music.h"
 
 AssetManager::AssetManager()
 {
@@ -62,6 +64,34 @@ Asset * AssetManager::loadAsset(std::string _name, AssetType _type)
 			path += ".png";
 
 			if (reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
+			{
+				newAsset->m_name = _name;
+				m_allAssets[_name] = newAsset;
+			}
+			break;
+
+		case AT_SFX:
+			newAsset = new Sfx();
+
+			path += "sfx\\";
+			path += _name;
+			path += ".wav";
+
+			if (reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path))
+			{
+				newAsset->m_name = _name;
+				m_allAssets[_name] = newAsset;
+			}
+			break;
+
+		case AT_MUSIC:
+			newAsset = new Music();
+
+			path += "music\\";
+			path += _name;
+			path += ".mp3";
+
+			if (reinterpret_cast<Music*>(newAsset)->loadFromFile(path))
 			{
 				newAsset->m_name = _name;
 				m_allAssets[_name] = newAsset;
