@@ -1,6 +1,8 @@
 #pragma once
 struct testStruct
 {
+
+	testStruct(int _value) { value = _value; }
 	int value;
 };
 class testActor: public Actor

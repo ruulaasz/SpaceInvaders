@@ -1,6 +1,9 @@
 #pragma once
 #include "SDL_Manager.h"
-
+struct ActorInputValues
+{
+	int x;
+};
 class Actor
 {
 public:

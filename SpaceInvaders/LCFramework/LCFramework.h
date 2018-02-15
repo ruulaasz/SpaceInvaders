@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Module.h"
 #include "SDL_Manager.h"
 
 #include "Asset.h"
