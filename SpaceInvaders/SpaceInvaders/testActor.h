@@ -1,4 +1,8 @@
 #pragma once
+struct testStruct
+{
+	int value;
+};
 class testActor: public Actor
 {
 public:
@@ -9,6 +13,6 @@ public:
 
 	virtual void render(SDL_Renderer* _renderer);
 
-	void move();
+	void move(testStruct _info);
 };
 

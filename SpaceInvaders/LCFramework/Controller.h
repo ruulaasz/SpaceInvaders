@@ -4,12 +4,12 @@
 
 namespace LCF
 {
-	template <class _type>
+	template <class _type, class _struct>
 	class Controller
 	{
 	protected:
 		//Member of the functions
-		std::map<char, typedef void(_type::*)(void)> m_functions;
+		std::map<char, typedef void(_type::*)(_struct)> m_functions;
 		//pointer to de class
 		_type* m_Object;
 	public:
@@ -25,10 +25,10 @@ namespace LCF
 			return MESSAGE_SUCCESS;
 		};
 		//function to add functions in the map
-		MESSAGE_LOG addFunction(char _input, void(_type::*_foo)(void))
+		MESSAGE_LOG addFunction(char _input, void(_type::*_foo)(_struct))
 		{
-			std::pair<std::map<char, void(_type::*)(void)>::iterator, bool> ret;
-			ret = m_functions.insert(std::pair<char, void(_type::*)(void)>(_input, _foo));
+			std::pair<std::map<char, void(_type::*)(_struct)>::iterator, bool> ret;
+			ret = m_functions.insert(std::pair<char, void(_type::*)(_struct)>(_input, _foo));
 
 			if (!ret.second)
 				return MESSAGE_ERROR;
@@ -36,14 +36,14 @@ namespace LCF
 			return MESSAGE_SUCCESS;
 		};
 		//Checking if this controler have function
-		MESSAGE_LOG checkInput(char _input)
+		MESSAGE_LOG checkInput(char _input, _struct _info)
 		{
-			std::map<char, void(_type::*)(void)>::iterator it = m_functions.find(_input);
+			std::map<char, void(_type::*)(_struct)>::iterator it = m_functions.find(_input);
 
 			if (it == m_functions.end())
 				return MESSAGE_ERROR;
 
-			(*m_Object.*it->second)();
+			(*m_Object.*it->second)(_info);
 			return MESSAGE_SUCCESS;
 		};
 	public:

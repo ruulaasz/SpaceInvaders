@@ -21,7 +21,7 @@ Music* g_testMusic;
 
 World g_World;
 testActor g_Actor;
-LCF::Controller<testActor> g_Controller;
+LCF::Controller<testActor, testStruct> g_Controller;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -80,6 +80,7 @@ void loadContent()
 
 	g_Controller.addObject(&g_Actor);
 	g_Controller.addFunction('A', &testActor::move);
+	g_Controller.addFunction('D', &testActor::move);
 	g_World.registerActor(&g_Actor);
 
 	assetName = "background";
@@ -114,7 +115,7 @@ void handleKeyboardEvents()
 			g_quit = true;
 		}
 
-		if (g_sdlManager.m_events.type == SDL_KEYDOWN && g_sdlManager.m_events.key.repeat == 0)
+		if (g_sdlManager.m_events.type == SDL_KEYDOWN)
 		{
 			switch (g_sdlManager.m_events.key.keysym.sym)
 			{
@@ -137,9 +138,9 @@ void handleKeyboardEvents()
 				g_audioManager.StopChannelFadeOut(-1, 300);
 				break;
 
-			case SDLK_d:
-				g_audioManager.SetSfxVolume(-1, 1);
-				break;
+			//case SDLK_d:
+				//g_audioManager.SetSfxVolume(-1, 1);
+				//break;
 
 			case SDLK_f:
 				g_audioManager.SetSfxVolume(-1, MIX_MAX_VOLUME);
@@ -150,7 +151,19 @@ void handleKeyboardEvents()
 				break;
 				
 			case SDLK_a:
-				g_Controller.checkInput('A');
+			{
+				testStruct inputValue;
+				inputValue.value = -1;
+				g_Controller.checkInput('A', inputValue);
+				
+			}
+			break;
+			case SDLK_d:
+			{
+				testStruct inputValue;
+				inputValue.value = 1;
+				g_Controller.checkInput('D', inputValue);
+			}
 			}
 		}
 		else if (g_sdlManager.m_events.type == SDL_KEYUP && g_sdlManager.m_events.key.repeat == 0)
