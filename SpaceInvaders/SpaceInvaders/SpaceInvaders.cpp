@@ -6,7 +6,7 @@
 SDL_Manager g_sdlManager;
 //AssetManager g_assetManager;
 AudioManager g_audioManager;
-InputManager g_inputManager;
+//InputManager g_inputManager;
 
 bool g_quit;
 float g_deltaTime;
@@ -21,7 +21,8 @@ Music* g_testMusic;
 
 World g_World;
 testActor g_Actor;
-LCF::Controller<testActor, testStruct> g_Controller;
+TestActorController g_Controller;
+//std::vector<LCF::BaseController*> g_allControllers;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -79,8 +80,11 @@ void loadContent()
 	g_Actor.m_posY = 225;
 
 	g_Controller.addObject(&g_Actor);
-	g_Controller.addFunction('A', &testActor::move);
-	g_Controller.addFunction('D', &testActor::move);
+	g_Controller.addFunctionAndValues(SDLK_a, &testActor::move, new testStruct(-1));
+	g_Controller.addFunctionAndValues(SDLK_d, &testActor::move, new testStruct(1));
+	LCF::InputManager::GetInstance().AddController(&g_Controller);
+//	g_allControllers.push_back(&g_Controller);
+
 	g_World.registerActor(&g_Actor);
 
 	assetName = "background";
@@ -108,14 +112,19 @@ void handleKeyboardEvents()
 {
 	while (SDL_PollEvent(&g_sdlManager.m_events))
 	{
-		g_inputManager.dispatchInput(g_sdlManager.m_events);
+		LCF::InputManager::GetInstance().dispatchInput(g_sdlManager.m_events);
+
+		if (g_sdlManager.m_events.type == SDL_KEYDOWN)
+			g_Controller.checkInput(g_sdlManager.m_events.key.keysym.sym);
+			//g_allControllers[0]->checkInput(g_sdlManager.m_events.key.keysym.sym);
+			
 
 		if (g_sdlManager.m_events.type == SDL_QUIT)
 		{
 			g_quit = true;
 		}
 
-		if (g_sdlManager.m_events.type == SDL_KEYDOWN)
+		/*if (g_sdlManager.m_events.type == SDL_KEYDOWN)
 		{
 			switch (g_sdlManager.m_events.key.keysym.sym)
 			{
@@ -152,17 +161,13 @@ void handleKeyboardEvents()
 				
 			case SDLK_a:
 			{
-				testStruct inputValue;
-				inputValue.value = -1;
-				g_Controller.checkInput('A', inputValue);
+				g_Controller.checkInput(SDLK_a);
 				
 			}
 			break;
 			case SDLK_d:
 			{
-				testStruct inputValue;
-				inputValue.value = 1;
-				g_Controller.checkInput('D', inputValue);
+				g_Controller.checkInput(SDLK_d);
 			}
 			}
 		}
@@ -174,7 +179,7 @@ void handleKeyboardEvents()
 				g_quit = true;
 				break;
 			}
-		}
+		}*/
 	}
 }
 

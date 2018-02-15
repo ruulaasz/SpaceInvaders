@@ -11,5 +11,5 @@
 #include <LCFramework.h>
 
 #include "testActor.h"
-
+typedef LCF::Controller<testActor, testStruct> TestActorController;
 #pragma comment(lib, "LCFramework.lib")
