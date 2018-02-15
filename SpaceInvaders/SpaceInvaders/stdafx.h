@@ -10,4 +10,6 @@
 #include <tchar.h>
 #include <LCFramework.h>
 
+#include "testActor.h"
+
 #pragma comment(lib, "LCFramework.lib")

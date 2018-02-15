@@ -14,3 +14,9 @@
 #include "Music.h"
 
 #include "AudioManager.h"
+
+#include "World.h"
+#include "Actor.h"
+#include "Driver.h"
+
+#include "InputManager.h"

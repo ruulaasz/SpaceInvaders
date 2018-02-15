@@ -6,6 +6,7 @@
 SDL_Manager g_sdlManager;
 AssetManager g_assetManager;
 AudioManager g_audioManager;
+InputManager g_inputManager;
 
 bool g_quit;
 float g_deltaTime;
@@ -17,6 +18,9 @@ BackgroundTexture* g_testBackgroundTexture;
 Sprite* g_testSprite;
 Sfx* g_testSfx;
 Music* g_testMusic;
+
+World g_World;
+testActor g_Actor;
 
 // Declaraciones de funciones adelantadas incluidas en este módulo de código:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -40,13 +44,15 @@ void render()
 
 	if (g_testTexture)
 	{
-		g_testTexture->renderEx(400, 225, 0.5 + g_scalation, 0.5 + g_scalation, g_angle, g_sdlManager.m_renderer);
+		//g_testTexture->renderEx(400, 225, 0.5 + g_scalation, 0.5 + g_scalation, g_angle, g_sdlManager.m_renderer);
 	}
 
 	if (g_testSprite)
 	{
-		g_testSprite->render(1000, 200, g_sdlManager.m_renderer);
+		g_testSprite->render(1000, 75, g_sdlManager.m_renderer);
 	}
+
+	g_World.render(g_sdlManager.m_renderer);
 
 	SDL_RenderPresent(g_sdlManager.m_renderer);
 }
@@ -66,6 +72,12 @@ void loadContent()
 
 	g_assetManager.loadAsset(assetName, AT_TEXTURE);
 	g_testTexture = reinterpret_cast<Texture*>(g_assetManager.searchAsset(assetName));
+
+	g_Actor.m_texture = g_testTexture;
+	g_Actor.m_posX = 500;
+	g_Actor.m_posY = 225;
+
+	g_World.registerActor(&g_Actor);
 
 	assetName = "background";
 
@@ -92,6 +104,8 @@ void handleKeyboardEvents()
 {
 	while (SDL_PollEvent(&g_sdlManager.m_events))
 	{
+		g_inputManager.dispatchInput(g_sdlManager.m_events);
+
 		if (g_sdlManager.m_events.type == SDL_QUIT)
 		{
 			g_quit = true;
@@ -158,7 +172,7 @@ int _tmain(int, _TCHAR**)
 
 		g_audioManager.SetMusicVolume(50);
 		g_testMusic->playFadeIn(3000);
-		g_audioManager.SetSfxVolume(-1, 20);
+		g_audioManager.SetSfxVolume(-1, 30);
 
 		while (!g_quit)
 		{

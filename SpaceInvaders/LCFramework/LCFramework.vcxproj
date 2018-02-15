@@ -158,29 +158,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="Asset.h" />
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BackgroundTexture.h" />
+    <ClInclude Include="Driver.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="LCFramework.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="SDL_Manager.h" />
     <ClInclude Include="Sfx.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BackgroundTexture.cpp" />
+    <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />
     <ClCompile Include="Sfx.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

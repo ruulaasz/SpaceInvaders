@@ -1,8 +1,18 @@
 #pragma once
-class CWorld
+
+#include "Actor.h"
+#include <vector>
+#include "SDL_Manager.h"
+
+class World
 {
 public:
-	CWorld();
-	~CWorld();
+	World();
+	virtual ~World();
+
+	std::vector<Actor*> m_allActors;
+
+	void registerActor(Actor* _actor);
+	void render(SDL_Renderer* _renderer);
 };
 
