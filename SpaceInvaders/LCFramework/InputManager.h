@@ -9,18 +9,47 @@ namespace LCF
 {
 	//idk why this shit is working
 	static std::vector<BaseController*> m_allControllers;
+
+	/**
+	* Manager class for inputs
+	*/
 	class InputManager : public LFC::Module<InputManager>
 	{
-	protected:
-		
-	public:
-		//Dispatch any kind of message
-		void dispatchInput(SDL_Event _event);
-		MESSAGE_LOG AddController(BaseController* _controller);
-		void DestroyAllControllers();
 	public:
 		InputManager();
 		virtual ~InputManager();
-		
+
+		/**
+		* Dispatch any kind of message
+		*
+		* @param _event
+		* a SDL event
+		*
+		*/
+		void dispatchInput(SDL_Event _event);
+
+		/**
+		* Add a new _controller
+		*
+		* @param _event
+		* Pointer to a controller
+		*
+		*/
+		MESSAGE_LOG AddController(BaseController* _controller);
+
+		/**
+		* Erase all controllers
+		*
+		*/
+		void DestroyAllControllers();
+
+		/**
+		* Get the number of controllers
+		*
+		* @return int
+		* Number of controllers
+		*
+		*/
+		int GetControllerNumber();
 	};
 }

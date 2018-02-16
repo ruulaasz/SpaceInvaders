@@ -1,12 +1,14 @@
 #include "Actor.h"
 
-
-
-Actor::Actor()
+namespace LCF
 {
-}
+	Actor::Actor()
+	{
 
+	}
 
-Actor::~Actor()
-{
+	Actor::~Actor()
+	{
+
+	}
 }

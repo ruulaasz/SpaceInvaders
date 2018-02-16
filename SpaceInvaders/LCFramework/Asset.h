@@ -1,12 +1,18 @@
 #pragma once
 #include <string>
 
-class Asset
+namespace LCF
 {
-public:
-	Asset();
-	virtual ~Asset();
+	/**
+	* A container class for an Asset
+	*/
+	class Asset
+	{
+	public:
+		Asset();
+		virtual ~Asset();
 
-public:
-	std::string m_name;
-};
+	public:
+		std::string m_name;
+	};
+}

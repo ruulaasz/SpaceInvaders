@@ -1,11 +1,14 @@
 #include "Asset.h"
 
-Asset::Asset()
+namespace LCF
 {
+	Asset::Asset()
+	{
 
-}
+	}
 
-Asset::~Asset()
-{
+	Asset::~Asset()
+	{
 
+	}
 }

@@ -1,11 +1,14 @@
 #include "BackgroundTexture.h"
 
-BackgroundTexture::BackgroundTexture()
+namespace LCF
 {
+	BackgroundTexture::BackgroundTexture()
+	{
 
-}
+	}
 
-BackgroundTexture::~BackgroundTexture()
-{
+	BackgroundTexture::~BackgroundTexture()
+	{
 
+	}
 }

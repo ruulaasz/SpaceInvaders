@@ -1,34 +1,37 @@
 #include "Music.h"
 
-Music::Music()
+namespace LCF
 {
-
-}
-
-Music::~Music()
-{
-	Mix_FreeMusic(m_music);
-}
-
-bool Music::loadFromFile(std::string _path)
-{
-	m_music = Mix_LoadMUS(_path.c_str());
-
-	if (m_music == NULL)
+	Music::Music()
 	{
-		printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
-		return false;
+
 	}
 
-	return true;
-}
+	Music::~Music()
+	{
+		Mix_FreeMusic(m_music);
+	}
 
-void Music::play(int _loops)
-{
-	Mix_PlayMusic(m_music, _loops);
-}
+	bool Music::loadFromFile(std::string _path)
+	{
+		m_music = Mix_LoadMUS(_path.c_str());
 
-void Music::playFadeIn(int _ms, int _loops)
-{
-	Mix_FadeInMusic(m_music, _loops, _ms);
+		if (m_music == NULL)
+		{
+			printf("Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError());
+			return false;
+		}
+
+		return true;
+	}
+
+	void Music::play(int _loops)
+	{
+		Mix_PlayMusic(m_music, _loops);
+	}
+
+	void Music::playFadeIn(int _ms, int _loops)
+	{
+		Mix_FadeInMusic(m_music, _loops, _ms);
+	}
 }

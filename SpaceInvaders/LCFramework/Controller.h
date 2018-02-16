@@ -9,11 +9,12 @@ namespace LCF
 	{
 	public:
 		virtual MESSAGE_LOG checkInput(char _input) { return MESSAGE_SUCCESS; };
-	/*public:
+	public:
 		BaseController() {};
-		virtual ~BaseController() {};*/
+		virtual ~BaseController() {};
 
 	};
+
 	template <class _type, class _struct>
 	class Controller : public BaseController
 	{

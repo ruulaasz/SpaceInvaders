@@ -1,23 +1,54 @@
 #pragma once
 #include "Audio.h"
 
-class Sfx : public Audio
+namespace LCF
 {
-public:
-	Sfx();
-	~Sfx();
-
 	/**
-	* Loads a texture from a file.
-	*
-	* @param _path
-	* String to the file direction.
-	*
+	* A container class for a Sfx
 	*/
-	bool loadFromFile(std::string _path);
-	void play(int _channel, int _loops = 0);
-	void playFadeIn(int _channel, int _ms, int _loops = 0);
+	class Sfx : public Audio
+	{
+	public:
+		Sfx();
+		~Sfx();
 
-public:
-	Mix_Chunk* m_sfx;
-};
+		/**
+		* Loads a sfx from a file.
+		*
+		* @param _path
+		* String to the file direction.
+		*
+		*/
+		bool loadFromFile(std::string _path);
+
+		/**
+		* Reproduce the sfx file
+		*
+		* @param _channel
+		* the channel number.
+		*
+		* @param _loops
+		* the number of loops, 0 by default.
+		*
+		*/
+		void play(int _channel, int _loops = 0);
+
+		/**
+		* Reproduce the sfx file with a fade in effect
+		*
+		* @param _channel
+		* the channel number.
+		*
+		* @param _ms
+		* the time to reach max volume.
+		*
+		* @param _loops
+		* the number of loops, 0 by default.
+		*
+		*/
+		void playFadeIn(int _channel, int _ms, int _loops = 0);
+
+	public:
+		Mix_Chunk* m_sfx;
+	};
+}

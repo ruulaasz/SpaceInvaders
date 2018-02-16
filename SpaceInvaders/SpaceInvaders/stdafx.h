@@ -10,6 +10,6 @@
 #include <tchar.h>
 #include <LCFramework.h>
 
-#include "testActor.h"
-typedef LCF::Controller<testActor, testStruct> TestActorController;
+#include "VerticalActor.h"
+
 #pragma comment(lib, "LCFramework.lib")

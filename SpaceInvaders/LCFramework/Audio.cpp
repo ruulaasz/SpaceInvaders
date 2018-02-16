@@ -1,11 +1,14 @@
 #include "Audio.h"
 
-Audio::Audio()
+namespace LCF
 {
+	Audio::Audio()
+	{
 
-}
+	}
 
-Audio::~Audio()
-{
+	Audio::~Audio()
+	{
 
+	}
 }

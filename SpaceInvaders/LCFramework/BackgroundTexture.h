@@ -1,9 +1,15 @@
 #pragma once
 #include "Texture.h"
 
-class BackgroundTexture : public Texture
+namespace LCF
 {
-public:
-	BackgroundTexture();
-	~BackgroundTexture();
-};
+	/**
+	* Container class for a background texture.
+	*/
+	class BackgroundTexture : public LCF::Texture
+	{
+	public:
+		BackgroundTexture();
+		~BackgroundTexture();
+	};
+}

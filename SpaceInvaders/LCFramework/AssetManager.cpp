@@ -6,119 +6,122 @@
 #include "Sfx.h"
 #include "Music.h"
 
-AssetManager::AssetManager()
+namespace LCF
 {
-
-}
-
-AssetManager::~AssetManager()
-{
-
-}
-
-Asset * AssetManager::loadAsset(std::string _name, AssetType _type)
-{
-	std::string path = "..\\resources\\";
-	Asset* newAsset = searchAsset(_name);
-
-	if (!newAsset)
+	AssetManager::AssetManager()
 	{
-		switch (_type)
+
+	}
+
+	AssetManager::~AssetManager()
+	{
+
+	}
+
+	Asset * AssetManager::loadAsset(std::string _name, AssetType _type)
+	{
+		std::string path = "..\\resources\\";
+		Asset* newAsset = searchAsset(_name);
+
+		if (!newAsset)
 		{
-		default:
-			break;
-
-		case AT_TEXTURE:
-			newAsset = new Texture();
-
-			path += "textures\\";
-			path += _name;
-			path += ".png";
-
-			if (reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer))
+			switch (_type)
 			{
-				newAsset->m_name = _name;
-				m_allAssets[_name] = newAsset;
+			default:
+				break;
+
+			case AT_TEXTURE:
+				newAsset = new Texture();
+
+				path += "textures\\";
+				path += _name;
+				path += ".png";
+
+				if (reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer))
+				{
+					newAsset->m_name = _name;
+					m_allAssets[_name] = newAsset;
+				}
+				break;
+
+			case AT_BACKGROUNDTEXTURE:
+				newAsset = new BackgroundTexture();
+
+				path += "background_textures\\";
+				path += _name;
+				path += ".png";
+
+				if (reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer))
+				{
+					newAsset->m_name = _name;
+					m_allAssets[_name] = newAsset;
+				}
+				break;
+
+			case AT_SPRITE:
+				newAsset = new Sprite();
+
+				path += "sprites\\";
+				path += _name;
+				path += ".png";
+
+				if (reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
+				{
+					newAsset->m_name = _name;
+					m_allAssets[_name] = newAsset;
+				}
+				break;
+
+			case AT_SFX:
+				newAsset = new Sfx();
+
+				path += "sfx\\";
+				path += _name;
+				path += ".wav";
+
+				if (reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path))
+				{
+					newAsset->m_name = _name;
+					m_allAssets[_name] = newAsset;
+				}
+				break;
+
+			case AT_MUSIC:
+				newAsset = new Music();
+
+				path += "music\\";
+				path += _name;
+				path += ".mp3";
+
+				if (reinterpret_cast<Music*>(newAsset)->loadFromFile(path))
+				{
+					newAsset->m_name = _name;
+					m_allAssets[_name] = newAsset;
+				}
+				break;
 			}
-			break;
+		}
 
-		case AT_BACKGROUNDTEXTURE:
-			newAsset = new BackgroundTexture();
+		return newAsset;
+	}
 
-			path += "background_textures\\";
-			path += _name;
-			path += ".png";
+	Asset * AssetManager::searchAsset(std::string _name)
+	{
+		std::map<std::string, Asset*>::iterator it;
+		it = m_allAssets.find(_name);
 
-			if (reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer))
-			{
-				newAsset->m_name = _name;
-				m_allAssets[_name] = newAsset;
-			}
-			break;
-
-		case AT_SPRITE:
-			newAsset = new Sprite();
-
-			path += "sprites\\";
-			path += _name;
-			path += ".png";
-
-			if (reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
-			{
-				newAsset->m_name = _name;
-				m_allAssets[_name] = newAsset;
-			}
-			break;
-
-		case AT_SFX:
-			newAsset = new Sfx();
-
-			path += "sfx\\";
-			path += _name;
-			path += ".wav";
-
-			if (reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path))
-			{
-				newAsset->m_name = _name;
-				m_allAssets[_name] = newAsset;
-			}
-			break;
-
-		case AT_MUSIC:
-			newAsset = new Music();
-
-			path += "music\\";
-			path += _name;
-			path += ".mp3";
-
-			if (reinterpret_cast<Music*>(newAsset)->loadFromFile(path))
-			{
-				newAsset->m_name = _name;
-				m_allAssets[_name] = newAsset;
-			}
-			break;
+		if (it != m_allAssets.end())
+		{
+			return it->second;
+		}
+		else
+		{
+			return nullptr;
 		}
 	}
 
-	return newAsset;
-}
-
-Asset * AssetManager::searchAsset(std::string _name)
-{
-	std::map<std::string, Asset*>::iterator it;
-	it = m_allAssets.find(_name);
-
-	if (it != m_allAssets.end())	
+	void AssetManager::init(SDL_Renderer * _renderer)
 	{
-		return it->second;
+		m_renderer = _renderer;
 	}
-	else
-	{
-		return nullptr;
-	}
-}
-
-void AssetManager::init(SDL_Renderer * _renderer)
-{
-	m_renderer = _renderer;
 }

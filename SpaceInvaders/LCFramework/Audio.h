@@ -2,9 +2,15 @@
 #include "Asset.h"
 #include "SDL_Manager.h"
 
-class Audio : public Asset
+namespace LCF
 {
-public:
-	Audio();
-	virtual ~Audio();
-};
+	/**
+	* A container class for an Audio
+	*/
+	class Audio : public LCF::Asset
+	{
+	public:
+		Audio();
+		virtual ~Audio();
+	};
+}
