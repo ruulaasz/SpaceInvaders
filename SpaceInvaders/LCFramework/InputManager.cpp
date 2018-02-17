@@ -15,12 +15,9 @@ namespace LCF
 
 	void InputManager::dispatchInput(SDL_Event _event)
 	{
-		if (_event.type == SDL_KEYDOWN)
+		for (size_t i = 0; i < m_allControllers.size(); i++)
 		{
-			for (size_t i = 0; i < m_allControllers.size(); i++)
-			{
-				m_allControllers[i]->checkInput(_event.key.keysym.sym);
-			}
+			m_allControllers[i]->checkInput(_event.key.keysym.sym, _event.type);
 		}
 	}
 

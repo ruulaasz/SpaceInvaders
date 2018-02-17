@@ -92,8 +92,8 @@ void loadContent()
 	g_verticalActor.m_posY = 225;
 
 	g_verticalActorController.addObject(&g_verticalActor);
-	g_verticalActorController.addFunctionAndValues(SDLK_a, &VerticalActor::move, new VerticalStruct(-1));
-	g_verticalActorController.addFunctionAndValues(SDLK_d, &VerticalActor::move, new VerticalStruct(1));
+	g_verticalActorController.addFunctionAndValues(SDLK_a, SDL_KEYUP,&VerticalActor::move, new VerticalStruct(-1));
+	g_verticalActorController.addFunctionAndValues(SDLK_d, SDL_KEYDOWN,&VerticalActor::move, new VerticalStruct(1));
 	LCF::InputManager::GetInstance().AddController(&g_verticalActorController);
 
 	g_world.registerActor(&g_verticalActor);
