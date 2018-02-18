@@ -24,11 +24,13 @@ namespace LCF
 	MESSAGE_LOG InputManager::AddController(BaseController* _controller)
 	{
 		if (_controller == NULL)
-			return MESSAGE_ERROR;
+		{
+			return MESSAGE_WARNING("The pointer of the controller is NULL");
+		}
 
 		m_allControllers.push_back(_controller);
 
-		return MESSAGE_SUCCESS;
+		return MESSAGE_SUCCESS("The controller now is in the input Manager");
 	}
 
 	void InputManager::DestroyAllControllers()
