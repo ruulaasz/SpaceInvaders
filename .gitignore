@@ -275,3 +275,7 @@ SpaceInvaders/bin/Win32/Debug/libFLAC-8.dll
 SpaceInvaders/bin/Win32/Debug/SpaceInvaders.ilk
 SpaceInvaders/bin/Win32/Debug/libvorbis-0.dll
 SpaceInvaders/externals/SDL2/include/SDL_name.h
+SpaceInvaders/SpaceInvaders.VC.db
+SpaceInvaders/docs/README.txt
+SpaceInvaders/intermediate/
+SpaceInvaders/ipch/
