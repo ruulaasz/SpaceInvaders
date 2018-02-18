@@ -73,12 +73,12 @@ void render()
 
 void renderDebugConsole()
 {
-	system("cls");
+	/*system("cls");
 	printf("Assets Loaded: %d", LCF::AssetManager::GetInstance().m_allAssets.size());
 	printf("\nCurrent Jump: %d", g_testSprite->m_currentJump);
 	printf("\n\nCurrent sfx Volume: %d", LCF::AudioManager::GetInstance().SetSfxVolume(1, -1));
 	printf("\n\nCurrent music Volume: %d", LCF::AudioManager::GetInstance().SetMusicVolume(-1));
-	printf("\n\nNumber of Controllers: %d", LCF::InputManager::GetInstance().GetControllerNumber());
+	printf("\n\nNumber of Controllers: %d", LCF::InputManager::GetInstance().GetControllerNumber());*/
 }
 
 void loadContent()
