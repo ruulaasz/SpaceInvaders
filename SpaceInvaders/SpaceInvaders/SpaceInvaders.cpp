@@ -41,6 +41,16 @@ bool init()
 	LCF::AudioManager::GetInstance().SetMusicVolume(50);
 	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 30);
 
+	g_verticalActor.m_posX = 500;
+	g_verticalActor.m_posY = 225;
+
+	g_verticalActorController.addObject(&g_verticalActor);
+	g_verticalActorController.addFunctionAndValues(SDLK_a, SDL_KEYUP, &VerticalActor::move, new VerticalStruct(-1));
+	g_verticalActorController.addFunctionAndValues(SDLK_d, SDL_KEYDOWN, &VerticalActor::move, new VerticalStruct(1));
+	LCF::InputManager::GetInstance().AddController(&g_verticalActorController);
+
+	g_world.registerActor(&g_verticalActor);
+
 	return true;
 }
 
@@ -87,16 +97,6 @@ void loadContent()
 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 	g_verticalActor.m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
-
-	g_verticalActor.m_posX = 500;
-	g_verticalActor.m_posY = 225;
-
-	g_verticalActorController.addObject(&g_verticalActor);
-	g_verticalActorController.addFunctionAndValues(SDLK_a, SDL_KEYUP,&VerticalActor::move, new VerticalStruct(-1));
-	g_verticalActorController.addFunctionAndValues(SDLK_d, SDL_KEYDOWN,&VerticalActor::move, new VerticalStruct(1));
-	LCF::InputManager::GetInstance().AddController(&g_verticalActorController);
-
-	g_world.registerActor(&g_verticalActor);
 
 	assetName = "background";
 
