@@ -8,7 +8,7 @@ static bool PrinteMessage = true;
 static MESSAGE_LOG ReturnCallMessage(MESSAGE_LOG Descriptor, MESSAGE_LOG aditionalText, int line, char* foo, char* file)
 {
 	if(PrinteMessage)
-		std::cout << line << "::" << foo << "::" << file << "::" << Descriptor << "::" << aditionalText << ".\n";
+		std::cout << "\n" <<line << "::" << foo << "::" << file << "::" << Descriptor << "::" << aditionalText << ".\n";
 	return Descriptor;
 }
 
@@ -31,7 +31,7 @@ static MESSAGE_LOG ReturnCallMessage(MESSAGE_LOG Descriptor, MESSAGE_LOG adition
 #define MESSAGE_SUCCESS(...) M_SUCCESS
 #define MESSAGE_WARNING(...) M_WARNING
 
-MESSAGE_LOG ReturnCallMessage(MESSAGE_LOG Descriptor, MESSAGE_LOG aditionalText)
+MESSAGE_LOG ReturnCallMessage(MESSAGE_LOG Descriptor, MESSAGE_LOG aditionalText, int line, char* foo, char* file)
 {
 	return Descriptor;
 }
