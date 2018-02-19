@@ -26,6 +26,7 @@ namespace LCF
 		{
 			delete m_allColliders[i];
 		}
+		m_allColliders.clear();
 	}
 	MESSAGE_LOG ColliderManager::RegistrerCollider(BaseColliderBox * _Collider)
 	{
