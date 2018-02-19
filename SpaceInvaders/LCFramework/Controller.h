@@ -94,8 +94,10 @@ namespace LCF
 			{
 				return MESSAGE_WARNING("The type event is different");
 			}
-			ENABLE_PRINT_MESSAGE(true);
+			
 			return MESSAGE_SUCCESS("The input is correct and event type");
+
+			ENABLE_PRINT_MESSAGE(true);
 		}
 		void DestroyController()
 		{

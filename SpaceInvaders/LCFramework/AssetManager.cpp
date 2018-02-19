@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "Sfx.h"
 #include "Music.h"
+#include "message.h"
 
 namespace LCF
 {
@@ -37,11 +38,20 @@ namespace LCF
 				path += _name;
 				path += ".png";
 
+				newAsset->setName(_name);
+
 				if (reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer))
 				{
-					newAsset->m_name = _name;
-					m_allAssets[_name] = newAsset;
+					
 				}
+				else
+				{
+					path = "..\\resources\\textures\\default.png";
+					reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer);
+					MESSAGE_WARNING("Texture not found, using default texture");
+				}
+
+				m_allAssets[_name] = newAsset;
 				break;
 
 			case AT_BACKGROUNDTEXTURE:
@@ -51,11 +61,20 @@ namespace LCF
 				path += _name;
 				path += ".png";
 
+				newAsset->setName(_name);
+
 				if (reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer))
 				{
-					newAsset->m_name = _name;
-					m_allAssets[_name] = newAsset;
+					
 				}
+				else
+				{
+					path = "..\\resources\\background_textures\\default.png";
+					reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer);
+					MESSAGE_WARNING("BackgroundTexture not found, using default texture");
+				}
+
+				m_allAssets[_name] = newAsset;
 				break;
 
 			case AT_SPRITE:
@@ -65,11 +84,20 @@ namespace LCF
 				path += _name;
 				path += ".png";
 
+				newAsset->setName(_name);
+
 				if (reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
 				{
-					newAsset->m_name = _name;
-					m_allAssets[_name] = newAsset;
+					
 				}
+				else
+				{
+					path = "..\\resources\\sprites\\default.png";
+					reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer);
+					MESSAGE_WARNING("Sprite not found, using default texture");
+				}
+
+				m_allAssets[_name] = newAsset;
 				break;
 
 			case AT_SFX:
@@ -79,11 +107,20 @@ namespace LCF
 				path += _name;
 				path += ".wav";
 
+				newAsset->setName(_name);
+
 				if (reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path))
 				{
-					newAsset->m_name = _name;
-					m_allAssets[_name] = newAsset;
+						
 				}
+				else
+				{
+					path = "..\\resources\\sfx\\default.wav";
+					reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path);
+					MESSAGE_WARNING("Sfx not found, using default sfx");
+				}
+
+				m_allAssets[_name] = newAsset;
 				break;
 
 			case AT_MUSIC:
@@ -93,15 +130,25 @@ namespace LCF
 				path += _name;
 				path += ".mp3";
 
+				newAsset->setName(_name);
+
 				if (reinterpret_cast<Music*>(newAsset)->loadFromFile(path))
 				{
-					newAsset->m_name = _name;
-					m_allAssets[_name] = newAsset;
+					
 				}
+				else
+				{
+					path = "..\\resources\\music\\default.mp3";
+					reinterpret_cast<Music*>(newAsset)->loadFromFile(path);
+					MESSAGE_WARNING("Music not found, using default Music");
+				}
+
+				m_allAssets[_name] = newAsset;
 				break;
 			}
 		}
 
+		MESSAGE_SUCCESS("Asset ready");
 		return newAsset;
 	}
 
@@ -112,6 +159,7 @@ namespace LCF
 
 		if (it != m_allAssets.end())
 		{
+			MESSAGE_SUCCESS("Asset found");
 			return it->second;
 		}
 		else

@@ -9,8 +9,6 @@ SDL_Renderer* g_renderer;
 
 bool g_quit;
 float g_deltaTime;
-double g_angle;
-float g_scalation;
 
 LCF::BackgroundTexture* g_testBackgroundTexture;
 LCF::Sprite* g_testSprite;
@@ -56,6 +54,9 @@ bool init()
 	g_verticalActorController.addFunctionAndValues(SDLK_d, SDL_KEYDOWN, &VerticalActor::move, new VerticalStruct(1));
 	LCF::InputManager::GetInstance().AddController(&g_verticalActorController);
 
+	g_verticalActor.Init();
+	g_verticalActor2.Init();
+
 	g_world.registerActor(&g_verticalActor);
 	g_world.registerActor(&g_verticalActor2);
 
@@ -65,8 +66,6 @@ bool init()
 void update()
 {
 	g_testSprite->update(g_deltaTime);
-	g_angle += g_deltaTime*4;
-	g_scalation += g_deltaTime/100;
 	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
 }
 
@@ -90,16 +89,6 @@ void render()
 	SDL_RenderPresent(g_renderer);
 }
 
-void renderDebugConsole()
-{
-	/*system("cls");
-	printf("Assets Loaded: %d", LCF::AssetManager::GetInstance().m_allAssets.size());
-	printf("\nCurrent Jump: %d", g_testSprite->m_currentJump);
-	printf("\n\nCurrent sfx Volume: %d", LCF::AudioManager::GetInstance().SetSfxVolume(1, -1));
-	printf("\n\nCurrent music Volume: %d", LCF::AudioManager::GetInstance().SetMusicVolume(-1));
-	printf("\n\nNumber of Controllers: %d", LCF::InputManager::GetInstance().GetControllerNumber());*/
-}
-
 void loadContent()
 {
 	std::string assetName = "hakai";
@@ -107,6 +96,7 @@ void loadContent()
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 	g_verticalActor.m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
 	g_verticalActor2.m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
+
 	assetName = "background";
 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_BACKGROUNDTEXTURE);
@@ -126,9 +116,6 @@ void loadContent()
 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
 	g_testMusic = reinterpret_cast<LCF::Music*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
-
-	g_verticalActor.Init();
-	g_verticalActor2.Init();
 }
 
 void handleInputs()
@@ -148,6 +135,10 @@ void handleInputs()
 			{
 			case SDLK_ESCAPE:
 				g_quit = true;
+				break;
+
+			case SDLK_SPACE:
+				g_testSfx->play(1);
 				break;
 			}
 		}
@@ -199,7 +190,6 @@ int _tmain(int argc, char **argv)
 			update();
 
 			render();
-			renderDebugConsole();
 		}
 	}
 

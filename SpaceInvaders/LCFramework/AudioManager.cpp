@@ -1,5 +1,6 @@
 #include "AudioManager.h"
 #include "SDL_Manager.h"
+#include "message.h"
 
 namespace LCF
 {
