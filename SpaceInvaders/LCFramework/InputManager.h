@@ -13,7 +13,7 @@ namespace LCF
 	/**
 	* Manager class for inputs
 	*/
-	class InputManager : public LFC::Module<InputManager>
+	class InputManager : public LCF::Module<InputManager>
 	{
 	public:
 		InputManager();

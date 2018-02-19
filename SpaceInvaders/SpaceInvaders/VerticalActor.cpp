@@ -24,3 +24,18 @@ void VerticalActor::update(float _deltaTime)
 {
 
 }
+
+void VerticalActor::Init()
+{
+	LCF::ColliderBox<VerticalActor>* newBox = new LCF::ColliderBox<VerticalActor>();
+
+	newBox->SetFunction(&VerticalActor::Collision);
+	newBox->SetActor(this, false);
+	newBox->SetSize(m_posX, m_posY, 50, 50);
+	LCF::ColliderManager::GetInstance().RegistrerCollider(newBox);
+}
+
+void VerticalActor::Collision(const Actor * _actor)
+{
+	std::cout << "Collision.\n";
+}

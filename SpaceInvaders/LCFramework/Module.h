@@ -1,6 +1,6 @@
 #pragma once
 
-namespace LFC
+namespace LCF
 {
 	template<class _type>
 	class Module

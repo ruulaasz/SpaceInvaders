@@ -42,13 +42,11 @@ namespace LCF
 		MESSAGE_LOG addObject(_type* _object)
 		{
 			if (_object == NULL)
-			{
 				return MESSAGE_ERROR("The object is NULL");
-			}
+
 			if (m_Object != NULL)
-			{
 				return MESSAGE_ERROR("The controller already had a objet");
-			}
+			
 
 			m_Object = _object;
 			return MESSAGE_SUCCESS("to add");

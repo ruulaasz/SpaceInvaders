@@ -6,7 +6,7 @@ namespace LCF
 	/**
 	* Manager class for inputs
 	*/
-	class AudioManager : public LFC::Module<AudioManager>
+	class AudioManager : public LCF::Module<AudioManager>
 	{
 	public:
 		AudioManager();

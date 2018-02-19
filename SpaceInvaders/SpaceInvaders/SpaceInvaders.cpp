@@ -20,11 +20,15 @@ LCF::Music* g_testMusic;
 LCF::World g_world;
 
 VerticalActor g_verticalActor;
+VerticalActor g_verticalActor2;
 VerticalActorController g_verticalActorController;
 
 bool init()
 {
 	LCF::SDL_Manager::StartModule();
+
+	LCF::ColliderManager::StartModule();
+	LCF::ColliderManager::GetInstance().Init();
 
 	if (!LCF::SDL_Manager::GetInstance().init("SpaceInvaders", 1600, 900))
 	{
@@ -44,12 +48,16 @@ bool init()
 	g_verticalActor.m_posX = 500;
 	g_verticalActor.m_posY = 225;
 
+	g_verticalActor2.m_posX = 500;
+	g_verticalActor2.m_posY = 0;
+
 	g_verticalActorController.addObject(&g_verticalActor);
-	g_verticalActorController.addFunctionAndValues(SDLK_a, SDL_KEYUP, &VerticalActor::move, new VerticalStruct(-1));
+	g_verticalActorController.addFunctionAndValues(SDLK_a, SDL_KEYDOWN, &VerticalActor::move, new VerticalStruct(-1));
 	g_verticalActorController.addFunctionAndValues(SDLK_d, SDL_KEYDOWN, &VerticalActor::move, new VerticalStruct(1));
 	LCF::InputManager::GetInstance().AddController(&g_verticalActorController);
 
 	g_world.registerActor(&g_verticalActor);
+	g_world.registerActor(&g_verticalActor2);
 
 	return true;
 }
@@ -59,6 +67,7 @@ void update()
 	g_testSprite->update(g_deltaTime);
 	g_angle += g_deltaTime*4;
 	g_scalation += g_deltaTime/100;
+	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
 }
 
 void render()
@@ -97,7 +106,7 @@ void loadContent()
 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 	g_verticalActor.m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
-
+	g_verticalActor2.m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
 	assetName = "background";
 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_BACKGROUNDTEXTURE);
@@ -117,6 +126,9 @@ void loadContent()
 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
 	g_testMusic = reinterpret_cast<LCF::Music*>(LCF::AssetManager::GetInstance().searchAsset(assetName));
+
+	g_verticalActor.Init();
+	g_verticalActor2.Init();
 }
 
 void handleInputs()
@@ -168,6 +180,7 @@ int _tmain(int argc, char **argv)
 {
 	if (init())
 	{
+		
 		float thisTime = 0.f;
 		float lastTime = 0.f;
 		

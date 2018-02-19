@@ -185,6 +185,8 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BackgroundTexture.h" />
+    <ClInclude Include="ColliderBox.h" />
+    <ClInclude Include="ColliderManager.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LCFramework.h" />
@@ -204,6 +206,8 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BackgroundTexture.cpp" />
+    <ClCompile Include="ColliderBox.cpp" />
+    <ClCompile Include="ColliderManager.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Music.cpp" />

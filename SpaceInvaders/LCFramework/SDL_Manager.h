@@ -15,7 +15,7 @@ namespace LCF
 	/**
 	* Manager class for SDL 2.0
 	*/
-	class SDL_Manager : public LFC::Module<SDL_Manager>
+	class SDL_Manager : public LCF::Module<SDL_Manager>
 	{
 	public:
 		SDL_Manager();

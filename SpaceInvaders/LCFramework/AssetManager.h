@@ -23,7 +23,7 @@ namespace LCF
 	/**
 	* Manager class for Assets
 	*/
-	class AssetManager : public LFC::Module<AssetManager>
+	class AssetManager : public LCF::Module<AssetManager>
 	{
 	public:
 		AssetManager();

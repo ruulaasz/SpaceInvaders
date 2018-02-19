@@ -18,6 +18,9 @@
 
 #include "World.h"
 #include "Actor.h"
-#include "Controller.h"
 
+#include "Controller.h"
 #include "InputManager.h"
+
+#include "ColliderBox.h"
+#include "ColliderManager.h"

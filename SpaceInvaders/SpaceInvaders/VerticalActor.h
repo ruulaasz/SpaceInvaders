@@ -17,4 +17,6 @@ public:
 	virtual void render(SDL_Renderer* _renderer);
 	void move(VerticalStruct _info);
 	void update(float _deltaTime);
+	void Init();
+	void Collision(const Actor* _actor);
 };
