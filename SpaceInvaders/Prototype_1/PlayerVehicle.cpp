@@ -7,13 +7,17 @@ PlayerVehicle::PlayerVehicle()
 
 PlayerVehicle::~PlayerVehicle()
 {
-
+	
 }
 
 void PlayerVehicle::init(int _screenW, int _screenH)
 {
 	m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_vehicle_selected"));
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_vehicle"));
+
+	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
+	m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_mainweapon"));
+	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
 
 	Actor::init();
 	m_posX = (_screenW / 2) - (m_texture->getWidth() / 2);
@@ -26,6 +30,11 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_subWeaponB.init();
 
 	m_subWeaponB.m_posY = m_posY;
+
+	m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
+	LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+
+	//hardcode necesito poder modificar mi caja de colision
 }
 
 void PlayerVehicle::render(SDL_Renderer * _renderer)
@@ -56,6 +65,24 @@ void PlayerVehicle::update(float _deltaTime)
 void PlayerVehicle::move(MovementInfo _info)
 {
 	m_currentDirection = _info.direction;
+
+	if (m_currentDirection != 0)
+	{
+		if (!LCF::AudioManager::GetInstance().PlayingChannel(1))
+		{
+			m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
+			LCF::AudioManager::GetInstance().PauseChannel(1);
+		}
+
+		if (LCF::AudioManager::GetInstance().PausedChannel(1))
+		{
+			LCF::AudioManager::GetInstance().ResumeChannel(1);
+		}
+	}
+	else
+	{
+		LCF::AudioManager::GetInstance().PauseChannel(1);
+	}
 }
 
 void PlayerVehicle::shootMainWeapon(MovementInfo _info)
@@ -66,12 +93,15 @@ void PlayerVehicle::shootMainWeapon(MovementInfo _info)
 		b->init();
 		//hardcode incluir funcion en el mundo para eliminar la bala
 		LCF::World::GetInstance().registerActor(b);
+
+		m_shootSFX->play(MAINWEAPON_SHOOT_SFXCHANNEL);
 	}
 	else
 	{
 		m_weaponSelected = true;
 		m_subWeaponA.m_weaponSelected = false;
 		m_subWeaponB.m_weaponSelected = false;
+		m_changeWeaponSFX->play(CHANGEWEAPON_SFXCHANNEL);
 	}
 }
 
@@ -91,9 +121,18 @@ void PlayerVehicle::shootSubWeaponB(MovementInfo _info)
 
 void PlayerVehicle::collision(const Actor * _actor)
 {
-	//if (Wall* temp = dynamic_cast<Wall*>(_actor))
-	//hardcode necesito la info del collider contra el que choque y ver como evitar que vibre al chocar
-	//m_posX = _actor->m_posX + (-100 * m_currentDirection); 
+	if (const Wall* temp = dynamic_cast<const Wall*>(_actor))
+	{
+		//hardcode necesito la info del collider contra el que choque y ver como evitar que vibre al chocar
+		if (m_currentDirection < 0)
+		{
+			m_posX = _actor->m_posX + temp->m_texture->getWidth();
+		}
+		else
+		{
+			m_posX = _actor->m_posX - m_texture->getWidth();
+		}
 
-	//m_currentDirection = 0;
+		m_currentDirection = 0;
+	}
 }

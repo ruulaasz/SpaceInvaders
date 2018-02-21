@@ -51,4 +51,8 @@ public:
 	LCF::Texture* m_weaponReadyTexture;
 	SideWeapon m_subWeaponA;
 	SideWeapon m_subWeaponB;
+
+	LCF::Sfx* m_moveSFX;
+	LCF::Sfx* m_shootSFX;
+	LCF::Sfx* m_changeWeaponSFX;
 };

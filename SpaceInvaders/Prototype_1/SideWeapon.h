@@ -32,9 +32,12 @@ public:
 
 	void shootMainWeapon(int _posX, int _posY, int _direction);
 
+	virtual void collision(const Actor* _actor);
+
 public:
 	bool m_weaponSelected;
 
 	LCF::Texture* m_weaponReadyTexture;
+	LCF::Sfx* m_shootSFX;
+	LCF::Sfx* m_changeWeaponSFX;
 };
-

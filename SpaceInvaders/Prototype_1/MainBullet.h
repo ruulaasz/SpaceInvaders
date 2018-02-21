@@ -3,6 +3,7 @@
 class MainBullet : public LCF::Actor
 {
 public:
+	MainBullet() {};
 	MainBullet(int _posX, int _posY, int _direction);
 	virtual ~MainBullet();
 
@@ -35,5 +36,8 @@ public:
 public:
 	float m_movementSpeed;
 	int m_direction;
+	LCF::Sfx* m_afterShootSFX;
+	float m_timer;
+	bool m_casketDroped;
 };
 

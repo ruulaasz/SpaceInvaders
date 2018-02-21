@@ -44,6 +44,11 @@ namespace LCF
 		return Mix_Paused(_channel);
 	}
 
+	int AudioManager::PlayingChannel(int _channel)
+	{
+		return Mix_Playing(_channel);
+	}
+
 	int AudioManager::SetMusicVolume(int _volume)
 	{
 		return Mix_VolumeMusic(_volume);

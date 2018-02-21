@@ -16,6 +16,9 @@ void SideWeapon::init()
 	m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_sidevehicle_selected"));
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_sidevehicle"));
 
+	m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
+	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
+
 	Actor::init();
 }
 
@@ -40,13 +43,21 @@ void SideWeapon::shootMainWeapon(int _posX, int _posY, int _direction)
 {
 	if (m_weaponSelected)
 	{
-		MainBullet* b = new MainBullet(_posX, _posY, _direction);
+		SubBullet* b = new SubBullet(_posX, _posY, _direction);
 		b->init();
 		//hardcode incluir funcion en el mundo para eliminar la bala
 		LCF::World::GetInstance().registerActor(b);
+
+		m_shootSFX->play(SUBWEAPON_SHOOT_SFXCHANNEL);
 	}
 	else
 	{
 		m_weaponSelected = true;
+		m_changeWeaponSFX->play(CHANGEWEAPON_SFXCHANNEL);
 	}
+}
+
+void SideWeapon::collision(const Actor * _actor)
+{
+	
 }

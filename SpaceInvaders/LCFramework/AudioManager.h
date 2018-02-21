@@ -79,6 +79,18 @@ namespace LCF
 		int PausedChannel(int _channel);
 
 		/**
+		* Get if the channel is playing
+		*
+		* @param _channel
+		* the channel number, -1 for all channels
+		*
+		* @return int
+		* 0 if the channel is not playing
+		*
+		*/
+		int PlayingChannel(int _channel);
+
+		/**
 		* Set the music volume
 		*
 		* @param _volume
