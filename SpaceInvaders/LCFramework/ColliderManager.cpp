@@ -5,7 +5,9 @@ namespace LCF
 {
 	void ColliderManager::Init()
 	{
+
 	}
+
 	void ColliderManager::Update(float _deltaTime)
 	{
 		for (int i = 0; i < m_allColliders.size(); i++)
@@ -20,6 +22,7 @@ namespace LCF
 			}
 		}
 	}
+
 	void ColliderManager::Destroy()
 	{
 		for (int i = 0; i < m_allColliders.size(); i++)
@@ -28,20 +31,24 @@ namespace LCF
 		}
 		m_allColliders.clear();
 	}
+
 	MESSAGE_LOG ColliderManager::RegistrerCollider(BaseColliderBox * _Collider)
 	{
 		if (_Collider == NULL)
 			return MESSAGE_WARNING("The collider is null");
 
 		m_allColliders.push_back(_Collider);
+	
 		return MESSAGE_SUCCESS("Succes to add");
 	}
+
 	ColliderManager::ColliderManager()
 	{
-	}
 
+	}
 
 	ColliderManager::~ColliderManager()
 	{
+
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL_Manager.h"
+#include "Texture.h"
 
 namespace LCF
 {
@@ -12,9 +13,11 @@ namespace LCF
 		Actor();
 		virtual ~Actor();
 
-		int m_id;
-		int m_posX;
-		int m_posY;
+		/**
+		* Virtual: Initialize the content of the Actor
+		*
+		*/
+		virtual void init();
 
 		/**
 		* Virtual: Render the content of the Actor
@@ -24,5 +27,23 @@ namespace LCF
 		*
 		*/
 		virtual void render(SDL_Renderer* _renderer) = 0;
+
+		/**
+		* Virtual: Updates the content of the Actor
+		*
+		* @param _deltaTime
+		* the change of time
+		*
+		*/
+		virtual void update(float _deltaTime) = 0;
+
+		virtual void collision(const Actor* _actor) {};
+
+	public:
+		int m_id;
+		float m_posX;
+		float m_posY;
+
+		Texture* m_texture;
 	};
 }

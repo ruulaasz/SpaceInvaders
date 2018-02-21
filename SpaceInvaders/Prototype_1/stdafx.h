@@ -10,5 +10,10 @@
 #include <tchar.h>
 #include <LCFramework.h>
 
+#include "Wall.h"
+#include "MainBullet.h"
+#include "SideWeapon.h"
+#include "PlayerVehicle.h"
+
 
 #pragma comment(lib, "LCFramework.lib")

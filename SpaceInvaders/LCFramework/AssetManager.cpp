@@ -159,12 +159,26 @@ namespace LCF
 
 		if (it != m_allAssets.end())
 		{
-			MESSAGE_SUCCESS("Asset found");
 			return it->second;
 		}
 		else
 		{
 			return nullptr;
+		}
+	}
+
+	Asset * AssetManager::getAsset(std::string _name)
+	{
+		std::map<std::string, Asset*>::iterator it;
+		it = m_allAssets.find(_name);
+
+		if (it != m_allAssets.end())
+		{
+			return it->second;
+		}
+		else
+		{
+			return m_allAssets["default"];
 		}
 	}
 

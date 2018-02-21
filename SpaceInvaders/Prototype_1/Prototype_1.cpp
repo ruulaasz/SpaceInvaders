@@ -6,9 +6,15 @@ SDL_Renderer* g_renderer;
 bool g_quit;
 float g_deltaTime;
 
-LCF::World g_world;
+PlayerVehicle g_player;
+typedef LCF::Controller<PlayerVehicle, MovementInfo> PlayerVehicleController;
+PlayerVehicleController g_playerVehicleController_DOWN;
+PlayerVehicleController g_playerVehicleController_UP;
 
-bool init()
+Wall g_leftWall;
+Wall g_rightWall;
+
+bool initSystems()
 {
 	LCF::SDL_Manager::StartModule();
 
@@ -27,12 +33,73 @@ bool init()
 
 	LCF::AudioManager::StartModule();
 
+	LCF::World::StartModule();
+
 	return true;
+}
+
+void initWorld()
+{
+	g_player.init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
+
+	//hardcode controlados no agarra la misma tecla 2 veces
+	g_playerVehicleController_DOWN.addObject(&g_player);
+	g_playerVehicleController_DOWN.addFunctionAndValues(SDLK_a, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(-1));
+	g_playerVehicleController_DOWN.addFunctionAndValues(SDLK_d, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(1));
+
+	g_playerVehicleController_UP.addObject(&g_player);
+	g_playerVehicleController_UP.addFunctionAndValues(SDLK_a, SDL_KEYUP, &PlayerVehicle::move, new MovementInfo(0));
+	g_playerVehicleController_UP.addFunctionAndValues(SDLK_d, SDL_KEYUP, &PlayerVehicle::move, new MovementInfo(0));
+
+	g_playerVehicleController_UP.addFunctionAndValues(SDLK_UP, SDL_KEYUP, &PlayerVehicle::shootMainWeapon, new MovementInfo(0));
+	g_playerVehicleController_UP.addFunctionAndValues(SDLK_RIGHT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponA, new MovementInfo(0));
+	g_playerVehicleController_UP.addFunctionAndValues(SDLK_LEFT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponB, new MovementInfo(0));
+
+	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController_DOWN);
+	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController_UP);
+
+	LCF::World::GetInstance().registerActor(&g_player);
+
+	g_leftWall.init();
+	g_leftWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - (g_leftWall.m_texture->getHeight());
+
+	LCF::World::GetInstance().registerActor(&g_leftWall);
+
+	g_rightWall.init();
+	g_rightWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - (g_rightWall.m_texture->getHeight());
+	g_rightWall.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - (g_rightWall.m_texture->getWidth());
+
+	LCF::World::GetInstance().registerActor(&g_rightWall);
+}
+
+void loadContent()
+{
+	std::string assetName = "player_vehicle";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+
+	assetName = "wall";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+
+	assetName = "player_vehicle_selected";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+
+	assetName = "main_bullet_base";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+
+	assetName = "default";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+
+	assetName = "player_sidevehicle_selected";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
+
+	assetName = "player_sidevehicle";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 }
 
 void update()
 {
 	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
+	LCF::World::GetInstance().update(g_deltaTime);
 }
 
 void render()
@@ -40,14 +107,9 @@ void render()
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(g_renderer);
 
-	g_world.render(g_renderer);
+	LCF::World::GetInstance().render(g_renderer);
 
 	SDL_RenderPresent(g_renderer);
-}
-
-void loadContent()
-{
-
 }
 
 void handleInputs()
@@ -67,6 +129,10 @@ void handleInputs()
 			{
 			case SDLK_ESCAPE:
 				g_quit = true;
+				break;
+
+			case SDLK_SPACE:
+
 				break;
 			}
 		}
@@ -97,13 +163,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 int _tmain(int argc, char **argv)
 {
-	if (init())
+	if (initSystems())
 	{
-
 		float thisTime = 0.f;
 		float lastTime = 0.f;
 
 		loadContent();
+
+		initWorld();
 
 		while (!g_quit)
 		{

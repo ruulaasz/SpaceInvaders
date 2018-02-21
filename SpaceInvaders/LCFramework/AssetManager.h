@@ -57,6 +57,18 @@ namespace LCF
 		Asset* searchAsset(std::string _name);
 
 		/**
+		* Get an asset by name
+		*
+		* @param _name
+		* a string with the asset name
+		*
+		* @return Asset
+		* a pointer to the found asset, null if the search fails
+		*
+		*/
+		Asset* getAsset(std::string _name);
+
+		/**
 		* Dispatch any kind of message
 		*
 		* @param _renderer
