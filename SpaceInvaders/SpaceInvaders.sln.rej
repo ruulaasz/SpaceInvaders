@@ -1,9 +1,0 @@
-diff a/SpaceInvaders/SpaceInvaders.sln b/SpaceInvaders/SpaceInvaders.sln	(rejected hunks)
-@@ -5,7 +5,6 @@
- MinimumVisualStudioVersion = 10.0.40219.1
- Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpaceInvaders", "SpaceInvaders\SpaceInvaders.vcxproj", "{3C83C9AA-D43C-40DB-9CE3-3D8F1BA23227}"
- EndProject
--Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LC2DFramework", "LC2DFramework\LC2DFramework.vcxproj", "{BECA64D0-D5C6-4BB0-8DAE-7A2D9EA64F92}"
- Global
- 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
- 		Debug|x64 = Debug|x64
