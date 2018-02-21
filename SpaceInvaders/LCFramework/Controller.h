@@ -1,5 +1,5 @@
 #pragma once
-#include <map>
+#include <vector>
 #include "message.h"
 #include "SDL_Manager.h"
 
@@ -14,27 +14,24 @@ namespace LCF
 		virtual ~BaseController() {};
 
 	};
-	
+
 	template <class _type, class _struct>
 	class Controller : public BaseController
 	{
-	public:
-#define FunctionPair std::pair<char, void(_type::*)(_struct)> 
-#define FunctionIterator std::map<char, void(_type::*)(_struct)>::iterator
-#define FunctionMap std::map<char, void(_type::*)(_struct)> 
-#define StructPair std::pair<char, _struct*>
-#define StructIterator std::map<char, _struct*>::iterator 
-#define StructMap std::map<char, _struct*> 
-#define TypeEventPair std::pair<char, Uint32> 
-#define TypeEventIterator std::map<char, Uint32>::iterator 
-#define TypeEventMap std::map<char, Uint32> 
+	public: 
+		struct BasicInformation
+		{
+			char Cinput;
+			void(_type::*PFunction)(_struct);
+			_struct* Svalue;
+			Uint32 UtypeEvent;
+
+		};
+#define BIIterator std::vector<BasicInformation*>::iterator
+#define BIVector std::vector<BasicInformation*> 
 	protected:
 		//Member of the functions
-		FunctionMap m_functions;
-		//Member of all values
-		StructMap m_values;
-		//Member whit all type of eventes
-		TypeEventMap m_typeEvents;
+		BIVector m_BasicInformations;
 		//pointer to de class
 		_type* m_Object;
 	public:
@@ -58,56 +55,61 @@ namespace LCF
 			{
 				return MESSAGE_ERROR("The pointer of the value is NULL");
 			}
-			std::pair<FunctionIterator, bool> ret;
-			ret = m_functions.insert(FunctionPair(_input, _foo));
 
-			if (!ret.second)
+			if (_foo == NULL)
 			{
-				delete _value;
-				return MESSAGE_ERROR("the functions is alredy added");
+				return MESSAGE_ERROR("The pointer of the function is NULL");
 			}
-			m_typeEvents.insert(TypeEventPair(_input, _typeEvent));
-			m_values.insert(StructPair(_input, _value));
+
+			if (CheckForExistInput(_input, _typeEvent) == M_WARNING)
+			{
+				return M_WARNING;
+			}
+
+			BasicInformation* addToVector = new BasicInformation();
+			addToVector->Cinput = _input;
+			addToVector->PFunction = _foo;
+			addToVector->Svalue = _value;
+			addToVector->UtypeEvent = _typeEvent;
+
+			m_BasicInformations.push_back(addToVector);
 			return MESSAGE_SUCCESS("Succes to add");
 		}
 		//Checking if this controler have function
 		virtual MESSAGE_LOG checkInput(char _input, Uint32 _typeEvent)
 		{
 			ENABLE_PRINT_MESSAGE(false);
-			FunctionIterator it = m_functions.find(_input);
-
-			if (it == m_functions.end())
+			for (size_t i = 0; i < m_BasicInformations.size(); i++)
 			{
-				return MESSAGE_WARNING("Cant find the input in the map");
+				BasicInformation* _BI = m_BasicInformations[i];
+				if (_BI->Cinput == _input && _BI->UtypeEvent == _typeEvent)
+				{
+					(*m_Object.*_BI->PFunction)(*_BI->Svalue);
+					return MESSAGE_SUCCESS("The input is correct and event type");
+				}
 			}
 
-			TypeEventIterator itEvent = m_typeEvents.find(_input);
-
-			if (itEvent == m_typeEvents.end())
+			return MESSAGE_WARNING("Error to find The input and the type event");
+		}
+		MESSAGE_LOG CheckForExistInput(char _input, Uint32 _typeEvent)
+		{
+			for (size_t i = 0; i < m_BasicInformations.size(); i++)
 			{
-				return MESSAGE_WARNING("Cant find the input in the map");
+				if (m_BasicInformations[i]->Cinput == _input && m_BasicInformations[i]->UtypeEvent == _typeEvent)
+				{
+					return MESSAGE_WARNING("That input its already exist");
+				}
 			}
-
-			if (itEvent->second == _typeEvent)
-				(*m_Object.*it->second)(*m_values[_input]);
-			else
-			{
-				return MESSAGE_WARNING("The type event is different");
-			}
-			
-			return MESSAGE_SUCCESS("The input is correct and event type");
-
-			ENABLE_PRINT_MESSAGE(true);
+			return MESSAGE_SUCCESS("That input dont Exist");
 		}
 		void DestroyController()
 		{
-			for each (std::map<char, _struct*>::iterator it in m_values)
+			for (size_t i = 0; i < m_BasicInformations.size(); i++)
 			{
-				delete it->second;
+				delete m_BasicInformations[i].Svalue;
+				delete m_BasicInformations[i];
 			}
-			m_values.clear();
-			m_typeEvents.clear();
-			m_functions.clear();
+			m_BasicInformations.clear();
 			m_Object = NULL;
 		}
 	public:

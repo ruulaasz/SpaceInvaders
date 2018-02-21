@@ -1,12 +1,13 @@
 #pragma once
 #include "SDL_Manager.h"
 #include "Texture.h"
-
+#include "ColliderBox.h"
 namespace LCF
 {
 	/**
 	* A container class for an Actor
 	*/
+	typedef ColliderBox<Actor> ActorBox;
 	class Actor
 	{
 	public:
@@ -43,7 +44,7 @@ namespace LCF
 		int m_id;
 		float m_posX;
 		float m_posY;
-
+		ActorBox* m_colliderBox;
 		Texture* m_texture;
 	};
 }
