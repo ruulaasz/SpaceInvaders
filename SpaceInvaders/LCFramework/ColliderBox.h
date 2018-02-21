@@ -15,6 +15,8 @@ namespace LCF
 		virtual int GetY() const = 0;
 		virtual int GetW() const = 0;
 		virtual int GetH() const = 0;
+		virtual void SetEnabled(bool _value) = 0;
+		virtual bool GetEnabled() const = 0;
 		virtual Actor* GetActor() const = 0;
 		virtual void Update(float _deltaTime) = 0;
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _target) = 0;
@@ -29,6 +31,7 @@ namespace LCF
 		_type* m_actor;
 		void(_type::*m_function)(const Actor*);
 		bool m_centerPosition;
+		bool m_enabled;
 		int m_left;
 		int m_right;
 		int m_top;
@@ -169,6 +172,14 @@ namespace LCF
 		{
 			return y;
 		}
+		virtual void SetEnabled(bool _value)
+		{
+			m_enabled = _value;
+		}
+		virtual bool GetEnabled() const
+		{
+			return m_enabled;
+		}
 	protected:
 		void SetBox()
 		{
@@ -184,6 +195,7 @@ namespace LCF
 			m_actor = NULL;
 			m_function = NULL;
 			m_centerPosition = false;
+			m_enabled = true;
 		}
 		virtual ~ColliderBox() {};
 	};

@@ -12,12 +12,15 @@ namespace LCF
 	{
 		for (int i = 0; i < m_allColliders.size(); i++)
 		{
-			m_allColliders[i]->Update(_deltaTime);
-			for (int j = 0; j < m_allColliders.size(); j++)
+			if (m_allColliders[i]->GetEnabled())
 			{
-				if (j != i)
+				m_allColliders[i]->Update(_deltaTime);
+				for (int j = 0; j < m_allColliders.size(); j++)
 				{
-					m_allColliders[i]->CheckCollision(m_allColliders[j]);
+					if (j != i)
+					{
+						m_allColliders[i]->CheckCollision(m_allColliders[j]);
+					}
 				}
 			}
 		}
@@ -25,11 +28,16 @@ namespace LCF
 
 	void ColliderManager::Render(SDL_Renderer * _renderer)
 	{
+#ifdef _DEBUG
 		for (size_t i = 0; i < m_allColliders.size(); i++)
 		{
-			SDL_Rect renderQuad = { m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH() };
-			SDL_RenderDrawRect(_renderer, &renderQuad);
+			if (m_allColliders[i]->GetEnabled())
+			{
+				SDL_Rect renderQuad = { m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH() };
+				SDL_RenderDrawRect(_renderer, &renderQuad);
+			}
 		}
+#endif
 	}
 
 	void ColliderManager::Destroy()

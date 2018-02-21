@@ -36,6 +36,9 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
 	LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
 
+	//esa funcion es para desactivar la caja
+	//m_colliderBox->SetEnabled(false);
+
 	//hardcode necesito poder modificar mi caja de colision
 }
 

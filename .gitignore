@@ -329,3 +329,7 @@ SpaceInvaders/bin/x64/Release/SDL2.dll
 SpaceInvaders/bin/x64/Debug/zlib1.dll
 SpaceInvaders/bin/x64/Debug/libwebp-4.dll
 SpaceInvaders/resources.rar
+SpaceInvaders/bin/Win32/Release/Prototype_1.ipdb
+SpaceInvaders/bin/Win32/Release/Prototype_1.exe
+SpaceInvaders/bin/Win32/Release/Prototype_1.iobj
+SpaceInvaders/bin/Win32/Release/Prototype_1.pdb
