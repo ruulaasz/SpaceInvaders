@@ -1,8 +1,10 @@
 #include "stdafx.h"
-
+#define MAX_NUMBER_TO_THE_LEFT -2
+#define MAX_NUMBER_TO_THE_RIGHT 2
 PlayerVehicle::PlayerVehicle()
 {
 	m_movementSpeed = 400.f;
+	m_collisionDectected = false;
 }
 
 PlayerVehicle::~PlayerVehicle()
@@ -39,6 +41,7 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 void PlayerVehicle::render(SDL_Renderer * _renderer)
 {
+
 	if (m_weaponSelected)
 	{
 		m_weaponReadyTexture->render(m_posX, m_posY, _renderer);
@@ -55,6 +58,15 @@ void PlayerVehicle::render(SDL_Renderer * _renderer)
 
 void PlayerVehicle::update(float _deltaTime)
 {
+	//esta condicion evvita que coque ilimitadamente con el collider
+	if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT)
+	{
+		return;
+	}
+	else if (m_currentDirection == MAX_NUMBER_TO_THE_RIGHT)
+	{
+		return;
+	}
 	m_posX += (m_currentDirection * m_movementSpeed * _deltaTime);
 
 	m_subWeaponA.m_posX = m_posX + m_texture->getWidth();
@@ -64,8 +76,24 @@ void PlayerVehicle::update(float _deltaTime)
 
 void PlayerVehicle::move(MovementInfo _info)
 {
+	if (m_collisionDectected)
+	{
+		if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT && _info.direction == 1)
+		{
+			m_currentDirection = _info.direction;
+			m_collisionDectected = false;
+			return;
+		}
+		else if (m_currentDirection == MAX_NUMBER_TO_THE_RIGHT && _info.direction == -1)
+		{
+			m_currentDirection = _info.direction;
+			m_collisionDectected = false;
+			return;
+		}
+		LCF::AudioManager::GetInstance().PauseChannel(1);
+		return;
+	}
 	m_currentDirection = _info.direction;
-
 	if (m_currentDirection != 0)
 	{
 		if (!LCF::AudioManager::GetInstance().PlayingChannel(1))
@@ -127,12 +155,13 @@ void PlayerVehicle::collision(const Actor * _actor)
 		if (m_currentDirection < 0)
 		{
 			m_posX = _actor->m_posX + temp->m_texture->getWidth();
+			m_currentDirection = MAX_NUMBER_TO_THE_LEFT;
 		}
 		else
 		{
 			m_posX = _actor->m_posX - m_texture->getWidth();
+			m_currentDirection = MAX_NUMBER_TO_THE_RIGHT;
 		}
-
-		m_currentDirection = 0;
+		m_collisionDectected = true;
 	}
 }

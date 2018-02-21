@@ -2,6 +2,7 @@
 #include "message.h"
 #include <vector>
 #include "Module.h"
+#include "SDL_Manager.h"
 namespace LCF
 {
 	class BaseColliderBox;
@@ -13,6 +14,7 @@ namespace LCF
 	public:
 		void Init();
 		void Update(float _deltaTime);
+		void Render(SDL_Renderer* _renderer);
 		void Destroy();
 		MESSAGE_LOG RegistrerCollider(BaseColliderBox* _Collider);
 	public:

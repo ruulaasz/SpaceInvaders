@@ -23,6 +23,15 @@ namespace LCF
 		}
 	}
 
+	void ColliderManager::Render(SDL_Renderer * _renderer)
+	{
+		for (size_t i = 0; i < m_allColliders.size(); i++)
+		{
+			SDL_Rect renderQuad = { m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH() };
+			SDL_RenderDrawRect(_renderer, &renderQuad);
+		}
+	}
+
 	void ColliderManager::Destroy()
 	{
 		for (int i = 0; i < m_allColliders.size(); i++)

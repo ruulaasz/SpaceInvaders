@@ -47,6 +47,7 @@ public:
 	int m_currentDirection;
 	float m_movementSpeed;
 	bool m_weaponSelected;
+	bool m_collisionDectected;
 
 	LCF::Texture* m_weaponReadyTexture;
 	SideWeapon m_subWeaponA;

@@ -8,8 +8,9 @@ float g_deltaTime;
 
 PlayerVehicle g_player;
 typedef LCF::Controller<PlayerVehicle, MovementInfo> PlayerVehicleController;
-PlayerVehicleController g_playerVehicleController_DOWN;
-PlayerVehicleController g_playerVehicleController_UP;
+//PlayerVehicleController g_playerVehicleController_DOWN;
+//PlayerVehicleController g_playerVehicleController_UP;
+PlayerVehicleController g_playerVehicleController;
 
 Wall g_leftWall;
 Wall g_rightWall;
@@ -94,7 +95,7 @@ void initControllers()
 {
 	//hardcode como evitar que las teclas se fastidien entre si
 	//hardcode controlador no agarra la misma tecla 2 veces
-	g_playerVehicleController_DOWN.addObject(&g_player);
+	/*g_playerVehicleController_DOWN.addObject(&g_player);
 	g_playerVehicleController_DOWN.addFunctionAndValues(SDLK_a, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(-1));
 	g_playerVehicleController_DOWN.addFunctionAndValues(SDLK_d, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(1));
 
@@ -107,7 +108,19 @@ void initControllers()
 	g_playerVehicleController_UP.addFunctionAndValues(SDLK_LEFT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponB, new MovementInfo(0));
 
 	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController_DOWN);
-	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController_UP);
+	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController_UP);*/
+	g_playerVehicleController.addObject(&g_player);
+	g_playerVehicleController.addFunctionAndValues(SDLK_a, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(-1));
+	g_playerVehicleController.addFunctionAndValues(SDLK_d, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(1));
+
+	g_playerVehicleController.addFunctionAndValues(SDLK_a, SDL_KEYUP, &PlayerVehicle::move, new MovementInfo(0));
+	g_playerVehicleController.addFunctionAndValues(SDLK_d, SDL_KEYUP, &PlayerVehicle::move, new MovementInfo(0));
+
+	g_playerVehicleController.addFunctionAndValues(SDLK_UP, SDL_KEYUP, &PlayerVehicle::shootMainWeapon, new MovementInfo(0));
+	g_playerVehicleController.addFunctionAndValues(SDLK_RIGHT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponA, new MovementInfo(0));
+	g_playerVehicleController.addFunctionAndValues(SDLK_LEFT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponB, new MovementInfo(0));
+
+	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController);
 }
 
 void initWorld()
@@ -160,18 +173,20 @@ void handleInputs()
 
 void update()
 {
-	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
 	LCF::World::GetInstance().update(g_deltaTime);
+	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
 }
 
 void render()
 {
-	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0, 0, 0xFF);
 	SDL_RenderClear(g_renderer);
 
 	g_background->render(0, 0, g_renderer);
 
 	LCF::World::GetInstance().render(g_renderer);
+
+	LCF::ColliderManager::GetInstance().Render(g_renderer);
 
 	SDL_RenderPresent(g_renderer);
 }

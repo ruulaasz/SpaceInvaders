@@ -11,6 +11,10 @@ namespace LCF
 		virtual int GetRight() const = 0;
 		virtual int GetTop() const = 0;
 		virtual int GetBot() const = 0;
+		virtual int GetX() const = 0;
+		virtual int GetY() const = 0;
+		virtual int GetW() const = 0;
+		virtual int GetH() const = 0;
 		virtual Actor* GetActor() const = 0;
 		virtual void Update(float _deltaTime) = 0;
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _target) = 0;
@@ -148,6 +152,22 @@ namespace LCF
 		virtual Actor* GetActor() const
 		{
 			return m_actor;
+		}
+		virtual int GetX() const
+		{
+			return x;
+		}
+		virtual int GetY() const
+		{
+			return y;
+		}
+		virtual int GetW() const
+		{
+			return w;
+		}
+		virtual int GetH() const
+		{
+			return y;
 		}
 	protected:
 		void SetBox()
