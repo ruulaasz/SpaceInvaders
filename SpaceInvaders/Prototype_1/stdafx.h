@@ -36,8 +36,6 @@
 #define DIRECTION_DOWN 2
 #define DIRECTION_STOP 0
 
-#define WALL_THICC 20
-
 #define SCREEN_WIDTH 1600
 #define SCREEN_HEIGHT 900
 

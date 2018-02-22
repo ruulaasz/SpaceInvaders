@@ -125,7 +125,7 @@ void initWorld()
 
 	g_rightWall.init();
 	g_rightWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - (g_rightWall.m_texture->getHeight());
-	g_rightWall.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - (g_rightWall.m_texture->getWidth()) - WALL_THICC;
+	g_rightWall.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - (g_rightWall.m_texture->getWidth());
 
 	LCF::World::GetInstance().registerActor(&g_rightWall);
 

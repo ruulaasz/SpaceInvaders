@@ -18,6 +18,9 @@ void Wall::render(SDL_Renderer * _renderer)
 void Wall::init()
 {
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("wall"));
+
+	m_sizeW = m_texture->getWidth();
+	m_sizeH = m_texture->getHeight();
 	Pawn::init();
-	m_colliderBox->w += WALL_THICC;
+	
 }

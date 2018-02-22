@@ -26,6 +26,10 @@ void MainBullet::init()
 
 	m_afterShootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("after_shoot_subweapon"));
 
+
+	m_sizeW = m_travelAnimation->m_sprite->getWidth() / m_travelAnimation->m_maxJumps;
+	m_sizeH = m_travelAnimation->m_sprite->getHeight();
+
 	Pawn::init();
 }
 
