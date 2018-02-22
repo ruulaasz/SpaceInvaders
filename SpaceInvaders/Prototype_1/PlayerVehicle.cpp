@@ -18,9 +18,11 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
 	
-	Pawn::init();
+	
 	m_posX = (_screenW / 2) - (m_texture->getWidth() / 2);
 	m_posY = _screenH - m_texture->getHeight();
+	m_sizeW = m_texture->getWidth();
+	m_sizeH = m_texture->getHeight();
 
 	m_mainWeapon.init(this);
 	m_mainWeapon.m_direction = DIRECTION_STOP;
@@ -34,6 +36,7 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 	m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
 	LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+	Pawn::init();
 }
 
 void PlayerVehicle::render(SDL_Renderer * _renderer)

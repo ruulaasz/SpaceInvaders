@@ -18,11 +18,13 @@ void SideWeapon::init(Pawn* _Parent)
 	m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
 	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
 
-	Pawn::init();
-
 	m_Parent = _Parent;
 
 	m_posY = SCREEN_HEIGHT - m_texture->getHeight();
+	m_posX = SCREEN_WIDTH - m_texture->getWidth();
+	m_sizeW = m_texture->getWidth();
+	m_sizeH = m_texture->getHeight();
+	Pawn::init();
 }
 
 void SideWeapon::update(float _deltaTime)

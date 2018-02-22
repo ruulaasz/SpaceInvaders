@@ -206,7 +206,7 @@ namespace LCF
 
 		virtual int GetH() const
 		{
-			return y;
+			return h;
 		}
 
 		virtual void SetEnabled(bool _value)

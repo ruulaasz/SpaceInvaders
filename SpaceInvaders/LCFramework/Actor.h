@@ -37,6 +37,8 @@ namespace LCF
 		int m_id;
 		float m_posX;
 		float m_posY;
+		float m_sizeW;
+		float m_sizeH;
 		
 		Texture* m_texture;
 	};
