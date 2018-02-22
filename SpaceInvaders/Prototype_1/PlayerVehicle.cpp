@@ -36,6 +36,14 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 	m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
 	LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+
+	//Ejemplo de segundo collider
+	m_secondBox = new PlayerVehicleBox();
+	m_secondBox->SetActor(this);
+	m_secondBox->SetFunction(&PlayerVehicle::SecondCollision);
+	m_secondBox->SetSize(m_posX, m_posY - 500, m_sizeW, m_sizeH);
+	m_secondBox->SetAutomaticOffset();
+	LCF::ColliderManager::GetInstance().RegistrerCollider(m_secondBox);
 	Pawn::init();
 }
 
@@ -134,4 +142,12 @@ void PlayerVehicle::shootSubWeaponB(MovementInfo _info)
 void PlayerVehicle::collision(const Actor * _actor)
 {
 	
+}
+
+void PlayerVehicle::SecondCollision(const Actor * _actor)
+{
+	if (const MainBullet* temp = dynamic_cast<const MainBullet*>(_actor))
+	{
+		LCF::World::GetInstance().deleteActorByID(_actor->m_id);
+	}
 }

@@ -4,6 +4,7 @@
 
 namespace LCF
 {
+	Uint64 Actor::autoID = 0;
 	Actor::Actor()
 	{
 

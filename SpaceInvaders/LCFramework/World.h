@@ -30,11 +30,20 @@ namespace LCF
 		/**
 		* deletes an actor of the world
 		*
-		* @param _actor
-		* A pointer to an actor
+		* @param Uint64 _id
+		* id of the actor
 		*
 		*/
-		void deleteActor(int _id);
+		MESSAGE_LOG deleteActorByID(Uint64 _id);
+
+		/**
+		* deletes all actors of the world with that name
+		*
+		* @param string _name
+		* A name of the actor
+		*
+		*/
+		MESSAGE_LOG deleteAllActorsByName(std::string _name);
 
 		/**
 		* Render the content of the world

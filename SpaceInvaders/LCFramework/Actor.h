@@ -34,12 +34,15 @@ namespace LCF
 		virtual void collision(const Actor* _actor) = 0;
 
 	public:
-		int m_id;
 		float m_posX;
 		float m_posY;
 		float m_sizeW;
 		float m_sizeH;
 		
 		Texture* m_texture;
+
+		static Uint64 autoID;
+		Uint64 m_id;
+		std::string m_name;
 	};
 }

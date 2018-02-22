@@ -1,11 +1,12 @@
 #pragma once
-
+#include <ColliderBox.h>
 struct MovementInfo
 {
 	MovementInfo(int _value) { direction = _value; }
 	int direction;
 };
-
+class PlayerVehicle;
+typedef LCF::ColliderBox<PlayerVehicle> PlayerVehicleBox;
 class PlayerVehicle : public Pawn
 {
 public:
@@ -43,6 +44,7 @@ public:
 
 	virtual void collision(const Actor* _actor);
 
+	void SecondCollision(const Actor* _actor);
 public: 
 	int m_currentDirection;
 	float m_movementSpeed;
@@ -51,6 +53,6 @@ public:
 	MainWeapon m_mainWeapon;
 	SideWeapon m_subWeaponA;
 	SideWeaponB m_subWeaponB;
-
+	PlayerVehicleBox* m_secondBox;
 	LCF::Sfx* m_moveSFX;
 };

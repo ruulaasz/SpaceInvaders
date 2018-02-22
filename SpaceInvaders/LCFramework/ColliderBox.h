@@ -24,13 +24,13 @@ namespace LCF
 
 		virtual int GetH() const = 0;
 
+		virtual int GetOffsetX() const = 0;
+
+		virtual int GetOffsetY() const = 0;
+
 		virtual void SetEnabled(bool _value) = 0;
 
 		virtual bool GetEnabled() const = 0;
-
-		//virtual void SetRendered(bool _value) = 0;
-
-		//virtual bool GetRenderer() const = 0;
 
 		virtual Actor* GetActor() const = 0;
 
@@ -52,24 +52,23 @@ namespace LCF
 		bool m_centerPosition;
 		bool m_enabled;
 		//bool m_rendered;
-		int m_left;
-		int m_right;
-		int m_top;
-		int m_bot;
-
-	public:
+		float m_left;
+		float m_right;
+		float m_top;
+		float m_bot;
 		union 
 		{
 			struct 
 			{
-				int x;
-				int y;
-				int w;
-				int h;
+				float x;
+				float y;
+				float w;
+				float h;
 			};
-			int line[4];
+			float line[4];
 		};
-
+		float m_offsetX;
+		float m_offsetY;
 	public:
 		void SetSize(int _x, int _y, int _w, int _h)
 		{
@@ -91,19 +90,38 @@ namespace LCF
 			SetBox();
 		}
 
+		MESSAGE_LOG SetAutomaticOffset()
+		{
+			if (m_actor == NULL)
+				return MESSAGE_WARNING("The actor is NULL");
+
+			m_offsetX = x - m_actor->m_posX;
+			m_offsetY = y - m_actor->m_posY;
+
+			Update(0.0);
+
+			return MESSAGE_SUCCESS("The offset is generated");
+		}
+
+		void SetOffset(float _offsetX, float _offsetY)
+		{
+			m_offsetX = _offsetX;
+			m_offsetY = _offsetY;
+		}
+
 		virtual void Update(float _deltaTime)
 		{
 			if (m_actor != NULL)
 			{
 				if (m_centerPosition)
 				{
-					x = m_actor->m_posX / w;
-					y = m_actor->m_posY / h;
+					x = (m_actor->m_posX / w) + m_offsetX;
+					y = (m_actor->m_posY / h) + m_offsetY;
 				}
 				else
 				{
-					x = m_actor->m_posX;
-					y = m_actor->m_posY;
+					x = m_actor->m_posX + m_offsetX;
+					y = m_actor->m_posY + m_offsetY;
 				}
 				SetBox();
 			}
@@ -209,6 +227,16 @@ namespace LCF
 			return h;
 		}
 
+		virtual int GetOffsetX() const
+		{
+			return m_offsetX;
+		}
+
+		virtual int GetOffsetY() const
+		{
+			return m_offsetY;
+		}
+
 		virtual void SetEnabled(bool _value)
 		{
 			m_enabled = _value;
@@ -218,16 +246,6 @@ namespace LCF
 		{
 			return m_enabled;
 		}
-
-		/*virtual void SetRenderer(bool _value)
-		{
-			m_rendered = _value;
-		}
-
-		virtual bool GetRendered() const
-		{
-			return m_rendered;
-		}*/
 
 	protected:
 		void SetBox()
@@ -246,7 +264,8 @@ namespace LCF
 			m_function = NULL;
 			m_centerPosition = false;
 			m_enabled = true;
-			//m_rendered = true;
+			m_offsetX = 0.0;
+			m_offsetY = 0.0;
 		}
 
 		virtual ~ColliderBox() {};
