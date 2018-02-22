@@ -72,18 +72,21 @@ void PlayerVehicle::move(MovementInfo _info)
 {
 	if (m_collisionDectected)
 	{
-		if (_info.direction == DIRECTION_RIGHT)
+		if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT && _info.direction == DIRECTION_RIGHT)
 		{
 			m_currentDirection = _info.direction;
 			m_collisionDectected = false;
+			return;
 		}
-		else if ( _info.direction == DIRECTION_LEFT)
+		else if (m_currentDirection == MAX_NUMBER_TO_THE_RIGHT && _info.direction == DIRECTION_LEFT)
 		{
 			m_currentDirection = _info.direction;
 			m_collisionDectected = false;
+			return;
 		}
 
 		LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+		return;
 	}
 
 	m_currentDirection = _info.direction;
