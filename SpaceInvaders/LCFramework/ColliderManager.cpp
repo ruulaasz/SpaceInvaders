@@ -46,6 +46,7 @@ namespace LCF
 		{
 			delete m_allColliders[i];
 		}
+
 		m_allColliders.clear();
 	}
 

@@ -1,17 +1,10 @@
 #pragma once
 
-class MainBullet : public Bullet
+class Weapon : public Pawn
 {
 public:
-	MainBullet();
-	MainBullet(int _posX, int _posY);
-	virtual ~MainBullet();
-
-	/**
-	* Virtual: Initialize the content of the Actor
-	*
-	*/
-	virtual void init();
+	Weapon();
+	~Weapon();
 
 	/**
 	* Virtual: Render the content of the Actor
@@ -33,11 +26,16 @@ public:
 
 	virtual void collision(const Actor* _actor);
 
+	virtual void shoot() {};
+
 public:
-	LCF::Sfx* m_afterShootSFX;
-	float m_timer;
-	bool m_casketDroped;
+	bool m_weaponSelected;
+	bool m_collisionDetected;
+	int m_direction;
 
-	LCF::Animator* m_travelAnimation;
+	LCF::Texture* m_weaponReadyTexture;
+	LCF::Sfx* m_shootSFX;
+	LCF::Sfx* m_changeWeaponSFX;
+
+	Pawn* m_Parent;
 };
-

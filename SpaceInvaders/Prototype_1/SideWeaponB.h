@@ -1,10 +1,10 @@
 #pragma once
 
-class SideWeapon : public Weapon
+class SideWeaponB :public Weapon
 {
 public:
-	SideWeapon();
-	~SideWeapon();
+	SideWeaponB();
+	~SideWeaponB();
 
 	/**
 	* Virtual: Initialize the content of the Actor
@@ -25,6 +25,8 @@ public:
 
 	float m_rateOfFire;
 	float m_timer;
-	bool m_shooting;
 	bool m_canShoot;
+	bool m_isShooting;
+	float m_burstTimer;
+	int m_bulletsFired;
 };

@@ -1,9 +1,8 @@
 #include "stdafx.h"
-#include "SideWeapon.h"
 
 SideWeapon::SideWeapon()
 {
-	
+	m_rateOfFire = 0.3f;
 }
 
 SideWeapon::~SideWeapon()
@@ -11,53 +10,69 @@ SideWeapon::~SideWeapon()
 
 }
 
-void SideWeapon::init()
+void SideWeapon::init(Pawn* _Parent)
 {
-	m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_sidevehicle_selected"));
-	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_sidevehicle"));
+	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA"));
+	m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA_Selected"));
 
 	m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
 	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
 
-	Actor::init();
-}
+	Pawn::init();
 
-void SideWeapon::render(SDL_Renderer * _renderer)
-{
-	if (m_weaponSelected)
-	{
-		m_weaponReadyTexture->render(m_posX, m_posY, _renderer);
-	}
-	else
-	{
-		m_texture->render(m_posX, m_posY, _renderer);
-	}
+	m_Parent = _Parent;
+
+	m_posY = SCREEN_HEIGHT - m_texture->getHeight();
 }
 
 void SideWeapon::update(float _deltaTime)
 {
-	
+	Weapon::update(_deltaTime);
+
+	if (m_timer < m_rateOfFire)
+	{
+		m_timer += _deltaTime;
+	}
+	else
+	{
+		m_canShoot = true;
+	}
 }
 
-void SideWeapon::shootMainWeapon(int _posX, int _posY, int _direction)
+void SideWeapon::shoot()
 {
+	int posX;
+	int posY;
+	
 	if (m_weaponSelected)
 	{
-		SubBullet* b = new SubBullet(_posX, _posY, _direction);
-		b->init();
-		//hardcode incluir funcion en el mundo para eliminar la bala
-		LCF::World::GetInstance().registerActor(b);
+		if (m_canShoot)
+		{
+			
+			posY = m_posY + m_texture->getHeight() / 2;
 
-		m_shootSFX->play(SUBWEAPON_SHOOT_SFXCHANNEL);
+			if (m_direction > DIRECTION_STOP)
+			{
+				posX = m_Parent->m_posX + (m_Parent->m_texture->getWidth() + m_texture->getWidth());
+			}
+			else
+			{
+				posX = m_Parent->m_posX - m_texture->getWidth();
+			}
+			
+			SubBullet* b = new SubBullet(posX, posY, m_direction);
+			b->init();
+			LCF::World::GetInstance().registerActor(b);
+
+			m_shootSFX->play(SUBWEAPON_SHOOT_SFXCHANNEL);
+			
+			m_canShoot = false;
+			m_timer = 0;
+		}
 	}
 	else
 	{
 		m_weaponSelected = true;
 		m_changeWeaponSFX->play(CHANGEWEAPON_SFXCHANNEL);
 	}
-}
-
-void SideWeapon::collision(const Actor * _actor)
-{
-	
 }

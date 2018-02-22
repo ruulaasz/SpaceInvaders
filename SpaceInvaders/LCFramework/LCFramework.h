@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "BackgroundTexture.h"
 #include "Sprite.h"
+#include "Animator.h"
 
 #include "AssetManager.h"
 

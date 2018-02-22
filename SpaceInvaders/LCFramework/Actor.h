@@ -7,18 +7,11 @@ namespace LCF
 	/**
 	* A container class for an Actor
 	*/
-	typedef ColliderBox<Actor> ActorBox;
 	class Actor
 	{
 	public:
 		Actor();
 		virtual ~Actor();
-
-		/**
-		* Virtual: Initialize the content of the Actor
-		*
-		*/
-		virtual void init();
 
 		/**
 		* Virtual: Render the content of the Actor
@@ -38,13 +31,13 @@ namespace LCF
 		*/
 		virtual void update(float _deltaTime) = 0;
 
-		virtual void collision(const Actor* _actor) {};
+		virtual void collision(const Actor* _actor) = 0;
 
 	public:
 		int m_id;
 		float m_posX;
 		float m_posY;
-		ActorBox* m_colliderBox;
+		
 		Texture* m_texture;
 	};
 }

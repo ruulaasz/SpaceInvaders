@@ -6,7 +6,7 @@ struct MovementInfo
 	int direction;
 };
 
-class PlayerVehicle : public LCF::Actor
+class PlayerVehicle : public Pawn
 {
 public:
 	PlayerVehicle();
@@ -46,14 +46,11 @@ public:
 public: 
 	int m_currentDirection;
 	float m_movementSpeed;
-	bool m_weaponSelected;
 	bool m_collisionDectected;
 
-	LCF::Texture* m_weaponReadyTexture;
+	MainWeapon m_mainWeapon;
 	SideWeapon m_subWeaponA;
-	SideWeapon m_subWeaponB;
+	SideWeaponB m_subWeaponB;
 
 	LCF::Sfx* m_moveSFX;
-	LCF::Sfx* m_shootSFX;
-	LCF::Sfx* m_changeWeaponSFX;
 };

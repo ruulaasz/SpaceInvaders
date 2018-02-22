@@ -4,26 +4,45 @@
 namespace LCF
 {
 	class Actor;
+
 	class BaseColliderBox
 	{
 	public:
 		virtual int GetLeft() const = 0;
+
 		virtual int GetRight() const = 0;
+
 		virtual int GetTop() const = 0;
+
 		virtual int GetBot() const = 0;
+
 		virtual int GetX() const = 0;
+
 		virtual int GetY() const = 0;
+
 		virtual int GetW() const = 0;
+
 		virtual int GetH() const = 0;
+
 		virtual void SetEnabled(bool _value) = 0;
+
 		virtual bool GetEnabled() const = 0;
+
+		//virtual void SetRendered(bool _value) = 0;
+
+		//virtual bool GetRenderer() const = 0;
+
 		virtual Actor* GetActor() const = 0;
+
 		virtual void Update(float _deltaTime) = 0;
+
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _target) = 0;
+
 	public:
 		BaseColliderBox(){}
 		virtual ~BaseColliderBox() {}
 	};
+
 	template<class _type>
 	class ColliderBox : public BaseColliderBox
 	{
@@ -32,10 +51,12 @@ namespace LCF
 		void(_type::*m_function)(const Actor*);
 		bool m_centerPosition;
 		bool m_enabled;
+		//bool m_rendered;
 		int m_left;
 		int m_right;
 		int m_top;
 		int m_bot;
+
 	public:
 		union 
 		{
@@ -48,6 +69,7 @@ namespace LCF
 			};
 			int line[4];
 		};
+
 	public:
 		void SetSize(int _x, int _y, int _w, int _h)
 		{
@@ -59,6 +81,7 @@ namespace LCF
 			SetBox();
 
 		}
+
 		void SetSize(int _line[4])
 		{
 			line[0] = _line[0];
@@ -67,6 +90,7 @@ namespace LCF
 			line[3] = _line[3];
 			SetBox();
 		}
+
 		virtual void Update(float _deltaTime)
 		{
 			if (m_actor != NULL)
@@ -84,6 +108,7 @@ namespace LCF
 				SetBox();
 			}
 		}
+
 		MESSAGE_LOG SetActor(Actor* _actor, bool _centerPosition = false)
 		{
 			if (_actor == NULL)
@@ -96,6 +121,7 @@ namespace LCF
 			m_centerPosition = _centerPosition;
 			return MESSAGE_SUCCESS("Success to set the object");
 		}
+
 		MESSAGE_LOG SetFunction(void(_type::*_foo)(const Actor*))
 		{
 			if (m_function != NULL)
@@ -103,6 +129,7 @@ namespace LCF
 			m_function = _foo;
 			return MESSAGE_SUCCESS("Added Correctly");
 		}
+
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _ColliderBox)
 		{
 			ENABLE_PRINT_MESSAGE(false);
@@ -136,50 +163,72 @@ namespace LCF
 
 			return MESSAGE_SUCCESS("Collision founded");
 		}
+
 		virtual int GetLeft() const
 		{
 			return m_left;
 		}
+
 		virtual int GetRight() const
 		{
 			return m_right;
 		}
+
 		virtual int GetTop() const
 		{
 			return m_top;
 		}
+
 		virtual int GetBot() const
 		{
 			return m_bot;
 		}
+
 		virtual Actor* GetActor() const
 		{
 			return m_actor;
 		}
+
 		virtual int GetX() const
 		{
 			return x;
 		}
+
 		virtual int GetY() const
 		{
 			return y;
 		}
+
 		virtual int GetW() const
 		{
 			return w;
 		}
+
 		virtual int GetH() const
 		{
 			return y;
 		}
+
 		virtual void SetEnabled(bool _value)
 		{
 			m_enabled = _value;
 		}
+
 		virtual bool GetEnabled() const
 		{
 			return m_enabled;
 		}
+
+		/*virtual void SetRenderer(bool _value)
+		{
+			m_rendered = _value;
+		}
+
+		virtual bool GetRendered() const
+		{
+			return m_rendered;
+		}*/
+
 	protected:
 		void SetBox()
 		{
@@ -189,6 +238,7 @@ namespace LCF
 			m_bot = y + h;
 			//std::cout << m_left << " " << m_right << " " << m_top << " " << m_bot << "\n";
 		}
+
 	public:
 		ColliderBox()
 		{
@@ -196,7 +246,9 @@ namespace LCF
 			m_function = NULL;
 			m_centerPosition = false;
 			m_enabled = true;
+			//m_rendered = true;
 		}
+
 		virtual ~ColliderBox() {};
 	};
 }

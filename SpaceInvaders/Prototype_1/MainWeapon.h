@@ -1,18 +1,16 @@
 #pragma once
-#include "MainBullet.h"
 
-class SubBullet : public Bullet
+class MainWeapon :public Weapon
 {
 public:
-	SubBullet();
-	SubBullet(int _posX, int _posY, int _direction);
-	~SubBullet();
+	MainWeapon();
+	~MainWeapon();
 
 	/**
 	* Virtual: Initialize the content of the Actor
 	*
 	*/
-	virtual void init();
+	virtual void init(Pawn* _Parent);
 
 	/**
 	* Virtual: Updates the content of the Actor
@@ -23,7 +21,10 @@ public:
 	*/
 	virtual void update(float _deltaTime);
 
-	virtual void collision(const Actor* _actor) {};
+	virtual void shoot();
 
-	int m_direction;
+	float m_rateOfFire;
+	float m_timer;
+	bool m_shooting;
+	bool m_canShoot;
 };

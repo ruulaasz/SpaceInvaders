@@ -179,21 +179,30 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="MainBullet.h" />
+    <ClInclude Include="MainWeapon.h" />
+    <ClInclude Include="Pawn.h" />
     <ClInclude Include="PlayerVehicle.h" />
     <ClInclude Include="Prototype_1.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SideWeapon.h" />
+    <ClInclude Include="SideWeaponB.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SubBullet.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wall.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="MainBullet.cpp" />
+    <ClCompile Include="MainWeapon.cpp" />
+    <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="PlayerVehicle.cpp" />
     <ClCompile Include="Prototype_1.cpp" />
     <ClCompile Include="SideWeapon.cpp" />
+    <ClCompile Include="SideWeaponB.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -202,6 +211,7 @@
     </ClCompile>
     <ClCompile Include="SubBullet.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Prototype_1.rc" />

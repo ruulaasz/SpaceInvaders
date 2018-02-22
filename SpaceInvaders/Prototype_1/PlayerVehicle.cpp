@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#define MAX_NUMBER_TO_THE_LEFT -2
-#define MAX_NUMBER_TO_THE_RIGHT 2
+
+
 PlayerVehicle::PlayerVehicle()
 {
 	m_movementSpeed = 400.f;
@@ -14,45 +14,33 @@ PlayerVehicle::~PlayerVehicle()
 
 void PlayerVehicle::init(int _screenW, int _screenH)
 {
-	m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_vehicle_selected"));
-	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("player_vehicle"));
+	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
-	m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_mainweapon"));
-	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
-
-	Actor::init();
+	
+	Pawn::init();
 	m_posX = (_screenW / 2) - (m_texture->getWidth() / 2);
 	m_posY = _screenH - m_texture->getHeight();
 
-	m_subWeaponA.init();
+	m_mainWeapon.init(this);
+	m_mainWeapon.m_direction = DIRECTION_STOP;
+	m_mainWeapon.m_weaponSelected = true;
 
-	m_subWeaponA.m_posY = m_posY;
+	m_subWeaponA.init(this);
+	m_subWeaponA.m_direction = DIRECTION_RIGHT;
 
-	m_subWeaponB.init();
-
-	m_subWeaponB.m_posY = m_posY;
+	m_subWeaponB.init(this);
+	m_subWeaponB.m_direction = DIRECTION_LEFT;
 
 	m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
 	LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
-
-	//esa funcion es para desactivar la caja
-	//m_colliderBox->SetEnabled(false);
-
-	//hardcode necesito poder modificar mi caja de colision
 }
 
 void PlayerVehicle::render(SDL_Renderer * _renderer)
 {
-
-	if (m_weaponSelected)
-	{
-		m_weaponReadyTexture->render(m_posX, m_posY, _renderer);
-	}
-	else
-	{
-		m_texture->render(m_posX, m_posY, _renderer);
-	}
+	//m_texture->render(m_posX, m_posY, _renderer);
+	
+	m_mainWeapon.render(_renderer);
 
 	m_subWeaponA.render(_renderer);
 
@@ -61,7 +49,10 @@ void PlayerVehicle::render(SDL_Renderer * _renderer)
 
 void PlayerVehicle::update(float _deltaTime)
 {
-	//esta condicion evvita que coque ilimitadamente con el collider
+	m_mainWeapon.update(_deltaTime);
+	m_subWeaponA.update(_deltaTime);
+	m_subWeaponB.update(_deltaTime);
+
 	if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT)
 	{
 		return;
@@ -70,101 +61,71 @@ void PlayerVehicle::update(float _deltaTime)
 	{
 		return;
 	}
+
 	m_posX += (m_currentDirection * m_movementSpeed * _deltaTime);
-
-	m_subWeaponA.m_posX = m_posX + m_texture->getWidth();
-	m_subWeaponB.m_posX = m_posX - m_texture->getWidth()/2;
 }
-
 
 void PlayerVehicle::move(MovementInfo _info)
 {
 	if (m_collisionDectected)
 	{
-		if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT && _info.direction == 1)
+		if (_info.direction == DIRECTION_RIGHT)
 		{
 			m_currentDirection = _info.direction;
 			m_collisionDectected = false;
-			return;
 		}
-		else if (m_currentDirection == MAX_NUMBER_TO_THE_RIGHT && _info.direction == -1)
+		else if ( _info.direction == DIRECTION_LEFT)
 		{
 			m_currentDirection = _info.direction;
 			m_collisionDectected = false;
-			return;
-		}
-		LCF::AudioManager::GetInstance().PauseChannel(1);
-		return;
-	}
-	m_currentDirection = _info.direction;
-	if (m_currentDirection != 0)
-	{
-		if (!LCF::AudioManager::GetInstance().PlayingChannel(1))
-		{
-			m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
-			LCF::AudioManager::GetInstance().PauseChannel(1);
 		}
 
-		if (LCF::AudioManager::GetInstance().PausedChannel(1))
+		LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+	}
+
+	m_currentDirection = _info.direction;
+
+	if (m_currentDirection != DIRECTION_STOP)
+	{
+		if (!LCF::AudioManager::GetInstance().PlayingChannel(PLAYERMOVEMENT_SFXCHANNEL))
 		{
-			LCF::AudioManager::GetInstance().ResumeChannel(1);
+			m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
+			LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+		}
+
+		if (LCF::AudioManager::GetInstance().PausedChannel(PLAYERMOVEMENT_SFXCHANNEL))
+		{
+			LCF::AudioManager::GetInstance().ResumeChannel(PLAYERMOVEMENT_SFXCHANNEL);
 		}
 	}
 	else
 	{
-		LCF::AudioManager::GetInstance().PauseChannel(1);
+		LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
 	}
 }
 
 void PlayerVehicle::shootMainWeapon(MovementInfo _info)
 {
-	if (m_weaponSelected)
-	{
-		MainBullet* b = new MainBullet(m_posX + m_texture->getWidth() / 2, m_posY - 20, 0);
-		b->init();
-		//hardcode incluir funcion en el mundo para eliminar la bala
-		LCF::World::GetInstance().registerActor(b);
-
-		m_shootSFX->play(MAINWEAPON_SHOOT_SFXCHANNEL);
-	}
-	else
-	{
-		m_weaponSelected = true;
-		m_subWeaponA.m_weaponSelected = false;
-		m_subWeaponB.m_weaponSelected = false;
-		m_changeWeaponSFX->play(CHANGEWEAPON_SFXCHANNEL);
-	}
+	m_subWeaponA.m_weaponSelected = false;
+	m_subWeaponB.m_weaponSelected = false;
+	m_mainWeapon.shoot();
 }
 
 void PlayerVehicle::shootSubWeaponA(MovementInfo _info)
 {
-	m_weaponSelected = false;
+	m_mainWeapon.m_weaponSelected = false;
 	m_subWeaponB.m_weaponSelected = false;
-	m_subWeaponA.shootMainWeapon(m_posX + (m_texture->getWidth() + m_subWeaponA.m_texture->getWidth()), m_posY + m_subWeaponA.m_texture->getHeight()/2, 1);
+	m_subWeaponA.shoot();
 }
 
 void PlayerVehicle::shootSubWeaponB(MovementInfo _info)
 {
-	m_weaponSelected = false;
+	m_mainWeapon.m_weaponSelected = false;
 	m_subWeaponA.m_weaponSelected = false;
-	m_subWeaponB.shootMainWeapon(m_posX - m_subWeaponB.m_texture->getWidth(), m_posY + m_subWeaponB.m_texture->getHeight() / 2, -1);
+	m_subWeaponB.shoot();
 }
 
 void PlayerVehicle::collision(const Actor * _actor)
 {
-	if (const Wall* temp = dynamic_cast<const Wall*>(_actor))
-	{
-		//hardcode necesito la info del collider contra el que choque y ver como evitar que vibre al chocar
-		if (m_currentDirection < 0)
-		{
-			m_posX = _actor->m_posX + temp->m_texture->getWidth();
-			m_currentDirection = MAX_NUMBER_TO_THE_LEFT;
-		}
-		else
-		{
-			m_posX = _actor->m_posX - m_texture->getWidth();
-			m_currentDirection = MAX_NUMBER_TO_THE_RIGHT;
-		}
-		m_collisionDectected = true;
-	}
+	
 }
