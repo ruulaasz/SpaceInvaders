@@ -12,7 +12,7 @@ namespace LCF
 	class ColliderManager : public LCF::Module<ColliderManager>
 	{
 	protected:
-		
+		bool m_EnabledRender;
 	public:
 		void Init();
 
@@ -23,6 +23,10 @@ namespace LCF
 		void Destroy();
 
 		MESSAGE_LOG RegistrerCollider(BaseColliderBox* _Collider);
+
+		void SetEnabledRender(bool _value);
+
+		bool GetEnabledRender();
 
 	public:
 		ColliderManager();
