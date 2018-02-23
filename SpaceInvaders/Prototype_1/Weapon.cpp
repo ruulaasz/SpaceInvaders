@@ -10,6 +10,17 @@ Weapon::~Weapon()
 
 }
 
+void Weapon::init(Pawn * _Parent)
+{
+	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
+
+	m_Parent = _Parent;
+	m_posX = _Parent->m_posX;
+	m_posY = _Parent->m_posY;
+
+	m_canShoot = true;
+}
+
 void Weapon::render(SDL_Renderer * _renderer)
 {
 	if (m_weaponSelected)
@@ -42,19 +53,10 @@ void Weapon::update(float _deltaTime)
 
 void Weapon::collision(const Actor * _actor)
 {
-	if (const Wall* temp = dynamic_cast<const Wall*>(_actor))
-	{
-		if (m_direction < DIRECTION_STOP)
-		{
-			m_Parent->m_posX = temp->m_posX + temp->m_colliderBox->w + m_colliderBox->w;
-			reinterpret_cast<PlayerVehicle*>(m_Parent)->m_currentDirection = MAX_NUMBER_TO_THE_LEFT;
-		}
-		else
-		{
-			m_Parent->m_posX = temp->m_posX - m_Parent->m_colliderBox->w - m_colliderBox->w;
-			reinterpret_cast<PlayerVehicle*>(m_Parent)->m_currentDirection = MAX_NUMBER_TO_THE_RIGHT;
-		}
 
-		reinterpret_cast<PlayerVehicle*>(m_Parent)->m_collisionDectected = true;
-	}
+}
+
+void Weapon::recieveDamage(int _damage)
+{
+	m_life -= _damage;
 }

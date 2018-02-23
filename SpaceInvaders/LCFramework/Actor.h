@@ -33,6 +33,8 @@ namespace LCF
 
 		virtual void collision(const Actor* _actor) = 0;
 
+		virtual void destroy() = 0;
+
 	public:
 		float m_posX;
 		float m_posY;

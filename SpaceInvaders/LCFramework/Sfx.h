@@ -50,5 +50,6 @@ namespace LCF
 
 	public:
 		Mix_Chunk* m_sfx;
+		int m_currentChannel;
 	};
 }

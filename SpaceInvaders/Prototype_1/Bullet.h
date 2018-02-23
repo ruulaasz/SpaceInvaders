@@ -16,4 +16,7 @@ public:
 	virtual void render(SDL_Renderer* _renderer);
 
 	float m_movementSpeed;
+	int m_damage;
+	LCF::Animator* m_travelAnimation;
+	LCF::Animator* m_currentAnimation;
 };

@@ -8,7 +8,13 @@ public:
 	Pawn();
 	~Pawn();
 
-	ActorBox* m_colliderBox;
-
 	virtual void init();
+
+	virtual void destroy();
+
+	ActorBox* m_colliderBox;
+	bool m_enabled;
+
+	bool getEnabled() { return m_enabled; }
+	void setEnabled(bool _enabled) { m_enabled = _enabled; };
 };

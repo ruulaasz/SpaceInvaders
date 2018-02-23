@@ -22,9 +22,4 @@ public:
 	virtual void update(float _deltaTime);
 
 	virtual void shoot();
-
-	float m_rateOfFire;
-	float m_timer;
-	bool m_shooting;
-	bool m_canShoot;
 };

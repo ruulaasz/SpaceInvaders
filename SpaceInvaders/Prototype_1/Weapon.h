@@ -7,6 +7,12 @@ public:
 	~Weapon();
 
 	/**
+	* Virtual: Initialize the content of the Actor
+	*
+	*/
+	virtual void init(Pawn* _Parent);
+
+	/**
 	* Virtual: Render the content of the Actor
 	*
 	* @param _renderer
@@ -28,10 +34,15 @@ public:
 
 	virtual void shoot() {};
 
+	void recieveDamage(int _damage);
+	
 public:
 	bool m_weaponSelected;
-	bool m_collisionDetected;
 	int m_direction;
+	float m_rateOfFire;
+	float m_rateTimer;
+	bool m_canShoot;
+	int m_life;
 
 	LCF::Texture* m_weaponReadyTexture;
 	LCF::Sfx* m_shootSFX;

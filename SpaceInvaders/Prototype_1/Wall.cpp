@@ -12,15 +12,13 @@ Wall::~Wall()
 
 void Wall::render(SDL_Renderer * _renderer)
 {
-	//m_texture->render(m_posX, m_posY, _renderer);
+
 }
 
 void Wall::init()
 {
-	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("wall"));
-
-	m_sizeW = m_texture->getWidth();
-	m_sizeH = m_texture->getHeight();
+	m_sizeW = 20;
+	m_sizeH = 50;
+	m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - m_sizeH;
 	Pawn::init();
-	
 }

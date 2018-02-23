@@ -4,7 +4,7 @@
 PlayerVehicle::PlayerVehicle()
 {
 	m_movementSpeed = 400.f;
-	m_collisionDectected = false;
+	m_life = 100;
 }
 
 PlayerVehicle::~PlayerVehicle()
@@ -14,55 +14,59 @@ PlayerVehicle::~PlayerVehicle()
 
 void PlayerVehicle::init(int _screenW, int _screenH)
 {
-	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
+	m_collisionDectected = false;
 
+	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
-	
-	
+
 	m_posX = (_screenW / 2) - (m_texture->getWidth() / 2);
 	m_posY = _screenH - m_texture->getHeight();
-	m_sizeW = m_texture->getWidth();
+
+	m_weapons[MAIN_WEAPON] = new MainWeapon();
+	m_weapons[MAIN_WEAPON]->init(this);
+	m_weapons[MAIN_WEAPON]->m_direction = DIRECTION_STOP;
+	m_weapons[MAIN_WEAPON]->m_weaponSelected = true;
+
+	m_weapons[RIGHT_WEAPON] = new SideWeapon();
+	m_weapons[RIGHT_WEAPON]->init(this);
+	m_weapons[RIGHT_WEAPON]->m_direction = DIRECTION_RIGHT;
+
+	m_weapons[LEFT_WEAPON] = new SideWeaponB();
+	m_weapons[LEFT_WEAPON]->init(this);
+	m_weapons[LEFT_WEAPON]->m_direction = DIRECTION_LEFT;
+
+	m_moveSFX->play(-1);
+	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
+
+	m_sizeW = m_texture->getWidth() + m_weapons[LEFT_WEAPON]->m_texture->getWidth() + m_weapons[RIGHT_WEAPON]->m_texture->getWidth();
 	m_sizeH = m_texture->getHeight();
-
-	m_mainWeapon.init(this);
-	m_mainWeapon.m_direction = DIRECTION_STOP;
-	m_mainWeapon.m_weaponSelected = true;
-
-	m_subWeaponA.init(this);
-	m_subWeaponA.m_direction = DIRECTION_RIGHT;
-
-	m_subWeaponB.init(this);
-	m_subWeaponB.m_direction = DIRECTION_LEFT;
-
-	m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
-	LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
-
-	//Ejemplo de segundo collider
-	m_secondBox = new PlayerVehicleBox();
-	m_secondBox->SetActor(this);
-	m_secondBox->SetFunction(&PlayerVehicle::SecondCollision);
-	m_secondBox->SetSize(m_posX, m_posY - 500, m_sizeW, m_sizeH);
-	m_secondBox->SetAutomaticOffset();
-	LCF::ColliderManager::GetInstance().RegistrerCollider(m_secondBox);
 	Pawn::init();
+	m_colliderBox->SetOffset(-m_weapons[LEFT_WEAPON]->m_texture->getWidth(), 0);
+
+	m_coreCollider = new PlayerVehicleBox();
+	m_coreCollider->SetActor(this);
+	m_coreCollider->SetFunction(&PlayerVehicle::coreColision);
+	m_coreCollider->SetSize(m_posX, m_posY, m_texture->getWidth() -10, m_texture->getHeight() - 10);
+	LCF::ColliderManager::GetInstance().RegistrerCollider(m_coreCollider);
+	m_coreCollider->SetOffset(5, 5);
 }
 
 void PlayerVehicle::render(SDL_Renderer * _renderer)
 {
 	//m_texture->render(m_posX, m_posY, _renderer);
 	
-	m_mainWeapon.render(_renderer);
-
-	m_subWeaponA.render(_renderer);
-
-	m_subWeaponB.render(_renderer);
+	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
+	{
+		m_weapons[i]->render(_renderer);
+	}
 }
 
 void PlayerVehicle::update(float _deltaTime)
 {
-	m_mainWeapon.update(_deltaTime);
-	m_subWeaponA.update(_deltaTime);
-	m_subWeaponB.update(_deltaTime);
+	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
+	{
+		m_weapons[i]->update(_deltaTime);
+	}
 
 	if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT)
 	{
@@ -93,7 +97,7 @@ void PlayerVehicle::move(MovementInfo _info)
 			return;
 		}
 
-		LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+		LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 		return;
 	}
 
@@ -101,53 +105,78 @@ void PlayerVehicle::move(MovementInfo _info)
 
 	if (m_currentDirection != DIRECTION_STOP)
 	{
-		if (!LCF::AudioManager::GetInstance().PlayingChannel(PLAYERMOVEMENT_SFXCHANNEL))
+		if (!LCF::AudioManager::GetInstance().PlayingChannel(m_moveSFX->m_currentChannel))
 		{
-			m_moveSFX->play(PLAYERMOVEMENT_SFXCHANNEL);
-			LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+			m_moveSFX->play(-1);
+			LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 		}
 
-		if (LCF::AudioManager::GetInstance().PausedChannel(PLAYERMOVEMENT_SFXCHANNEL))
+		if (LCF::AudioManager::GetInstance().PausedChannel(m_moveSFX->m_currentChannel))
 		{
-			LCF::AudioManager::GetInstance().ResumeChannel(PLAYERMOVEMENT_SFXCHANNEL);
+			LCF::AudioManager::GetInstance().ResumeChannel(m_moveSFX->m_currentChannel);
 		}
 	}
 	else
 	{
-		LCF::AudioManager::GetInstance().PauseChannel(PLAYERMOVEMENT_SFXCHANNEL);
+		LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 	}
 }
 
 void PlayerVehicle::shootMainWeapon(MovementInfo _info)
 {
-	m_subWeaponA.m_weaponSelected = false;
-	m_subWeaponB.m_weaponSelected = false;
-	m_mainWeapon.shoot();
+	m_weapons[LEFT_WEAPON]->m_weaponSelected = false;
+	m_weapons[RIGHT_WEAPON]->m_weaponSelected = false;
+	m_weapons[MAIN_WEAPON]->shoot();
 }
 
-void PlayerVehicle::shootSubWeaponA(MovementInfo _info)
+void PlayerVehicle::shootRightWeapon(MovementInfo _info)
 {
-	m_mainWeapon.m_weaponSelected = false;
-	m_subWeaponB.m_weaponSelected = false;
-	m_subWeaponA.shoot();
+	m_weapons[MAIN_WEAPON]->m_weaponSelected = false;
+	m_weapons[LEFT_WEAPON]->m_weaponSelected = false;
+	m_weapons[RIGHT_WEAPON]->shoot();
 }
 
-void PlayerVehicle::shootSubWeaponB(MovementInfo _info)
+void PlayerVehicle::shootLeftWeapon(MovementInfo _info)
 {
-	m_mainWeapon.m_weaponSelected = false;
-	m_subWeaponA.m_weaponSelected = false;
-	m_subWeaponB.shoot();
+	m_weapons[MAIN_WEAPON]->m_weaponSelected = false;
+	m_weapons[RIGHT_WEAPON]->m_weaponSelected = false;
+	m_weapons[LEFT_WEAPON]->shoot();
+}
+
+void PlayerVehicle::recieveDamage(int _damage)
+{
+	m_life -= _damage;
 }
 
 void PlayerVehicle::collision(const Actor * _actor)
 {
-	
+	if (const SkyEnemy* temp = dynamic_cast<const SkyEnemy*>(_actor))
+	{
+		recieveDamage(temp->m_damage);
+		m_weapons[RIGHT_WEAPON]->recieveDamage(temp->m_damage);
+		m_weapons[LEFT_WEAPON]->recieveDamage(temp->m_damage);
+		LCF::AudioManager::GetInstance().StopChannel(temp->m_moveSFX->m_currentChannel);
+		LCF::World::GetInstance().deleteActorByID(temp->m_id);
+	}
+
+	if (const Wall* temp = dynamic_cast<const Wall*>(_actor))
+	{
+		if (m_currentDirection < DIRECTION_STOP)
+		{
+			m_posX = temp->m_posX + temp->m_colliderBox->GetW() + m_weapons[LEFT_WEAPON]->m_texture->getWidth();
+			m_currentDirection = MAX_NUMBER_TO_THE_LEFT;
+		}
+		else
+		{
+			m_posX = temp->m_posX - m_colliderBox->GetW() + m_weapons[RIGHT_WEAPON]->m_texture->getWidth();
+			m_currentDirection = MAX_NUMBER_TO_THE_RIGHT;
+		}
+
+		m_collisionDectected = true;
+	}
 }
 
-void PlayerVehicle::SecondCollision(const Actor * _actor)
+void PlayerVehicle::coreColision(const Actor * _actor)
 {
-	if (const MainBullet* temp = dynamic_cast<const MainBullet*>(_actor))
-	{
-		LCF::World::GetInstance().deleteActorByID(_actor->m_id);
-	}
+
 }

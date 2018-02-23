@@ -17,6 +17,8 @@ LCF::Music* g_music;
 
 LCF::BackgroundTexture* g_background;
 
+SkyEnemy g_testEnemy;
+
 bool initSystems()
 {
 	LCF::SDL_Manager::StartModule();
@@ -65,7 +67,11 @@ void loadContent()
 	assetName = "default";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 
+	//SPRITES
 	assetName = "main_bullet";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "meteor";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
 	//BACKGROUNDS
@@ -88,6 +94,9 @@ void loadContent()
 	assetName = "shoot_subweapon";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
+	assetName = "skyenemy";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
 	//MUSIC
 	assetName = "background_music";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
@@ -106,8 +115,8 @@ void initControllers()
 
 	//shooting
 	g_playerVehicleController.addFunctionAndValues(SDLK_UP, SDL_KEYUP, &PlayerVehicle::shootMainWeapon, new MovementInfo(0));
-	g_playerVehicleController.addFunctionAndValues(SDLK_RIGHT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponA, new MovementInfo(0));
-	g_playerVehicleController.addFunctionAndValues(SDLK_LEFT, SDL_KEYUP, &PlayerVehicle::shootSubWeaponB, new MovementInfo(0));
+	g_playerVehicleController.addFunctionAndValues(SDLK_RIGHT, SDL_KEYUP, &PlayerVehicle::shootRightWeapon, new MovementInfo(0));
+	g_playerVehicleController.addFunctionAndValues(SDLK_LEFT, SDL_KEYUP, &PlayerVehicle::shootLeftWeapon, new MovementInfo(0));
 
 	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController);
 }
@@ -115,17 +124,18 @@ void initControllers()
 void initWorld()
 {
 	g_player.init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
-
 	LCF::World::GetInstance().registerActor(&g_player);
 
+	g_testEnemy.init();
+	LCF::World::GetInstance().registerActor(&g_testEnemy);
+
 	g_leftWall.init();
-	g_leftWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - (g_leftWall.m_texture->getHeight());
 
 	LCF::World::GetInstance().registerActor(&g_leftWall);
 
 	g_rightWall.init();
-	g_rightWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - (g_rightWall.m_texture->getHeight());
-	g_rightWall.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - (g_rightWall.m_texture->getWidth());
+	g_rightWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - g_rightWall.m_sizeH;
+	g_rightWall.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - g_rightWall.m_sizeW;
 
 	LCF::World::GetInstance().registerActor(&g_rightWall);
 
@@ -133,12 +143,8 @@ void initWorld()
 	g_background = reinterpret_cast<LCF::BackgroundTexture*>(LCF::AssetManager::GetInstance().getAsset("background"));
 
 	g_music->playFadeIn(1500);
-	LCF::AudioManager::GetInstance().SetMusicVolume(12);
-	LCF::AudioManager::GetInstance().SetSfxVolume(PLAYERMOVEMENT_SFXCHANNEL, 25);
-	LCF::AudioManager::GetInstance().SetSfxVolume(MAINWEAPON_SHOOT_SFXCHANNEL, 15);
-	LCF::AudioManager::GetInstance().SetSfxVolume(MAINWEAPON_CASKET_SFXCHANNEL, 2);
-	LCF::AudioManager::GetInstance().SetSfxVolume(CHANGEWEAPON_SFXCHANNEL, 5);
-	LCF::AudioManager::GetInstance().SetSfxVolume(SUBWEAPON_SHOOT_SFXCHANNEL, 10);
+	LCF::AudioManager::GetInstance().SetMusicVolume(15);
+	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 15);
 }
 
 void handleInputs()
@@ -187,7 +193,7 @@ void render()
 void renderDebug()
 {
 	system("cls");
-	printf("%f", g_player.m_mainWeapon.m_timer);
+	printf("%d", g_testEnemy.m_damageText.size());
 }
 
 //

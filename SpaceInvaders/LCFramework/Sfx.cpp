@@ -27,11 +27,11 @@ namespace LCF
 
 	void Sfx::play(int _channel, int _loops)
 	{
-		Mix_PlayChannel(_channel, m_sfx, _loops);
+		m_currentChannel = Mix_PlayChannel(_channel, m_sfx, _loops);
 	}
 
 	void Sfx::playFadeIn(int _channel, int _ms, int _loops)
 	{
-		Mix_FadeInChannel(_channel, m_sfx, _loops, _ms);
+		m_currentChannel = Mix_FadeInChannel(_channel, m_sfx, _loops, _ms);
 	}
 }

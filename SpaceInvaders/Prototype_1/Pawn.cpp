@@ -3,7 +3,7 @@
 
 Pawn::Pawn()
 {
-
+	m_enabled = true;
 }
 
 Pawn::~Pawn()
@@ -27,4 +27,9 @@ void Pawn::init()
 	//Asignacion de id
 	m_id = autoID;
 	autoID++;
+}
+
+void Pawn::destroy()
+{
+	m_colliderBox->SetEnabled(false);
 }

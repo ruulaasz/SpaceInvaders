@@ -19,37 +19,41 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C38FEA3D-D4DA-4D38-B419-63766C47BBD5}</ProjectGuid>
+    <ProjectGuid>{E769832D-19BF-4243-982D-017885050261}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Prototype_1</RootNamespace>
+    <RootNamespace>spiGUI</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -70,46 +74,50 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)\LCFramework;$(SolutionDir)\spiGUI;$(SolutionDir)\externals\SDL2_image\include;$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_mixer\include;$(SolutionDir)\externals\SDL2_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\LCFramework\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\SDL2_image\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(SolutionDir)\externals\SDL2_ttf\lib\x86;$(SolutionDir)\externals\SDL2_mixer\lib\x86;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)\LCFramework;$(SolutionDir)\spiGUI;$(SolutionDir)\externals\SDL2_image\include;$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_mixer\include;$(SolutionDir)\externals\SDL2_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\LCFramework\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\SDL2_image\lib\x64;$(SolutionDir)\externals\SDL2_ttf\lib\x64;$(SolutionDir)\externals\SDL2\lib\x64;$(SolutionDir)\externals\SDL2_mixer\lib\x64;$(LibraryPath)</LibraryPath>
+    <TargetName>spiGUI</TargetName>
+    <IncludePath>$(SolutionDir)\externals\SDL2_ttf\include;$(SolutionDir)\externals\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\SDL2_ttf\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)\LCFramework;$(SolutionDir)\spiGUI;$(SolutionDir)\externals\SDL2_image\include;$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_mixer\include;$(SolutionDir)\externals\SDL2_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\LCFramework\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\SDL2_image\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(SolutionDir)\externals\SDL2_mixer\lib\x86;$(SolutionDir)\externals\SDL2_ttf\lib\x86;$(LibraryPath)</LibraryPath>
+    <TargetName>spiGUI</TargetName>
+    <IncludePath>$(SolutionDir)\externals\SDL2_ttf\include;$(SolutionDir)\externals\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\SDL2_ttf\lib\x86;$(SolutionDir)\externals\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
+    <TargetName>spiGUI</TargetName>
+    <IncludePath>$(SolutionDir)\externals\SDL2_ttf\include;$(SolutionDir)\externals\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\SDL2_ttf\lib\x64;$(SolutionDir)\externals\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)intermediate\unused\$(Configuration)\$(Platform)\$(ProjectName)\</IntDir>
-    <IncludePath>$(SolutionDir)\LCFramework;$(SolutionDir)\spiGUI;$(SolutionDir)\externals\SDL2_image\include;$(SolutionDir)\externals\SDL2\include;$(SolutionDir)\externals\SDL2_mixer\include;$(SolutionDir)\externals\SDL2_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\externals\spiGUI\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\LCFramework\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\externals\SDL2_image\lib\x64;$(SolutionDir)\externals\SDL2\lib\x64;$(SolutionDir)\externals\SDL2_mixer\lib\x64;$(SolutionDir)\externals\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
+    <TargetName>spiGUI</TargetName>
+    <IncludePath>$(SolutionDir)\externals\SDL2_ttf\include;$(SolutionDir)\externals\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\externals\SDL2_ttf\lib\x64;$(SolutionDir)\externals\SDL2\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SDLCheck>true</SDLCheck>
+      <MinimalRebuild>false</MinimalRebuild>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <EnforceTypeConversionRules>true</EnforceTypeConversionRules>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)intermediate\buildLogs\$(Configuration)\$(Platform)\$(MSBuildProjectName).log</Path>
@@ -117,17 +125,16 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
     </Link>
     <BuildLog>
       <Path>$(SolutionDir)intermediate\buildLogs\$(Configuration)\$(Platform)\$(MSBuildProjectName).log</Path>
@@ -136,17 +143,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -157,17 +163,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
@@ -179,48 +184,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="MainBullet.h" />
-    <ClInclude Include="MainWeapon.h" />
-    <ClInclude Include="Pawn.h" />
-    <ClInclude Include="PlayerVehicle.h" />
-    <ClInclude Include="Prototype_1.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="SideWeapon.h" />
-    <ClInclude Include="SideWeaponB.h" />
-    <ClInclude Include="SkyEnemy.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="SubBullet.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Wall.h" />
-    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="FallingText.h" />
+    <ClInclude Include="spiGUI.h" />
+    <ClInclude Include="spiText.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="MainBullet.cpp" />
-    <ClCompile Include="MainWeapon.cpp" />
-    <ClCompile Include="Pawn.cpp" />
-    <ClCompile Include="PlayerVehicle.cpp" />
-    <ClCompile Include="Prototype_1.cpp" />
-    <ClCompile Include="SideWeapon.cpp" />
-    <ClCompile Include="SideWeaponB.cpp" />
-    <ClCompile Include="SkyEnemy.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="SubBullet.cpp" />
-    <ClCompile Include="Wall.cpp" />
-    <ClCompile Include="Weapon.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Prototype_1.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Prototype_1.ico" />
-    <Image Include="small.ico" />
+    <ClCompile Include="FallingText.cpp" />
+    <ClCompile Include="spiText.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

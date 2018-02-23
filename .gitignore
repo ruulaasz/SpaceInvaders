@@ -333,3 +333,7 @@ SpaceInvaders/bin/Win32/Release/Prototype_1.ipdb
 SpaceInvaders/bin/Win32/Release/Prototype_1.exe
 SpaceInvaders/bin/Win32/Release/Prototype_1.iobj
 SpaceInvaders/bin/Win32/Release/Prototype_1.pdb
+SpaceInvaders/spiGUI/ReadMe.txt
+SpaceInvaders/externals/SDL2_ttf/CHANGES.txt
+SpaceInvaders/externals/
+SpaceInvaders/bin/

@@ -4,13 +4,9 @@ namespace LCF
 {
 	Animator::Animator()
 	{
-		m_maxJumps = 4;
-		m_frameHeight = 30;
-		m_frameWidth = 28;
-		m_animSpeed = 0.2f;
-
 		m_timer = 0.0f;
 		m_currentJump = 0;
+		m_maxRepetitions = 0;
 	}
 
 	Animator::~Animator()
@@ -20,17 +16,30 @@ namespace LCF
 
 	void Animator::update(float _deltaTime)
 	{
-		m_timer += _deltaTime;
-
-		if (m_timer > m_animSpeed)
+		if (!m_finished)
 		{
-			m_currentJump++;
-			m_timer = 0.0f;
-		}
+			m_timer += _deltaTime;
 
-		if (m_currentJump > m_maxJumps)
-		{
-			m_currentJump = 0;
+			if (m_timer > m_animSpeed)
+			{
+				m_currentJump++;
+				m_timer = 0.0f;
+
+				if (m_currentJump > (m_numOfFrames - 1))
+				{
+					m_currentJump = 0;
+					m_currentRepetitions++;
+				}
+			}
+
+			if (m_maxRepetitions > 0)
+			{
+				if (m_currentRepetitions >= m_maxRepetitions)
+				{
+					m_finished = true;
+					m_currentJump = 0;
+				}
+			}
 		}
 	}
 

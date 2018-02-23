@@ -24,7 +24,8 @@ namespace LCF
 			if (m_allActors[i]->m_id == _id)
 			{
 				Actor* _actor = m_allActors[i];
-				delete _actor;
+				_actor->destroy();
+				_actor = nullptr;
 				m_allActors.erase(m_allActors.begin() + i);
 				return MESSAGE_SUCCESS("The actor was deleted");
 			}

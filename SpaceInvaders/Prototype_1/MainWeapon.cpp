@@ -2,7 +2,7 @@
 
 MainWeapon::MainWeapon()
 {
-	m_rateOfFire = 1.2f;
+	m_rateOfFire = 0.0f;
 }
 
 MainWeapon::~MainWeapon()
@@ -12,26 +12,29 @@ MainWeapon::~MainWeapon()
 
 void MainWeapon::init(Pawn * _Parent)
 {
+	Weapon::init(_Parent);
+
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 	m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon_Selected"));
-
 	m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_mainweapon"));
-	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
+
+	m_posX = _Parent->m_posX;
+	m_posY = _Parent->m_posY;
+	m_sizeW = m_texture->getWidth();
+	m_sizeH = m_texture->getHeight();
 
 	Pawn::init();
 
-	m_Parent = _Parent;
-	m_posX = _Parent->m_posX;
-	m_posY = _Parent->m_posY;
+	m_colliderBox->SetEnabled(false);
 }
 
 void MainWeapon::update(float _deltaTime)
 {
 	Weapon::update(_deltaTime);
 
-	if (m_timer < m_rateOfFire)
+	if (m_rateTimer < m_rateOfFire)
 	{
-		m_timer += _deltaTime;
+		m_rateTimer += _deltaTime;
 	}
 	else
 	{
@@ -49,15 +52,15 @@ void MainWeapon::shoot()
 			b->init();
 			LCF::World::GetInstance().registerActor(b);
 
-			m_shootSFX->play(MAINWEAPON_SHOOT_SFXCHANNEL);
+			m_shootSFX->play(-1);
 
 			m_canShoot = false;
-			m_timer = 0;
+			m_rateTimer = 0;
 		}
 	}
 	else
 	{
 		m_weaponSelected = true;
-		m_changeWeaponSFX->play(CHANGEWEAPON_SFXCHANNEL);
+		m_changeWeaponSFX->play(-1);
 	}
 }

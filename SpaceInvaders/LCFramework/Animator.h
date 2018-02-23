@@ -36,12 +36,15 @@ namespace LCF
 
 
 	public:
-		unsigned int m_maxJumps;
+		unsigned int m_numOfFrames;
 		unsigned int m_currentJump;
 		unsigned int m_frameWidth;
 		unsigned int m_frameHeight;
+		int m_maxRepetitions;
+		int m_currentRepetitions;
 		float m_animSpeed;
 		float m_timer;
+		bool m_finished;
 
 		Sprite* m_sprite;
 	};

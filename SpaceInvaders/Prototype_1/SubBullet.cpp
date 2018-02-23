@@ -30,4 +30,14 @@ void SubBullet::init()
 void SubBullet::update(float _deltaTime)
 {
 	m_posX += m_movementSpeed * _deltaTime * m_direction;
+
+	if (m_posX < -m_texture->getWidth())
+	{
+		LCF::World::GetInstance().deleteActorByID(m_id);
+	}
+
+	if (m_posX > SCREEN_WIDTH)
+	{
+		LCF::World::GetInstance().deleteActorByID(m_id);
+	}
 }

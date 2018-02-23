@@ -152,6 +152,7 @@ namespace LCF
 		{
 			ENABLE_PRINT_MESSAGE(false);
 			const ColliderBox<_type>* _target = (const ColliderBox<_type>*)_ColliderBox;
+
 			if (_target == NULL)
 				return MESSAGE_ERROR("the Target Collider is NULL");
 
