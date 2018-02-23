@@ -2,7 +2,7 @@
 
 MainWeapon::MainWeapon()
 {
-	m_rateOfFire = 0.0f;
+	m_rateOfFire = 0.2f;
 }
 
 MainWeapon::~MainWeapon()

@@ -185,12 +185,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FallingText.h" />
+    <ClInclude Include="Module.h" />
     <ClInclude Include="spiGUI.h" />
     <ClInclude Include="spiText.h" />
+    <ClInclude Include="TextManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FallingText.cpp" />
     <ClCompile Include="spiText.cpp" />
+    <ClCompile Include="TextManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

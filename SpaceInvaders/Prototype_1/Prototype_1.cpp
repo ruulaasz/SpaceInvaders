@@ -18,6 +18,7 @@ LCF::Music* g_music;
 LCF::BackgroundTexture* g_background;
 
 SkyEnemy* g_testEnemy;
+SkyEnemy* g_testEnemy2;
 
 bool initSystems()
 {
@@ -39,6 +40,8 @@ bool initSystems()
 	LCF::AudioManager::StartModule();
 
 	LCF::World::StartModule();
+
+	TextManager::StartModule();
 
 	return true;
 }
@@ -97,6 +100,9 @@ void loadContent()
 	assetName = "skyenemy";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
+	assetName = "skyenemy_dead";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
 	//MUSIC
 	assetName = "background_music";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
@@ -130,6 +136,11 @@ void initWorld()
 	g_testEnemy = new SkyEnemy();
 	g_testEnemy->init();
 	LCF::World::GetInstance().registerActor(g_testEnemy);
+
+	g_testEnemy2 = new SkyEnemy();
+	g_testEnemy2->init();
+	g_testEnemy2->m_posX = 800;
+	LCF::World::GetInstance().registerActor(g_testEnemy2);
 
 	g_leftWall = new Wall();
 	g_leftWall->init();
@@ -178,6 +189,7 @@ void update()
 {
 	LCF::World::GetInstance().update(g_deltaTime);
 	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
+	TextManager::GetInstance().update(g_deltaTime);
 }
 
 void render()
@@ -191,13 +203,15 @@ void render()
 
 	LCF::ColliderManager::GetInstance().Render(g_renderer);
 
+	TextManager::GetInstance().render(g_renderer);
+
 	SDL_RenderPresent(g_renderer);
 }
 
 void renderDebug()
 {
 	system("cls");
-	printf("%d", g_testEnemy->m_damageText.size());
+	printf("%d", TextManager::GetInstance().m_fallingText.size());
 }
 
 //
@@ -234,8 +248,6 @@ int _tmain(int argc, char **argv)
 		initWorld();
 
 		initControllers();
-
-		
 
 		while (!g_quit)
 		{

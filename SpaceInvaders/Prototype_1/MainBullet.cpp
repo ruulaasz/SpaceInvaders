@@ -50,6 +50,7 @@ void MainBullet::update(float _deltaTime)
 		//Usar esta bandera para que el manager lo elimine
 		m_DestroyMe = true;
 	}
+
 	m_posY -= m_movementSpeed * _deltaTime;
 	
 	m_currentAnimation->update(_deltaTime);

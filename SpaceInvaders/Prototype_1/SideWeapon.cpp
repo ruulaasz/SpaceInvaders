@@ -45,6 +45,7 @@ void SideWeapon::update(float _deltaTime)
 		//Usar esta bandera para que el manager lo elimine
 		m_DestroyMe = true;
 	}
+
 	if (m_life <= 0)
 	{
 		m_shieldCollider->SetEnabled(false);

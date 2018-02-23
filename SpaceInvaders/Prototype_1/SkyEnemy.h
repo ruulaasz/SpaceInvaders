@@ -20,7 +20,6 @@ public:
 	*
 	*/
 	virtual void render(SDL_Renderer* _renderer);
-	void renderDamage(SDL_Renderer* _renderer);
 
 	/**
 	* Virtual: Updates the content of the Actor
@@ -36,11 +35,11 @@ public:
 	virtual void collision(const Actor* _actor);
 
 	LCF::Sfx* m_moveSFX;
+	LCF::Sfx* m_deadSFX;
 	float m_movementSpeed;
 	LCF::Animator* m_animator;
 	LCF::Animator* m_currentAnimation;
 	int m_life;
-	std::vector<FallingText*> m_damageText;
-	int m_damageRecieved;
 	int m_damage;
+	bool m_dead;
 };

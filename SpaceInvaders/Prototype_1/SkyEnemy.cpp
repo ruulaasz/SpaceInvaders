@@ -4,7 +4,7 @@ SkyEnemy::SkyEnemy()
 {
 	m_movementSpeed = 100.f;
 	m_animator = new LCF::Animator();
-	m_life = 10;
+	m_life = 100;
 	m_damage = 10;
 }
 
@@ -25,6 +25,7 @@ void SkyEnemy::init()
 	m_animator->m_maxRepetitions = 0;
 
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy"));
+	m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
 
 	m_posX = 500;
 	m_posY = m_texture->getHeight();
@@ -41,63 +42,55 @@ void SkyEnemy::init()
 void SkyEnemy::render(SDL_Renderer * _renderer)
 {
 	m_currentAnimation->render(m_posX, m_posY, _renderer);
-
-	renderDamage(_renderer);
-}
-
-void SkyEnemy::renderDamage(SDL_Renderer * _renderer)
-{
-	for (size_t i = 0; i < m_damageText.size(); i++)
-	{
-		m_damageText.at(i)->render(_renderer);
-	}
 }
 
 void SkyEnemy::update(float _deltaTime)
 {
 	if (m_beDestroyed)
 	{
-		//animacion o cualquier cosa que se requiera
-		//Usar esta bandera para que el manager lo elimine
-		m_DestroyMe = true;
-	}
-	if (m_life <= 0)
-	{
-		LCF::AudioManager::GetInstance().StopChannel(m_moveSFX->m_currentChannel);
-		LCF::World::GetInstance().deleteActorByID(m_id);
-		return;
+		if (!LCF::AudioManager::GetInstance().PlayingChannel(m_deadSFX->m_currentChannel))
+		{
+			m_DestroyMe = true;
+		}
+
+		m_posY += (m_movementSpeed * _deltaTime);
 	}
 
-	m_posY += (m_movementSpeed * _deltaTime);
-	m_currentAnimation->update(_deltaTime);
-
-	for (size_t i = 0; i < m_damageText.size(); i++)
+	if (!m_dead)
 	{
-		if (m_damageText.at(i)->m_enable)
-		{
-			m_damageText.at(i)->update(_deltaTime);
-		}
-		else
-		{
-			m_damageText.erase(m_damageText.begin() + i);
-		}
+		m_posY += (m_movementSpeed * _deltaTime);
+		m_currentAnimation->update(_deltaTime);
 	}
 }
 
 void SkyEnemy::recieveDamage(int _damage)
 {
-	m_life -= _damage;
-	m_damageRecieved = _damage;
+	if (!m_dead)
+	{
+		m_life -= _damage;
 
-	FallingText* fall = new FallingText();
+		if(m_life <= 0)
+		{
+			LCF::AudioManager::GetInstance().StopChannel(m_moveSFX->m_currentChannel);
+			m_deadSFX->play(-1);
+			LCF::World::GetInstance().deleteActorByID(m_id);
+			m_colliderBox->SetEnabled(false);
+			m_dead = true;
+			return;
+		}
+		else
+		{
+			FallingText* fall = new FallingText();
 
-	fall->m_String = std::to_string(m_damageRecieved);
-	fall->m_posX = m_posX + m_sizeW;
-	fall->m_posY = m_posY + (m_sizeH / 2);
-	fall->m_originPosX = fall->m_posX;
-	fall->m_originPosY = fall->m_posY;
+			fall->m_String = std::to_string(_damage);
+			fall->m_posX = m_posX + m_sizeW;
+			fall->m_posY = m_posY + (m_sizeH / 2);
+			fall->m_originPosX = fall->m_posX;
+			fall->m_originPosY = fall->m_posY;
 
-	m_damageText.push_back(fall);
+			TextManager::GetInstance().m_fallingText.push_back(fall);
+		}
+	}
 }
 
 void SkyEnemy::collision(const Actor * _actor)

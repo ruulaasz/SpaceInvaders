@@ -3,7 +3,19 @@
 
 spiText::spiText()
 {
+	FontData data;
+	data._fontSize = 16;
+	data._pathFontFile = "c:/windows/fonts/arialbd.ttf";
+	Initialize(data);
 
+	SDL_Color c;
+	c.r = 255;
+	c.g = 0;
+	c.b = 0;
+
+	m_color = c;
+
+	m_enable = true;
 }
 
 spiText::~spiText()
@@ -155,3 +167,12 @@ void spiText::Destroy()
 	TTF_Quit();
 }
 
+void spiText::update(float _deltaTime)
+{
+
+}
+
+void spiText::render(SDL_Renderer * _renderer)
+{
+	RenderSolidText(m_String, m_color, m_posX, m_posY, *_renderer);
+}

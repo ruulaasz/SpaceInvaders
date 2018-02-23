@@ -29,15 +29,22 @@ void SubBullet::init()
 
 void SubBullet::update(float _deltaTime)
 {
+	if (m_beDestroyed)
+	{
+		//animacion o cualquier cosa que se requiera
+		//Usar esta bandera para que el manager lo elimine
+		m_DestroyMe = true;
+	}
+
 	m_posX += m_movementSpeed * _deltaTime * m_direction;
 
 	if (m_posX < -m_texture->getWidth())
 	{
-		LCF::World::GetInstance().deleteActorByID(m_id);
+		m_beDestroyed = true;
 	}
 
 	if (m_posX > SCREEN_WIDTH)
 	{
-		LCF::World::GetInstance().deleteActorByID(m_id);
+		m_beDestroyed = true;
 	}
 }

@@ -3,7 +3,7 @@
 
 PlayerVehicle::PlayerVehicle()
 {
-	m_movementSpeed = 400.f;
+	m_movementSpeed = 800.f;
 	m_life = 100;
 }
 

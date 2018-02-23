@@ -91,6 +91,7 @@ namespace LCF
 		{
 			m_allActors.at(i)->update(_deltaTime);
 		}
+
 		CheckAndDelete();
 	}
 }
