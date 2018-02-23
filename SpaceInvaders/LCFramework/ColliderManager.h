@@ -14,6 +14,8 @@ namespace LCF
 	protected:
 		bool m_EnabledRender;
 	public:
+		static Uint64 autoID;
+	public:
 		void Init();
 
 		void Update(float _deltaTime);
@@ -21,6 +23,8 @@ namespace LCF
 		void Render(SDL_Renderer* _renderer);
 
 		void Destroy();
+
+		MESSAGE_LOG DestroyColliderbyID(Uint64 _id);
 
 		MESSAGE_LOG RegistrerCollider(BaseColliderBox* _Collider);
 

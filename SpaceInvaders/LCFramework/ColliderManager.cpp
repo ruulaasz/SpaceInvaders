@@ -3,6 +3,7 @@
 
 namespace LCF
 {
+	Uint64 ColliderManager::autoID = 0;
 	void ColliderManager::Init()
 	{
 
@@ -53,11 +54,29 @@ namespace LCF
 		m_allColliders.clear();
 	}
 
+	MESSAGE_LOG ColliderManager::DestroyColliderbyID(Uint64 _id)
+	{
+		for (size_t i = 0; i < m_allColliders.size(); i++)
+		{
+			if (m_allColliders[i]->GetID() == _id)
+			{
+				BaseColliderBox* destroyCollider = m_allColliders[i];
+				destroyCollider->Destroy();
+				delete destroyCollider;
+				m_allColliders.erase(m_allColliders.begin() + i);
+				return MESSAGE_SUCCESS("The collider is delete");
+			}
+		}
+		return MESSAGE_WARNING("Cant find the ID");
+	}
+
 	MESSAGE_LOG ColliderManager::RegistrerCollider(BaseColliderBox * _Collider)
 	{
 		if (_Collider == NULL)
 			return MESSAGE_WARNING("The collider is null");
 
+		_Collider->SetId(autoID);
+		autoID++;
 		m_allColliders.push_back(_Collider);
 	
 		return MESSAGE_SUCCESS("Succes to add");

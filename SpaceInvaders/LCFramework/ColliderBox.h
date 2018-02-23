@@ -34,7 +34,13 @@ namespace LCF
 
 		virtual Actor* GetActor() const = 0;
 
+		virtual Uint64 GetID() const = 0;
+
+		virtual void SetId(Uint64 _ID) = 0;
+
 		virtual void Update(float _deltaTime) = 0;
+
+		virtual void Destroy() = 0;
 
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _target) = 0;
 
@@ -47,6 +53,7 @@ namespace LCF
 	class ColliderBox : public BaseColliderBox
 	{
 	protected:
+		Uint64 m_ID;
 		_type* m_actor;
 		void(_type::*m_function)(const Actor*);
 		bool m_centerPosition;
@@ -127,6 +134,12 @@ namespace LCF
 			}
 		}
 
+		virtual void Destroy()
+		{
+			m_actor = NULL;
+			m_function = NULL;
+			m_enabled = false;
+		}
 		MESSAGE_LOG SetActor(Actor* _actor, bool _centerPosition = false)
 		{
 			if (_actor == NULL)
@@ -246,6 +259,16 @@ namespace LCF
 		virtual bool GetEnabled() const
 		{
 			return m_enabled;
+		}
+
+		virtual Uint64 GetID() const
+		{
+			return m_ID;
+		}
+
+		virtual void SetId(Uint64 _ID)
+		{
+			m_ID = _ID;
 		}
 
 	protected:
