@@ -1,6 +1,6 @@
 #pragma once
 #include "message.h"
-
+#include "SDL_Manager.h"
 namespace LCF
 {
 	class Actor;

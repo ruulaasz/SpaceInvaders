@@ -4,7 +4,7 @@ SkyEnemy::SkyEnemy()
 {
 	m_movementSpeed = 100.f;
 	m_animator = new LCF::Animator();
-	m_life = 1000;
+	m_life = 10;
 	m_damage = 10;
 }
 
@@ -55,6 +55,12 @@ void SkyEnemy::renderDamage(SDL_Renderer * _renderer)
 
 void SkyEnemy::update(float _deltaTime)
 {
+	if (m_beDestroyed)
+	{
+		//animacion o cualquier cosa que se requiera
+		//Usar esta bandera para que el manager lo elimine
+		m_DestroyMe = true;
+	}
 	if (m_life <= 0)
 	{
 		LCF::AudioManager::GetInstance().StopChannel(m_moveSFX->m_currentChannel);

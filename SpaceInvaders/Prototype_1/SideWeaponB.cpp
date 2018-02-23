@@ -39,7 +39,12 @@ void SideWeaponB::init(Pawn * _Parent)
 void SideWeaponB::update(float _deltaTime)
 {
 	Weapon::update(_deltaTime);
-
+	if (m_beDestroyed)
+	{
+		//animacion o cualquier cosa que se requiera
+		//Usar esta bandera para que el manager lo elimine
+		m_DestroyMe = true;
+	}
 	if (m_life <= 0)
 	{
 		m_shieldCollider->SetEnabled(false);

@@ -44,6 +44,12 @@ void MainBullet::render(SDL_Renderer * _renderer)
 
 void MainBullet::update(float _deltaTime)
 {
+	if (m_beDestroyed)
+	{
+		//animacion o cualquier cosa que se requiera
+		//Usar esta bandera para que el manager lo elimine
+		m_DestroyMe = true;
+	}
 	m_posY -= m_movementSpeed * _deltaTime;
 	
 	m_currentAnimation->update(_deltaTime);

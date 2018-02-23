@@ -23,11 +23,8 @@ namespace LCF
 		{
 			if (m_allActors[i]->m_id == _id)
 			{
-				Actor* _actor = m_allActors[i];
-				_actor->destroy();
-				_actor = nullptr;
-				m_allActors.erase(m_allActors.begin() + i);
-				return MESSAGE_SUCCESS("The actor was deleted");
+				m_allActors[i]->m_beDestroyed = true;
+				return MESSAGE_SUCCESS("The actor was set to destroy");
 			}
 		}
 		return MESSAGE_WARNING("Cant find the actor");
@@ -36,26 +33,48 @@ namespace LCF
 	MESSAGE_LOG World::deleteAllActorsByName(std::string _name)
 	{
 		bool anyDestroyed = false;
-		std::vector<int> allInts;
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
 			if (m_allActors[i]->m_name == _name)
+			{
+				m_allActors[i]->m_beDestroyed;
+				anyDestroyed = true;
+			}
+		}
+
+		if (anyDestroyed)
+			return MESSAGE_SUCCESS("Some actors was destroyed");
+		else
+			return MESSAGE_WARNING("Any Actor was destroyed");
+	}
+
+	void World::CheckAndDelete()
+	{
+		bool anyDestroyed = false;
+		std::vector<int> allInts;
+		for (size_t i = 0; i < m_allActors.size(); i++)
+		{
+			if (m_allActors[i]->m_DestroyMe)
 			{
 				allInts.push_back(i);
 				anyDestroyed = true;
 			}
 		}
-		for (size_t i = 0; i < allInts.size(); i++)
-		{
-			int j = allInts[i];
-			Actor* _actor = m_allActors[j];
-			delete _actor;
-			m_allActors.erase(m_allActors.begin() + j);
-		}
 		if (anyDestroyed)
-			return MESSAGE_SUCCESS("Some actors was destroyed");
-		else
-			return MESSAGE_WARNING("Any Actor was destroyed");
+		{
+			for (size_t i = 0; i < allInts.size(); i++)
+			{
+				int j = allInts[i];
+				m_allActors[j]->destroy();
+				delete m_allActors[j];
+				m_allActors[j] = NULL;
+			}
+			for (size_t i = 0; i < allInts.size(); i++)
+			{
+				int j = allInts[i];
+				m_allActors.erase(m_allActors.begin() + j);
+			}
+		}
 	}
 
 	void World::render(SDL_Renderer* _renderer)
@@ -72,5 +91,6 @@ namespace LCF
 		{
 			m_allActors.at(i)->update(_deltaTime);
 		}
+		CheckAndDelete();
 	}
 }

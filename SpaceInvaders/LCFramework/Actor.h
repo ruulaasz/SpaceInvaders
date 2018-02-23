@@ -40,7 +40,10 @@ namespace LCF
 		float m_posY;
 		float m_sizeW;
 		float m_sizeH;
-		
+		//bool used to triger animations of death
+		bool m_beDestroyed;
+		//bool used to destroy an actor
+		bool m_DestroyMe;
 		Texture* m_texture;
 
 		static Uint64 autoID;

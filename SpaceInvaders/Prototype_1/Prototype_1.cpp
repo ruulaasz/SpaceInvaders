@@ -6,18 +6,18 @@ SDL_Renderer* g_renderer;
 bool g_quit;
 float g_deltaTime;
 
-PlayerVehicle g_player;
+PlayerVehicle* g_player;
 typedef LCF::Controller<PlayerVehicle, MovementInfo> PlayerVehicleController;
 PlayerVehicleController g_playerVehicleController;
 
-Wall g_leftWall;
-Wall g_rightWall;
+Wall* g_leftWall;
+Wall* g_rightWall;
 
 LCF::Music* g_music;
 
 LCF::BackgroundTexture* g_background;
 
-SkyEnemy g_testEnemy;
+SkyEnemy* g_testEnemy;
 
 bool initSystems()
 {
@@ -105,7 +105,7 @@ void loadContent()
 void initControllers()
 {
 	//PLAYER
-	g_playerVehicleController.addObject(&g_player);
+	g_playerVehicleController.addObject(g_player);
 
 	//movement
 	g_playerVehicleController.addFunctionAndValues(SDLK_a, SDL_KEYDOWN, &PlayerVehicle::move, new MovementInfo(DIRECTION_LEFT));
@@ -123,21 +123,25 @@ void initControllers()
 
 void initWorld()
 {
-	g_player.init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
-	LCF::World::GetInstance().registerActor(&g_player);
+	g_player = new PlayerVehicle();
+	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
+	LCF::World::GetInstance().registerActor(g_player);
 
-	g_testEnemy.init();
-	LCF::World::GetInstance().registerActor(&g_testEnemy);
+	g_testEnemy = new SkyEnemy();
+	g_testEnemy->init();
+	LCF::World::GetInstance().registerActor(g_testEnemy);
 
-	g_leftWall.init();
+	g_leftWall = new Wall();
+	g_leftWall->init();
 
-	LCF::World::GetInstance().registerActor(&g_leftWall);
+	LCF::World::GetInstance().registerActor(g_leftWall);
 
-	g_rightWall.init();
-	g_rightWall.m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - g_rightWall.m_sizeH;
-	g_rightWall.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - g_rightWall.m_sizeW;
+	g_rightWall = new Wall();
+	g_rightWall->init();
+	g_rightWall->m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - g_rightWall->m_sizeH;
+	g_rightWall->m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - g_rightWall->m_sizeW;
 
-	LCF::World::GetInstance().registerActor(&g_rightWall);
+	LCF::World::GetInstance().registerActor(g_rightWall);
 
 	g_music = reinterpret_cast<LCF::Music*>(LCF::AssetManager::GetInstance().getAsset("background_music"));
 	g_background = reinterpret_cast<LCF::BackgroundTexture*>(LCF::AssetManager::GetInstance().getAsset("background"));
@@ -193,7 +197,7 @@ void render()
 void renderDebug()
 {
 	system("cls");
-	printf("%d", g_testEnemy.m_damageText.size());
+	printf("%d", g_testEnemy->m_damageText.size());
 }
 
 //
@@ -227,9 +231,11 @@ int _tmain(int argc, char **argv)
 
 		loadContent();
 
+		initWorld();
+
 		initControllers();
 
-		initWorld();
+		
 
 		while (!g_quit)
 		{

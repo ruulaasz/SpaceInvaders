@@ -31,5 +31,5 @@ void Pawn::init()
 
 void Pawn::destroy()
 {
-	m_colliderBox->SetEnabled(false);
+	LCF::ColliderManager::GetInstance().DestroyColliderbyID(m_colliderBox->GetID());
 }

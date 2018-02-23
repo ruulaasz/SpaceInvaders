@@ -63,6 +63,13 @@ void PlayerVehicle::render(SDL_Renderer * _renderer)
 
 void PlayerVehicle::update(float _deltaTime)
 {
+	if (m_beDestroyed)
+	{
+		//animacion o cualquier cosa que se requiera
+		//Usar esta bandera para que el manager lo elimine
+		m_DestroyMe = true;
+	}
+
 	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
 	{
 		m_weapons[i]->update(_deltaTime);
