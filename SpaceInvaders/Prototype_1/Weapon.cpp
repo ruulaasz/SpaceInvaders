@@ -33,7 +33,7 @@ void Weapon::render(SDL_Renderer * _renderer)
 	}
 }
 
-void Weapon::update(float _deltaTime)
+void Weapon::update(float /*_deltaTime*/)
 {
 	if (m_direction > DIRECTION_STOP)
 	{

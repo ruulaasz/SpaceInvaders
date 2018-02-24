@@ -51,7 +51,7 @@ namespace LCF
 
 	void Texture::renderEx(int _x, int _y, float _w, float _h, double _angle, SDL_Renderer * _renderer)
 	{
-		SDL_Rect renderQuad = { _x, _y, m_width * _w, m_height * _h };
+		SDL_Rect renderQuad = { _x, _y, m_width * (int)_w, m_height * (int)_h };
 		SDL_RenderCopyEx(_renderer, m_sdlTexture, nullptr, &renderQuad, _angle, nullptr, SDL_FLIP_NONE);
 	}
 

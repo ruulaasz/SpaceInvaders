@@ -8,7 +8,7 @@ namespace LCF
 	class BaseController
 	{
 	public:
-		virtual MESSAGE_LOG checkInput(char _input, Uint32 _typeEvent) { return MESSAGE_SUCCESS("Checking Input"); };
+		virtual inline MESSAGE_LOG checkInput(char /*_input*/ = 0, Uint32 /*_typeEvent*/ = 0) { return MESSAGE_SUCCESS("Checking Input"); };
 	public:
 		BaseController() {};
 		virtual ~BaseController() {};
@@ -36,7 +36,7 @@ namespace LCF
 		_type* m_Object;
 	public:
 		//Add the object
-		MESSAGE_LOG addObject(_type* _object)
+		inline MESSAGE_LOG addObject(_type* _object)
 		{
 			if (_object == NULL)
 				return MESSAGE_ERROR("The object is NULL");
@@ -49,7 +49,7 @@ namespace LCF
 			return MESSAGE_SUCCESS("to add");
 		}
 		//function to add functions in the map
-		MESSAGE_LOG addFunctionAndValues(char _input, Uint32 _typeEvent, void(_type::*_foo)(_struct), _struct* _value)
+		inline MESSAGE_LOG addFunctionAndValues(char _input, Uint32 _typeEvent, void(_type::*_foo)(_struct), _struct* _value)
 		{
 			if (_value == NULL)
 			{
@@ -76,7 +76,7 @@ namespace LCF
 			return MESSAGE_SUCCESS("Succes to add");
 		}
 		//Checking if this controler have function
-		virtual MESSAGE_LOG checkInput(char _input, Uint32 _typeEvent)
+		virtual inline MESSAGE_LOG checkInput(char _input, Uint32 _typeEvent)
 		{
 			ENABLE_PRINT_MESSAGE(false);
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
@@ -91,7 +91,7 @@ namespace LCF
 
 			return MESSAGE_WARNING("Error to find The input and the type event");
 		}
-		MESSAGE_LOG CheckForExistInput(char _input, Uint32 _typeEvent)
+		inline MESSAGE_LOG CheckForExistInput(char _input, Uint32 _typeEvent)
 		{
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
 			{
@@ -102,7 +102,7 @@ namespace LCF
 			}
 			return MESSAGE_SUCCESS("That input dont Exist");
 		}
-		void DestroyController()
+		inline void DestroyController()
 		{
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
 			{

@@ -63,17 +63,11 @@ namespace LCF
 		float m_right;
 		float m_top;
 		float m_bot;
-		union 
-		{
-			struct 
-			{
-				float x;
-				float y;
-				float w;
-				float h;
-			};
-			float line[4];
-		};
+		float x;
+		float y;
+		float w;
+		float h;
+
 		float m_offsetX;
 		float m_offsetY;
 	public:
@@ -86,15 +80,6 @@ namespace LCF
 			//std::cout << x << " " << y << " " << w << " " << h << "\n";
 			SetBox();
 
-		}
-
-		void SetSize(int _line[4])
-		{
-			line[0] = _line[0];
-			line[1] = _line[1];
-			line[2] = _line[2];
-			line[3] = _line[3];
-			SetBox();
 		}
 
 		MESSAGE_LOG SetAutomaticOffset()

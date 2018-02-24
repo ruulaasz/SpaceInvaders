@@ -11,12 +11,12 @@ namespace LCF
 
 	void ColliderManager::Update(float _deltaTime)
 	{
-		for (int i = 0; i < m_allColliders.size(); i++)
+		for (size_t i = 0; i < m_allColliders.size(); i++)
 		{
 			if (m_allColliders[i]->GetEnabled())
 			{
 				m_allColliders[i]->Update(_deltaTime);
-				for (int j = 0; j < m_allColliders.size(); j++)
+				for (size_t j = 0; j < m_allColliders.size(); j++)
 				{
 					if (j != i && m_allColliders[j]->GetEnabled())
 					{
@@ -46,7 +46,7 @@ namespace LCF
 
 	void ColliderManager::Destroy()
 	{
-		for (int i = 0; i < m_allColliders.size(); i++)
+		for (size_t i = 0; i < m_allColliders.size(); i++)
 		{
 			delete m_allColliders[i];
 		}

@@ -17,7 +17,7 @@ namespace LCF
 	{
 		for (size_t i = 0; i < m_allControllers.size(); i++)
 		{
-			m_allControllers[i]->checkInput(_event.key.keysym.sym, _event.type);
+			m_allControllers[i]->checkInput((char)_event.key.keysym.sym, _event.type);
 		}
 	}
 
