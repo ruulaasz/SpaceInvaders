@@ -144,15 +144,15 @@ void initWorld()
 	g_testEnemy2->m_posX = 800;
 	LCF::World::GetInstance().registerActor(g_testEnemy2);
 
-	g_testEnemy3 = new SkyEnemy();
-	g_testEnemy3->init();
-	g_testEnemy3->m_posX = 1000;
-	LCF::World::GetInstance().registerActor(g_testEnemy3);
+	//g_testEnemy3 = new SkyEnemy();
+	//g_testEnemy3->init();
+	//g_testEnemy3->m_posX = 1000;
+	//LCF::World::GetInstance().registerActor(g_testEnemy3);
 
-	g_testEnemy4 = new SkyEnemy();
-	g_testEnemy4->init();
-	g_testEnemy4->m_posX = 1200;
-	LCF::World::GetInstance().registerActor(g_testEnemy4);
+	//g_testEnemy4 = new SkyEnemy();
+	//g_testEnemy4->init();
+	//g_testEnemy4->m_posX = 1200;
+	//LCF::World::GetInstance().registerActor(g_testEnemy4);
 
 	g_leftWall = new Wall();
 	g_leftWall->init();

@@ -7,6 +7,11 @@ namespace LCF
 
 	}
 
+	Sfx::Sfx(const Sfx & _sfx)
+	{
+		m_sfx = _sfx.m_sfx;
+	}
+
 	Sfx::~Sfx()
 	{
 		Mix_FreeChunk(m_sfx);

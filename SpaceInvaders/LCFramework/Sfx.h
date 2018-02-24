@@ -10,6 +10,7 @@ namespace LCF
 	{
 	public:
 		Sfx();
+		Sfx(const Sfx& _sfx);
 		~Sfx();
 
 		/**

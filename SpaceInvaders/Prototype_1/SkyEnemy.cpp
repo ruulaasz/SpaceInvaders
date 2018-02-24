@@ -2,7 +2,7 @@
 
 SkyEnemy::SkyEnemy()
 {
-	m_movementSpeed = 100.f;
+	m_movementSpeed = 10.f;
 	m_animator = new LCF::Animator();
 	m_life = 10;
 	m_damage = 10;
@@ -24,7 +24,7 @@ void SkyEnemy::init()
 	m_animator->m_animSpeed = 0.1f;
 	m_animator->m_maxRepetitions = 0;
 
-	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy"));
+	m_moveSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy")));
 	m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
 
 	m_posX = 500;
@@ -76,21 +76,18 @@ void SkyEnemy::recieveDamage(int _damage)
 			LCF::World::GetInstance().deleteActorByID(m_id);
 			m_colliderBox->SetEnabled(false);
 			m_dead = true;
-			return;
-		}
-		else
-		{
-			FallingText* fall = new FallingText();
-
-			fall->m_String = std::to_string(_damage);
-			fall->m_posX = m_posX + m_sizeW;
-			fall->m_posY = m_posY + (m_sizeH / 2);
-			fall->m_originPosX = fall->m_posX;
-			fall->m_originPosY = fall->m_posY;
-
-			TextManager::GetInstance().m_fallingText.push_back(fall);
 		}
 	}
+
+	FallingText* fall = new FallingText();
+
+	fall->m_String = std::to_string(_damage);
+	fall->m_posX = m_posX + m_sizeW;
+	fall->m_posY = m_posY + (m_sizeH / 2);
+	fall->m_originPosX = fall->m_posX;
+	fall->m_originPosY = fall->m_posY;
+
+	TextManager::GetInstance().m_fallingText.push_back(fall);
 }
 
 void SkyEnemy::collision(const Actor * _actor)
