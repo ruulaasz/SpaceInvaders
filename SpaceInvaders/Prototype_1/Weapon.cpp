@@ -25,11 +25,11 @@ void Weapon::render(SDL_Renderer * _renderer)
 {
 	if (m_weaponSelected)
 	{
-		m_weaponReadyTexture->render(m_posX, m_posY, _renderer);
+		m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer);
 	}
 	else
 	{
-		m_texture->render(m_posX, m_posY, _renderer);
+		m_texture->render((int)m_posX, (int)m_posY, _renderer);
 	}
 }
 
@@ -51,7 +51,7 @@ void Weapon::update(float /*_deltaTime*/)
 	}
 }
 
-void Weapon::collision(const Actor * _actor)
+void Weapon::collision(const Actor * /*_actor*/)
 {
 
 }

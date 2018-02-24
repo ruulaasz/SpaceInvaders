@@ -8,25 +8,25 @@ namespace LCF
 	class BaseColliderBox
 	{
 	public:
-		virtual int GetLeft() const = 0;
-
-		virtual int GetRight() const = 0;
-
-		virtual int GetTop() const = 0;
-
-		virtual int GetBot() const = 0;
-
-		virtual int GetX() const = 0;
-
-		virtual int GetY() const = 0;
-
-		virtual int GetW() const = 0;
-
-		virtual int GetH() const = 0;
-
-		virtual int GetOffsetX() const = 0;
-
-		virtual int GetOffsetY() const = 0;
+		virtual float GetLeft() const = 0;
+				
+		virtual float GetRight() const = 0;
+			
+		virtual float GetTop() const = 0;
+				
+		virtual float GetBot() const = 0;
+				
+		virtual float GetX() const = 0;
+				
+		virtual float GetY() const = 0;
+				
+		virtual float GetW() const = 0;
+				
+		virtual float GetH() const = 0;
+				
+		virtual float GetOffsetX() const = 0;
+				
+		virtual float GetOffsetY() const = 0;
 
 		virtual void SetEnabled(bool _value) = 0;
 
@@ -71,7 +71,7 @@ namespace LCF
 		float m_offsetX;
 		float m_offsetY;
 	public:
-		void SetSize(int _x, int _y, int _w, int _h)
+		void SetSize(float _x, float _y, float _w, float _h)
 		{
 			x = _x;
 			y = _y;
@@ -101,7 +101,7 @@ namespace LCF
 			m_offsetY = _offsetY;
 		}
 
-		virtual void Update(float _deltaTime)
+		virtual void Update(float /*_deltaTime*/)
 		{
 			if (m_actor != NULL)
 			{
@@ -148,7 +148,6 @@ namespace LCF
 
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _ColliderBox)
 		{
-			ENABLE_PRINT_MESSAGE(false);
 			const ColliderBox<_type>* _target = (const ColliderBox<_type>*)_ColliderBox;
 
 			if (_target == NULL)
@@ -181,22 +180,22 @@ namespace LCF
 			return MESSAGE_SUCCESS("Collision founded");
 		}
 
-		virtual int GetLeft() const
+		virtual float GetLeft() const
 		{
 			return m_left;
 		}
 
-		virtual int GetRight() const
+		virtual float GetRight() const
 		{
 			return m_right;
 		}
 
-		virtual int GetTop() const
+		virtual float GetTop() const
 		{
 			return m_top;
 		}
 
-		virtual int GetBot() const
+		virtual float GetBot() const
 		{
 			return m_bot;
 		}
@@ -206,32 +205,32 @@ namespace LCF
 			return m_actor;
 		}
 
-		virtual int GetX() const
+		virtual float GetX() const
 		{
 			return x;
 		}
 
-		virtual int GetY() const
+		virtual float GetY() const
 		{
 			return y;
 		}
 
-		virtual int GetW() const
+		virtual float GetW() const
 		{
 			return w;
 		}
 
-		virtual int GetH() const
+		virtual float GetH() const
 		{
 			return h;
 		}
 
-		virtual int GetOffsetX() const
+		virtual float GetOffsetX() const
 		{
 			return m_offsetX;
 		}
 
-		virtual int GetOffsetY() const
+		virtual float GetOffsetY() const
 		{
 			return m_offsetY;
 		}

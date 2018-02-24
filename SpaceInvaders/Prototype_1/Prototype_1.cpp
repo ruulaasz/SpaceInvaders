@@ -248,7 +248,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-int _tmain(int argc, char **argv)
+int _tmain(int /*argc*/, char** /*argv*/)
 {
 	if (initSystems())
 	{

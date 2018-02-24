@@ -22,8 +22,8 @@ void SideWeapon::init(Pawn* _Parent)
 
 	m_posY = _Parent->m_posY;
 	m_posX = _Parent->m_posX;
-	m_sizeW = m_texture->getWidth();
-	m_sizeH = m_texture->getHeight();
+	m_sizeW = (float)m_texture->getWidth();
+	m_sizeH = (float)m_texture->getHeight();
 
 	Pawn::init();
 
@@ -61,7 +61,7 @@ void SideWeapon::update(float _deltaTime)
 	}
 }
 
-void SideWeapon::collision(const Actor * _actor)
+void SideWeapon::collision(const Actor * /*_actor*/)
 {
 
 }
@@ -76,18 +76,18 @@ void SideWeapon::shoot()
 		if (m_canShoot)
 		{
 			
-			posY = m_posY + m_texture->getHeight() / 2;
+			posY = (int)m_posY + m_texture->getHeight() / 2;
 
 			if (m_direction > DIRECTION_STOP)
 			{
-				posX = m_Parent->m_posX + (m_Parent->m_texture->getWidth() + m_texture->getWidth());
+				posX = (int)m_Parent->m_posX + (m_Parent->m_texture->getWidth() + m_texture->getWidth());
 			}
 			else
 			{
-				posX = m_Parent->m_posX - m_texture->getWidth();
+				posX = (int)m_Parent->m_posX - m_texture->getWidth();
 			}
 			
-			SubBullet* b = new SubBullet(posX, posY, m_direction);
+			SubBullet* b = new SubBullet((float)posX, (float)posY, m_direction);
 			b->init();
 			LCF::World::GetInstance().registerActor(b);
 
@@ -104,7 +104,7 @@ void SideWeapon::shoot()
 	}
 }
 
-void SideWeapon::shieldColision(const Actor * _actor)
+void SideWeapon::shieldColision(const Actor * /*_actor*/)
 {
 	
 }

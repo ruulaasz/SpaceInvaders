@@ -8,7 +8,7 @@ namespace LCF
 	class BaseController
 	{
 	public:
-		virtual inline MESSAGE_LOG checkInput(char /*_input*/ = 0, Uint32 /*_typeEvent*/ = 0) { return MESSAGE_SUCCESS("Checking Input"); };
+		virtual inline MESSAGE_LOG checkInput(int /*_input*/ = 0, Uint32 /*_typeEvent*/ = 0) { return MESSAGE_SUCCESS("Checking Input"); };
 	public:
 		BaseController() {};
 		virtual ~BaseController() {};
@@ -21,7 +21,7 @@ namespace LCF
 	public: 
 		struct BasicInformation
 		{
-			char Cinput;
+			int Cinput;
 			void(_type::*PFunction)(_struct);
 			_struct* Svalue;
 			Uint32 UtypeEvent;
@@ -49,7 +49,7 @@ namespace LCF
 			return MESSAGE_SUCCESS("to add");
 		}
 		//function to add functions in the map
-		inline MESSAGE_LOG addFunctionAndValues(char _input, Uint32 _typeEvent, void(_type::*_foo)(_struct), _struct* _value)
+		inline MESSAGE_LOG addFunctionAndValues(int _input, Uint32 _typeEvent, void(_type::*_foo)(_struct), _struct* _value)
 		{
 			if (_value == NULL)
 			{
@@ -61,9 +61,9 @@ namespace LCF
 				return MESSAGE_ERROR("The pointer of the function is NULL");
 			}
 
-			if (CheckForExistInput(_input, _typeEvent) == M_WARNING)
+			if (std::string(M_WARNING) == std::string(CheckForExistInput(_input, _typeEvent)))
 			{
-				return M_WARNING;
+				return MESSAGE_WARNING("That input already exist");
 			}
 
 			BasicInformation* addToVector = new BasicInformation();
@@ -76,7 +76,7 @@ namespace LCF
 			return MESSAGE_SUCCESS("Succes to add");
 		}
 		//Checking if this controler have function
-		virtual inline MESSAGE_LOG checkInput(char _input, Uint32 _typeEvent)
+		virtual inline MESSAGE_LOG checkInput(int _input, Uint32 _typeEvent)
 		{
 			ENABLE_PRINT_MESSAGE(false);
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
@@ -91,7 +91,7 @@ namespace LCF
 
 			return MESSAGE_WARNING("Error to find The input and the type event");
 		}
-		inline MESSAGE_LOG CheckForExistInput(char _input, Uint32 _typeEvent)
+		inline MESSAGE_LOG CheckForExistInput(int _input, Uint32 _typeEvent)
 		{
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
 			{

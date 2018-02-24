@@ -36,7 +36,7 @@ namespace LCF
 			{
 				if (m_allColliders[i]->GetEnabled())
 				{
-					SDL_Rect renderQuad = { m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH() };
+					SDL_Rect renderQuad = { (int)m_allColliders[i]->GetX(), (int)m_allColliders[i]->GetY(), (int)m_allColliders[i]->GetW(), (int)m_allColliders[i]->GetH() };
 					SDL_RenderDrawRect(_renderer, &renderQuad);
 				}
 			}

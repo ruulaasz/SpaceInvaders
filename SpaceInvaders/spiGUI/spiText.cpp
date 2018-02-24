@@ -167,12 +167,12 @@ void spiText::Destroy()
 	TTF_Quit();
 }
 
-void spiText::update(float _deltaTime)
+void spiText::update(float /*_deltaTime*/)
 {
 
 }
 
 void spiText::render(SDL_Renderer * _renderer)
 {
-	RenderSolidText(m_String, m_color, m_posX, m_posY, *_renderer);
+	RenderSolidText(m_String, m_color, (int)m_posX, (int)m_posY, *_renderer);
 }

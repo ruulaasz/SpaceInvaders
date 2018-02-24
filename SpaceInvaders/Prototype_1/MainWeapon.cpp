@@ -20,8 +20,8 @@ void MainWeapon::init(Pawn * _Parent)
 
 	m_posX = _Parent->m_posX;
 	m_posY = _Parent->m_posY;
-	m_sizeW = m_texture->getWidth();
-	m_sizeH = m_texture->getHeight();
+	m_sizeW = (float)m_texture->getWidth();
+	m_sizeH = (float)m_texture->getHeight();
 
 	Pawn::init();
 
@@ -48,7 +48,7 @@ void MainWeapon::shoot()
 	{
 		if (m_canShoot)
 		{
-			MainBullet* b = new MainBullet(m_posX + (m_texture->getWidth() / 2) - 10, m_posY - 20);
+			MainBullet* b = new MainBullet(m_posX + ((float)m_texture->getWidth() / 2) - 10, m_posY - 20);
 			b->init();
 			LCF::World::GetInstance().registerActor(b);
 

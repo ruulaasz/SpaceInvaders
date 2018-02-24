@@ -5,7 +5,7 @@ SubBullet::SubBullet()
 
 }
 
-SubBullet::SubBullet(int _posX, int _posY, int _direction)
+SubBullet::SubBullet(float _posX, float _posY, int _direction)
 {
 	m_movementSpeed = 1800.f;
 	m_posX = _posX;
@@ -22,8 +22,8 @@ void SubBullet::init()
 {
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("sub_bullet_base"));
 
-	m_sizeW = m_texture->getWidth();
-	m_sizeH = m_texture->getHeight();
+	m_sizeW = (float)m_texture->getWidth();
+	m_sizeH = (float)m_texture->getHeight();
 	Pawn::init();
 }
 

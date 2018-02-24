@@ -27,6 +27,6 @@ void FallingText::render(SDL_Renderer * _renderer)
 {
 	if (m_enable)
 	{
-		RenderSolidText(m_String, m_color, m_posX, m_posY, *_renderer);
+		RenderSolidText(m_String, m_color, (int)m_posX, (int)m_posY, *_renderer);
 	}
 }

@@ -5,7 +5,7 @@ MainBullet::MainBullet()
 	
 }
 
-MainBullet::MainBullet(int _posX, int _posY)
+MainBullet::MainBullet(float _posX, float _posY)
 {
 	m_posX = _posX;
 	m_posY = _posY;
@@ -29,8 +29,8 @@ void MainBullet::init()
 	m_travelAnimation->m_animSpeed = 0.2f;
 	m_travelAnimation->m_numOfFrames = 5;
 
-	m_sizeW = m_travelAnimation->m_frameWidth;
-	m_sizeH = m_travelAnimation->m_frameHeight;
+	m_sizeW = (float)m_travelAnimation->m_frameWidth;
+	m_sizeH = (float)m_travelAnimation->m_frameHeight;
 
 	m_currentAnimation = m_travelAnimation;
 
@@ -39,7 +39,7 @@ void MainBullet::init()
 
 void MainBullet::render(SDL_Renderer * _renderer)
 {
-	m_currentAnimation->render(m_posX, m_posY, _renderer);
+	m_currentAnimation->render((int)m_posX, (int)m_posY, _renderer);
 }
 
 void MainBullet::update(float _deltaTime)

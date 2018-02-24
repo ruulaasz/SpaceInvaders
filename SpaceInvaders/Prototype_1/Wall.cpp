@@ -10,7 +10,7 @@ Wall::~Wall()
 
 }
 
-void Wall::render(SDL_Renderer * _renderer)
+void Wall::render(SDL_Renderer * /*_renderer*/)
 {
 
 }

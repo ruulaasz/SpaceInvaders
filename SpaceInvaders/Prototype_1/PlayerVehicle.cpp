@@ -19,8 +19,8 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
 
-	m_posX = (_screenW / 2) - (m_texture->getWidth() / 2);
-	m_posY = _screenH - m_texture->getHeight();
+	m_posX = ((float)_screenW / 2) - ((float)m_texture->getWidth() / 2);
+	m_posY = (float)_screenH - (float)m_texture->getHeight();
 
 	m_weapons[MAIN_WEAPON] = new MainWeapon();
 	m_weapons[MAIN_WEAPON]->init(this);
@@ -38,15 +38,15 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_moveSFX->play(-1);
 	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 
-	m_sizeW = m_texture->getWidth() + m_weapons[LEFT_WEAPON]->m_texture->getWidth() + m_weapons[RIGHT_WEAPON]->m_texture->getWidth();
-	m_sizeH = m_texture->getHeight();
+	m_sizeW = (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_texture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_texture->getWidth();
+	m_sizeH = (float)m_texture->getHeight();
 	Pawn::init();
-	m_colliderBox->SetOffset(-m_weapons[LEFT_WEAPON]->m_texture->getWidth(), 0);
+	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_texture->getWidth(), 0);
 
 	m_coreCollider = new PlayerVehicleBox();
 	m_coreCollider->SetActor(this);
 	m_coreCollider->SetFunction(&PlayerVehicle::coreColision);
-	m_coreCollider->SetSize(m_posX, m_posY, m_texture->getWidth() -10, m_texture->getHeight() - 10);
+	m_coreCollider->SetSize(m_posX, m_posY, (float)m_texture->getWidth() -10, (float)m_texture->getHeight() - 10);
 	LCF::ColliderManager::GetInstance().RegistrerCollider(m_coreCollider);
 	m_coreCollider->SetOffset(5, 5);
 }
@@ -129,21 +129,21 @@ void PlayerVehicle::move(MovementInfo _info)
 	}
 }
 
-void PlayerVehicle::shootMainWeapon(MovementInfo _info)
+void PlayerVehicle::shootMainWeapon(MovementInfo /*_info*/)
 {
 	m_weapons[LEFT_WEAPON]->m_weaponSelected = false;
 	m_weapons[RIGHT_WEAPON]->m_weaponSelected = false;
 	m_weapons[MAIN_WEAPON]->shoot();
 }
 
-void PlayerVehicle::shootRightWeapon(MovementInfo _info)
+void PlayerVehicle::shootRightWeapon(MovementInfo /*_info*/)
 {
 	m_weapons[MAIN_WEAPON]->m_weaponSelected = false;
 	m_weapons[LEFT_WEAPON]->m_weaponSelected = false;
 	m_weapons[RIGHT_WEAPON]->shoot();
 }
 
-void PlayerVehicle::shootLeftWeapon(MovementInfo _info)
+void PlayerVehicle::shootLeftWeapon(MovementInfo /*_info*/)
 {
 	m_weapons[MAIN_WEAPON]->m_weaponSelected = false;
 	m_weapons[RIGHT_WEAPON]->m_weaponSelected = false;
@@ -183,7 +183,7 @@ void PlayerVehicle::collision(const Actor * _actor)
 	}
 }
 
-void PlayerVehicle::coreColision(const Actor * _actor)
+void PlayerVehicle::coreColision(const Actor * /*_actor*/)
 {
 
 }

@@ -4,7 +4,7 @@
 #ifdef _DEBUG
 #define MESSAGE_LOG char*
 
-static bool PrinteMessage = true;
+static bool PrinteMessage = false;
 static inline MESSAGE_LOG ReturnCallMessage(MESSAGE_LOG Descriptor, MESSAGE_LOG aditionalText, int line, char* foo, char* file)
 {
 	if(PrinteMessage)

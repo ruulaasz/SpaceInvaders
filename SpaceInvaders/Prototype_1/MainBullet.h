@@ -4,7 +4,7 @@ class MainBullet : public Bullet
 {
 public:
 	MainBullet();
-	MainBullet(int _posX, int _posY);
+	MainBullet(float _posX, float _posY);
 	virtual ~MainBullet();
 
 	/**

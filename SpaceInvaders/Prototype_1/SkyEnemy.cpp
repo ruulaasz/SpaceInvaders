@@ -28,9 +28,9 @@ void SkyEnemy::init()
 	m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
 
 	m_posX = 500;
-	m_posY = m_texture->getHeight();
-	m_sizeW = m_animator->m_frameWidth;
-	m_sizeH = m_animator->m_frameHeight;
+	m_posY = (float)m_texture->getHeight();
+	m_sizeW = (float)m_animator->m_frameWidth;
+	m_sizeH = (float)m_animator->m_frameHeight;
 
 	m_currentAnimation = m_animator;
 
@@ -41,7 +41,7 @@ void SkyEnemy::init()
 
 void SkyEnemy::render(SDL_Renderer * _renderer)
 {
-	m_currentAnimation->render(m_posX, m_posY, _renderer);
+	m_currentAnimation->render((int)m_posX, (int)m_posY, _renderer);
 }
 
 void SkyEnemy::update(float _deltaTime)
