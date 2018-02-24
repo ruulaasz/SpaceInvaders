@@ -69,10 +69,12 @@ namespace LCF
 				delete m_allActors[j];
 				m_allActors[j] = NULL;
 			}
+			int number = 0;
 			for (size_t i = 0; i < allInts.size(); i++)
 			{
 				int j = allInts[i];
-				m_allActors.erase(m_allActors.begin() + j);
+				m_allActors.erase(m_allActors.begin() + j + number);
+				number--;
 			}
 		}
 	}
