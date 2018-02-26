@@ -4,7 +4,7 @@ SkyEnemy::SkyEnemy()
 {
 	m_movementSpeed = 10.f;
 	m_animator = new LCF::Animator();
-	m_life = 10;
+	m_life = 100;
 	m_damage = 10;
 }
 
