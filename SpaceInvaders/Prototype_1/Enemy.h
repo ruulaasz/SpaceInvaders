@@ -32,13 +32,7 @@ public:
 
 	void recieveDamage(int _damage);
 
-	LCF::Sfx* m_moveSFX;
-	LCF::Sfx* m_deadSFX;
-	float m_movementSpeed;
-	LCF::Animator* m_moveAnimation;
-	LCF::Animator* m_deadAnimation;
 	LCF::Animator* m_currentAnimation;
 	int m_life;
-	int m_damage;
 	bool m_dead;
 };

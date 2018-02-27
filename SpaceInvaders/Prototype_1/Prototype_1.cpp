@@ -18,8 +18,14 @@ LCF::Music* g_music;
 LCF::BackgroundTexture* g_background;
 
 SkyEnemy* g_testEnemy;
-
 GroundEnemy* g_groundEnemy;
+
+EnemyType* g_skyEnemyType;
+EnemyType* g_groundEnemyType;
+
+WeaponType* g_mainWeaponType;
+WeaponType* g_sideWeaponType;
+WeaponType* g_sideWeaponType2;
 
 bool initSystems()
 {
@@ -149,21 +155,126 @@ void initControllers()
 
 void initWorld()
 {
+	g_mainWeaponType = new WeaponType();
+	g_mainWeaponType->m_rateOfFire = 0.2f;
+
+	g_mainWeaponType->m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_mainweapon"));
+	g_mainWeaponType->m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon_Selected"));
+	g_mainWeaponType->m_weaponTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
+
+	g_mainWeaponType->m_shootAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("main_weapon_shoot"));
+	g_mainWeaponType->m_shootAnimation->m_frameHeight = 32;
+	g_mainWeaponType->m_shootAnimation->m_frameWidth = 90;
+	g_mainWeaponType->m_shootAnimation->m_animSpeed = 0.04f;
+	g_mainWeaponType->m_shootAnimation->m_numOfFrames = 8;
+	g_mainWeaponType->m_shootAnimation->m_maxRepetitions = 1;
+	g_mainWeaponType->m_shootAnimation->m_finished = true;
+
+	g_sideWeaponType = new WeaponType();
+	g_sideWeaponType->m_rateOfFire = 0.2f;
+
+	g_sideWeaponType->m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
+	g_sideWeaponType->m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA_Selected"));
+	g_sideWeaponType->m_weaponTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA"));
+
+	g_sideWeaponType->m_shootAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("main_weapon_shoot"));
+	g_sideWeaponType->m_shootAnimation->m_frameHeight = 32;
+	g_sideWeaponType->m_shootAnimation->m_frameWidth = 90;
+	g_sideWeaponType->m_shootAnimation->m_animSpeed = 0.04f;
+	g_sideWeaponType->m_shootAnimation->m_numOfFrames = 8;
+	g_sideWeaponType->m_shootAnimation->m_maxRepetitions = 1;
+	g_sideWeaponType->m_shootAnimation->m_finished = true;
+
+	g_sideWeaponType2 = new WeaponType();
+	g_sideWeaponType2->m_rateOfFire = 0.2f;
+
+	g_sideWeaponType2->m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
+	g_sideWeaponType2->m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA_Selected"));
+	g_sideWeaponType2->m_weaponTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA"));
+
+	g_sideWeaponType2->m_shootAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("main_weapon_shoot"));
+	g_sideWeaponType2->m_shootAnimation->m_frameHeight = 32;
+	g_sideWeaponType2->m_shootAnimation->m_frameWidth = 90;
+	g_sideWeaponType2->m_shootAnimation->m_animSpeed = 0.04f;
+	g_sideWeaponType2->m_shootAnimation->m_numOfFrames = 8;
+	g_sideWeaponType2->m_shootAnimation->m_maxRepetitions = 1;
+	g_sideWeaponType2->m_shootAnimation->m_finished = true;
+
 	g_player = new PlayerVehicle();
+
+	g_player->m_weapons[MAIN_WEAPON] = new MainWeapon();
+	reinterpret_cast<MainWeapon*>(g_player->m_weapons[MAIN_WEAPON])->m_weaponType = g_mainWeaponType;
+
+	g_player->m_weapons[RIGHT_WEAPON] = new SideWeapon();
+	reinterpret_cast<SideWeapon*>(g_player->m_weapons[RIGHT_WEAPON])->m_weaponType = g_sideWeaponType;
+
+	g_player->m_weapons[LEFT_WEAPON] = new SideWeapon();
+	reinterpret_cast<SideWeapon*>(g_player->m_weapons[LEFT_WEAPON])->m_weaponType = g_sideWeaponType2;
+
 	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
 	LCF::World::GetInstance().registerActor(g_player);
 
+	g_skyEnemyType = new EnemyType();
+	g_skyEnemyType->m_damage = 30;
+	g_skyEnemyType->m_life = 200;
+	g_skyEnemyType->m_movementSpeed = 125;
+
+	g_skyEnemyType->m_moveAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor"));
+	g_skyEnemyType->m_moveAnimation->m_frameHeight = g_skyEnemyType->m_moveAnimation->m_sprite->getHeight();
+	g_skyEnemyType->m_moveAnimation->m_numOfFrames = 5;
+	g_skyEnemyType->m_moveAnimation->m_frameWidth = g_skyEnemyType->m_moveAnimation->m_sprite->getWidth() / g_skyEnemyType->m_moveAnimation->m_numOfFrames;
+	g_skyEnemyType->m_moveAnimation->m_animSpeed = 0.1f;
+
+	g_skyEnemyType->m_deadAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor_dead"));
+	g_skyEnemyType->m_deadAnimation->m_frameHeight = g_skyEnemyType->m_deadAnimation->m_sprite->getHeight();
+	g_skyEnemyType->m_deadAnimation->m_numOfFrames = 5;
+	g_skyEnemyType->m_deadAnimation->m_frameWidth = g_skyEnemyType->m_deadAnimation->m_sprite->getWidth() / g_skyEnemyType->m_deadAnimation->m_numOfFrames;
+	g_skyEnemyType->m_deadAnimation->m_animSpeed = 0.1f;
+	g_skyEnemyType->m_deadAnimation->m_maxRepetitions = 1;
+
+	g_skyEnemyType->m_moveSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy")));
+	g_skyEnemyType->m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
+
+	g_skyEnemyType->m_weapon = new MainWeapon();
+	g_skyEnemyType->m_weapon->m_direction = DIRECTION_STOP;
+	g_skyEnemyType->m_weapon->m_weaponSelected = true;
+
 	g_testEnemy = new SkyEnemy();
-	g_testEnemy->init();
 	g_testEnemy->m_posX = 775;
 	g_testEnemy->m_posY = 100;
+	g_testEnemy->m_type = g_skyEnemyType;
+	g_testEnemy->init();
 	LCF::World::GetInstance().registerActor(g_testEnemy);
 
+	g_groundEnemyType = new EnemyType();
+	g_groundEnemyType->m_damage = 10;
+	g_groundEnemyType->m_life = 25;
+	g_groundEnemyType->m_movementSpeed = 50;
+	
+	g_groundEnemyType->m_moveAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor_small"));
+	g_groundEnemyType->m_moveAnimation->m_frameHeight = g_groundEnemyType->m_moveAnimation->m_sprite->getHeight();
+	g_groundEnemyType->m_moveAnimation->m_numOfFrames = 5;
+	g_groundEnemyType->m_moveAnimation->m_frameWidth = g_groundEnemyType->m_moveAnimation->m_sprite->getWidth() / g_groundEnemyType->m_moveAnimation->m_numOfFrames;
+	g_groundEnemyType->m_moveAnimation->m_animSpeed = 0.1f;
+	
+	g_groundEnemyType->m_deadAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor_small_dead"));
+	g_groundEnemyType->m_deadAnimation->m_frameHeight = g_groundEnemyType->m_deadAnimation->m_sprite->getHeight();
+	g_groundEnemyType->m_deadAnimation->m_numOfFrames = 5;
+	g_groundEnemyType->m_deadAnimation->m_frameWidth = g_groundEnemyType->m_deadAnimation->m_sprite->getWidth() / g_groundEnemyType->m_deadAnimation->m_numOfFrames;
+	g_groundEnemyType->m_deadAnimation->m_animSpeed = 0.1f;
+	g_groundEnemyType->m_deadAnimation->m_maxRepetitions = 1;
+	
+	g_groundEnemyType->m_moveSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy")));
+	g_groundEnemyType->m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
+	
+	g_groundEnemyType->m_weapon = new MainWeapon();
+
 	g_groundEnemy = new GroundEnemy();
+	g_groundEnemy->m_direction = DIRECTION_LEFT;
+	g_groundEnemy->m_type = g_groundEnemyType;
 	g_groundEnemy->init();
 	g_groundEnemy->m_posX = SCREEN_WIDTH - g_groundEnemy->m_sizeW;
-	g_groundEnemy->m_posY = SCREEN_HEIGHT-g_groundEnemy->m_sizeH;
-	g_groundEnemy->m_direction = DIRECTION_LEFT;
+	g_groundEnemy->m_posY = SCREEN_HEIGHT - g_groundEnemy->m_sizeH;
 	LCF::World::GetInstance().registerActor(g_groundEnemy);
 
 	g_leftWall = new Wall();

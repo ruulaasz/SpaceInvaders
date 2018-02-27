@@ -24,4 +24,6 @@ public:
 	virtual void collision(const Actor* _actor);
 
 	int m_direction;
+
+	EnemyType* m_type;
 };

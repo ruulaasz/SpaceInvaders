@@ -28,27 +28,26 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_posX = ((float)_screenW / 2) - ((float)m_texture->getWidth() / 2);
 	m_posY = (float)_screenH - (float)m_texture->getHeight();
 
-	m_weapons[MAIN_WEAPON] = new MainWeapon();
 	m_weapons[MAIN_WEAPON]->init(this);
 	m_weapons[MAIN_WEAPON]->m_direction = DIRECTION_STOP;
 	m_weapons[MAIN_WEAPON]->m_weaponSelected = true;
 	m_activeWeapon = MAIN_WEAPON;
 
-	m_weapons[RIGHT_WEAPON] = new SideWeapon();
 	m_weapons[RIGHT_WEAPON]->init(this);
 	m_weapons[RIGHT_WEAPON]->m_direction = DIRECTION_RIGHT;
+	m_weapons[RIGHT_WEAPON]->m_life = 100;
 
-	m_weapons[LEFT_WEAPON] = new SideWeapon();
 	m_weapons[LEFT_WEAPON]->init(this);
 	m_weapons[LEFT_WEAPON]->m_direction = DIRECTION_LEFT;
+	m_weapons[LEFT_WEAPON]->m_life = 100;
 
 	m_moveSFX->play(-1);
 	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 
-	m_sizeW = (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_texture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_texture->getWidth();
+	m_sizeW = (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
 	m_sizeH = (float)m_texture->getHeight();
 	Pawn::init();
-	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_texture->getWidth(), 0);
+	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), 0);
 
 	m_coreCollider = new PlayerVehicleBox();
 	m_coreCollider->SetActor(this);
@@ -273,14 +272,14 @@ void PlayerVehicle::collision(const Actor * _actor)
 {
 	if (const SkyEnemy* temp = dynamic_cast<const SkyEnemy*>(_actor))
 	{
-		recieveDamage(temp->m_damage);
+		recieveDamage(temp->m_type->m_damage);
 
-		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_damage)/4);
+		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage)/4);
 		m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
-		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_damage)/4);
+		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage)/4);
 		m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
 
-		LCF::AudioManager::GetInstance().StopChannel(temp->m_moveSFX->m_currentChannel);
+		LCF::AudioManager::GetInstance().StopChannel(temp->m_type->m_moveSFX->m_currentChannel);
 		LCF::World::GetInstance().deleteActorByID(temp->m_id);
 	}
 
@@ -288,16 +287,16 @@ void PlayerVehicle::collision(const Actor * _actor)
 	{
 		if (temp->m_direction < 0)
 		{
-			m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_damage) / 4);
+			m_weapons[RIGHT_WEAPON]->recieveDamage(temp->m_type->m_damage);
 			m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
 		}
 		else
 		{
-			m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_damage) / 4);
+			m_weapons[LEFT_WEAPON]->recieveDamage(temp->m_type->m_damage);
 			m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
 		}
 
-		LCF::AudioManager::GetInstance().StopChannel(temp->m_moveSFX->m_currentChannel);
+		LCF::AudioManager::GetInstance().StopChannel(temp->m_type->m_moveSFX->m_currentChannel);
 		LCF::World::GetInstance().deleteActorByID(temp->m_id);
 	}
 
@@ -305,12 +304,12 @@ void PlayerVehicle::collision(const Actor * _actor)
 	{
 		if (m_currentDirection < DIRECTION_STOP)
 		{
-			m_posX = temp->m_posX + temp->m_colliderBox->GetW() + m_weapons[LEFT_WEAPON]->m_texture->getWidth();
+			m_posX = temp->m_posX + temp->m_colliderBox->GetW() + m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
 			m_currentDirection = MAX_NUMBER_TO_THE_LEFT;
 		}
 		else
 		{
-			m_posX = temp->m_posX - m_colliderBox->GetW() + m_weapons[RIGHT_WEAPON]->m_texture->getWidth();
+			m_posX = temp->m_posX - m_colliderBox->GetW() + m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
 			m_currentDirection = MAX_NUMBER_TO_THE_RIGHT;
 		}
 

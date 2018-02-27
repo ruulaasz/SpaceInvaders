@@ -20,13 +20,14 @@
 #include "MainBullet.h"
 #include "SubBullet.h"
 
+#include "WeaponType.h"
 #include "Weapon.h"
 #include "MainWeapon.h"
 #include "SideWeapon.h"
-#include "SideWeaponB.h"
 
 #include "PlayerVehicle.h"
 
+#include "EnemyType.h"
 #include "Enemy.h"
 #include "SkyEnemy.h"
 #include "GroundEnemy.h"

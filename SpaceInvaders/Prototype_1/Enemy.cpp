@@ -2,8 +2,7 @@
 
 Enemy::Enemy()
 {
-	m_moveAnimation = new LCF::Animator();
-	m_deadAnimation = new LCF::Animator();
+
 }
 
 Enemy::~Enemy()

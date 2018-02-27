@@ -2,7 +2,7 @@
 
 Weapon::Weapon()
 {
-	m_shootAnimation = new LCF::Animator();
+
 }
 
 Weapon::~Weapon()
@@ -25,11 +25,11 @@ void Weapon::render(SDL_Renderer * _renderer)
 {
 	if (m_weaponSelected)
 	{
-		m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer);
+		m_weaponType->m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer);
 	}
 	else
 	{
-		m_texture->render((int)m_posX, (int)m_posY, _renderer);
+		m_weaponType->m_weaponTexture->render((int)m_posX, (int)m_posY, _renderer);
 	}
 }
 
@@ -42,7 +42,7 @@ void Weapon::update(float _deltaTime)
 	
 	if (m_direction < DIRECTION_STOP)
 	{
-		m_posX = m_Parent->m_posX - m_texture->getWidth();
+		m_posX = m_Parent->m_posX - m_weaponType->m_weaponTexture->getWidth();
 	}
 	
 	if (m_direction == DIRECTION_STOP)
@@ -51,7 +51,7 @@ void Weapon::update(float _deltaTime)
 		m_posY = m_Parent->m_posY;
 	}
 
-	m_shootAnimation->update(_deltaTime);
+	m_weaponType->m_shootAnimation->update(_deltaTime);
 }
 
 void Weapon::collision(const Actor * /*_actor*/)

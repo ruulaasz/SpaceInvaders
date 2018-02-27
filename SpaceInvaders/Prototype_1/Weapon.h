@@ -39,15 +39,11 @@ public:
 public:
 	bool m_weaponSelected;
 	int m_direction;
-	float m_rateOfFire;
 	float m_rateTimer;
 	bool m_canShoot;
+	LCF::Sfx* m_changeWeaponSFX;
+	Pawn* m_Parent;
 	int m_life;
 
-	LCF::Texture* m_weaponReadyTexture;
-	LCF::Sfx* m_shootSFX;
-	LCF::Sfx* m_changeWeaponSFX;
-	LCF::Animator* m_shootAnimation;
-
-	Pawn* m_Parent;
+	WeaponType* m_weaponType;
 };
