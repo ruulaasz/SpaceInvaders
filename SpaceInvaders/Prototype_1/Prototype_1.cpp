@@ -10,6 +10,8 @@ PlayerVehicle* g_player;
 typedef LCF::Controller<PlayerVehicle, MovementInfo> PlayerVehicleController;
 PlayerVehicleController g_playerVehicleController;
 
+LCF::Factory<SkyEnemy, EnemyType> g_factory;
+
 Wall* g_leftWall;
 Wall* g_rightWall;
 
@@ -26,8 +28,6 @@ EnemyType* g_groundEnemyType;
 WeaponType* g_mainWeaponType;
 WeaponType* g_sideWeaponType;
 WeaponType* g_sideWeaponType2;
-
-EnemyType* test;
 
 bool initSystems()
 {
@@ -218,14 +218,15 @@ void initWorld()
 	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
 	LCF::World::GetInstance().registerActor(g_player);
 
-	std::string c = "skyenemy skyenemy_dead 150 meteor 5 0.1 meteor_dead 5 0.1 1 200 50 ";
-	g_skyEnemyType = new EnemyType();
-	g_skyEnemyType->init(c);
+	//std::string c = "skyenemy skyenemy_dead 150 meteor 5 0.1 meteor_dead 5 0.1 1 200 50 ";
+	//g_skyEnemyType = new EnemyType();
+	//g_skyEnemyType->init(c);
 
-	g_testEnemy = new SkyEnemy();
+	std::string route = "..\\resources\\units\\";
+	route = route + "enemy\\skyenemy.txt";
+	g_testEnemy = g_factory.create(route);
 	g_testEnemy->m_posX = 775;
 	g_testEnemy->m_posY = 100;
-	g_testEnemy->m_type = g_skyEnemyType;
 	g_testEnemy->init();
 	LCF::World::GetInstance().registerActor(g_testEnemy);
 

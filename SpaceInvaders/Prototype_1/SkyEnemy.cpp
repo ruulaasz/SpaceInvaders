@@ -78,3 +78,8 @@ void SkyEnemy::collision(const Actor * _actor)
 		}
 	}
 }
+
+void SkyEnemy::setType(EnemyType * _type)
+{
+	m_type = _type;
+}

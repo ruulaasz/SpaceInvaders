@@ -23,5 +23,7 @@ public:
 
 	virtual void collision(const Actor* _actor);
 
+	void setType(EnemyType* _type);
+
 	EnemyType* m_type;
 };
