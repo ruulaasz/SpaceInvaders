@@ -14,5 +14,7 @@ public:
 	int m_life;
 	int m_damage;
 
+	void init(std::string _info);
+
 	Weapon* m_weapon;
 };

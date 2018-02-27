@@ -27,6 +27,8 @@ WeaponType* g_mainWeaponType;
 WeaponType* g_sideWeaponType;
 WeaponType* g_sideWeaponType2;
 
+EnemyType* test;
+
 bool initSystems()
 {
 	LCF::SDL_Manager::StartModule();
@@ -216,30 +218,9 @@ void initWorld()
 	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
 	LCF::World::GetInstance().registerActor(g_player);
 
+	std::string c = "skyenemy skyenemy_dead 150 meteor 5 0.1 meteor_dead 5 0.1 1 200 50 ";
 	g_skyEnemyType = new EnemyType();
-	g_skyEnemyType->m_damage = 30;
-	g_skyEnemyType->m_life = 200;
-	g_skyEnemyType->m_movementSpeed = 125;
-
-	g_skyEnemyType->m_moveAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor"));
-	g_skyEnemyType->m_moveAnimation->m_frameHeight = g_skyEnemyType->m_moveAnimation->m_sprite->getHeight();
-	g_skyEnemyType->m_moveAnimation->m_numOfFrames = 5;
-	g_skyEnemyType->m_moveAnimation->m_frameWidth = g_skyEnemyType->m_moveAnimation->m_sprite->getWidth() / g_skyEnemyType->m_moveAnimation->m_numOfFrames;
-	g_skyEnemyType->m_moveAnimation->m_animSpeed = 0.1f;
-
-	g_skyEnemyType->m_deadAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor_dead"));
-	g_skyEnemyType->m_deadAnimation->m_frameHeight = g_skyEnemyType->m_deadAnimation->m_sprite->getHeight();
-	g_skyEnemyType->m_deadAnimation->m_numOfFrames = 5;
-	g_skyEnemyType->m_deadAnimation->m_frameWidth = g_skyEnemyType->m_deadAnimation->m_sprite->getWidth() / g_skyEnemyType->m_deadAnimation->m_numOfFrames;
-	g_skyEnemyType->m_deadAnimation->m_animSpeed = 0.1f;
-	g_skyEnemyType->m_deadAnimation->m_maxRepetitions = 1;
-
-	g_skyEnemyType->m_moveSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy")));
-	g_skyEnemyType->m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
-
-	g_skyEnemyType->m_weapon = new MainWeapon();
-	g_skyEnemyType->m_weapon->m_direction = DIRECTION_STOP;
-	g_skyEnemyType->m_weapon->m_weaponSelected = true;
+	g_skyEnemyType->init(c);
 
 	g_testEnemy = new SkyEnemy();
 	g_testEnemy->m_posX = 775;
