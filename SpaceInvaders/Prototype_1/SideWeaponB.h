@@ -1,8 +1,4 @@
 #pragma once
-#include <ColliderBox.h>
-
-class SideWeaponB;
-typedef LCF::ColliderBox<SideWeaponB> SideWeaponBBox;
 
 class SideWeaponB :public Weapon
 {
@@ -27,13 +23,10 @@ public:
 
 	virtual void collision(const Actor* _actor);
 
-	void shieldColision(const Actor* _actor);
-
 	virtual void shoot();
 
 public:
 	bool m_isShooting;
 	float m_burstTimer;
 	int m_bulletsFired;
-	SideWeaponBBox* m_shieldCollider;
 };

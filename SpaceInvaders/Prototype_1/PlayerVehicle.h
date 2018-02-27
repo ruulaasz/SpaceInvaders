@@ -41,10 +41,13 @@ public:
 	virtual void update(float _deltaTime);
 
 	void move(MovementInfo _info);
+
 	void shootMainWeapon(MovementInfo _info);
 	void shootRightWeapon(MovementInfo _info);
 	void shootLeftWeapon(MovementInfo _info);
+
 	void recieveDamage(int _damage);
+	void superShot(MovementInfo _info);
 
 	virtual void collision(const Actor* _actor);
 	void coreColision(const Actor* _actor);
@@ -53,9 +56,22 @@ public:
 	int m_currentDirection;
 	float m_movementSpeed;
 	bool m_collisionDectected;
+	int m_activeWeapon;
+
 	int m_life;
+	int m_lifeMax;
+
+	float m_energy;
+	float m_energyRegenerationRate;
+	float m_energyMax;
 
 	Weapon* m_weapons[3];
 	PlayerVehicleBox* m_coreCollider;
 	LCF::Sfx* m_moveSFX;
+
+	spiText* m_coreLifeText;
+	spiText* m_leftShieldText;
+	spiText* m_rightShieldText;
+
+	spiText* m_energyText;
 };

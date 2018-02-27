@@ -37,7 +37,6 @@ namespace LCF
 				if (m_currentRepetitions >= m_maxRepetitions)
 				{
 					m_finished = true;
-					m_currentJump = 0;
 				}
 			}
 		}
@@ -45,18 +44,29 @@ namespace LCF
 
 	void Animator::render(int _x, int _y, SDL_Renderer * _renderer)
 	{
-		SDL_Rect dstRect;
-		dstRect.x = _x;
-		dstRect.y = _y;
-		dstRect.w = m_frameWidth;
-		dstRect.h = m_frameHeight;
+		if (!m_finished)
+		{
+			SDL_Rect dstRect;
+			dstRect.x = _x;
+			dstRect.y = _y;
+			dstRect.w = m_frameWidth;
+			dstRect.h = m_frameHeight;
 
-		SDL_Rect srcRect;
-		srcRect.x = m_frameWidth * m_currentJump;
-		srcRect.y = 0;
-		srcRect.w = m_frameWidth;
-		srcRect.h = m_frameHeight;
+			SDL_Rect srcRect;
+			srcRect.x = m_frameWidth * m_currentJump;
+			srcRect.y = 0;
+			srcRect.w = m_frameWidth;
+			srcRect.h = m_frameHeight;
 
-		m_sprite->render(dstRect, srcRect, _renderer);
+			m_sprite->render(dstRect, srcRect, _renderer);
+		}
+	}
+
+	void Animator::resetAnimation()
+	{
+		m_currentJump = 0;
+		m_currentRepetitions = 0;
+		m_timer = 0;
+		m_finished = false;
 	}
 }

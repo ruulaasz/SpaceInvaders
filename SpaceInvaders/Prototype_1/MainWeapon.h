@@ -21,5 +21,14 @@ public:
 	*/
 	virtual void update(float _deltaTime);
 
+	/**
+	* Virtual: Render the content of the Actor
+	*
+	* @param _renderer
+	* a SDL renderer
+	*
+	*/
+	virtual void render(SDL_Renderer* _renderer);
+
 	virtual void shoot();
 };

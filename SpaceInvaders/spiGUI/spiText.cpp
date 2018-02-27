@@ -4,14 +4,14 @@
 spiText::spiText()
 {
 	FontData data;
-	data._fontSize = 16;
+	data._fontSize = 20;
 	data._pathFontFile = "c:/windows/fonts/arialbd.ttf";
 	Initialize(data);
 
 	SDL_Color c;
 	c.r = 255;
-	c.g = 0;
-	c.b = 0;
+	c.g = 255;
+	c.b = 255;
 
 	m_color = c;
 

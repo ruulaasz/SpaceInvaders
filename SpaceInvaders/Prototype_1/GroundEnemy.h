@@ -1,16 +1,16 @@
 #pragma once
 
-class SideWeapon : public Weapon
+class GroundEnemy : public Enemy
 {
 public:
-	SideWeapon();
-	~SideWeapon();
+	GroundEnemy();
+	~GroundEnemy();
 
 	/**
 	* Virtual: Initialize the content of the Actor
 	*
 	*/
-	virtual void init(Pawn* _Parent);
+	virtual void init();
 
 	/**
 	* Virtual: Updates the content of the Actor
@@ -21,16 +21,7 @@ public:
 	*/
 	virtual void update(float _deltaTime);
 
-	/**
-	* Virtual: Render the content of the Actor
-	*
-	* @param _renderer
-	* a SDL renderer
-	*
-	*/
-	virtual void render(SDL_Renderer* _renderer);
-
 	virtual void collision(const Actor* _actor);
 
-	virtual void shoot();
+	int m_direction;
 };

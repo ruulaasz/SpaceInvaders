@@ -26,14 +26,6 @@ void SideWeaponB::init(Pawn * _Parent)
 	m_sizeH = (float)m_texture->getHeight();
 
 	Pawn::init();
-
-	m_shieldCollider = new SideWeaponBBox();
-	m_shieldCollider->SetActor(this);
-	m_shieldCollider->SetFunction(&SideWeaponB::shieldColision);
-	m_shieldCollider->SetSize(m_posX, m_posY, m_sizeW, m_sizeH);
-	LCF::ColliderManager::GetInstance().RegistrerCollider(m_shieldCollider);
-
-	m_colliderBox->SetEnabled(false);
 }
 
 void SideWeaponB::update(float _deltaTime)
@@ -47,7 +39,7 @@ void SideWeaponB::update(float _deltaTime)
 	}
 	if (m_life <= 0)
 	{
-		m_shieldCollider->SetEnabled(false);
+		m_colliderBox->SetEnabled(false);
 	}
 
 	if (m_weaponSelected)
@@ -103,11 +95,6 @@ void SideWeaponB::update(float _deltaTime)
 void SideWeaponB::collision(const Actor * /*_actor*/)
 {
 
-}
-
-void SideWeaponB::shieldColision(const Actor * /*_actor*/)
-{
-	
 }
 
 void SideWeaponB::shoot()

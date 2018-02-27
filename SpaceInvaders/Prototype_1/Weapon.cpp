@@ -2,7 +2,7 @@
 
 Weapon::Weapon()
 {
-	
+	m_shootAnimation = new LCF::Animator();
 }
 
 Weapon::~Weapon()
@@ -33,7 +33,7 @@ void Weapon::render(SDL_Renderer * _renderer)
 	}
 }
 
-void Weapon::update(float /*_deltaTime*/)
+void Weapon::update(float _deltaTime)
 {
 	if (m_direction > DIRECTION_STOP)
 	{
@@ -48,7 +48,10 @@ void Weapon::update(float /*_deltaTime*/)
 	if (m_direction == DIRECTION_STOP)
 	{
 		m_posX = m_Parent->m_posX;
+		m_posY = m_Parent->m_posY;
 	}
+
+	m_shootAnimation->update(_deltaTime);
 }
 
 void Weapon::collision(const Actor * /*_actor*/)
@@ -59,4 +62,21 @@ void Weapon::collision(const Actor * /*_actor*/)
 void Weapon::recieveDamage(int _damage)
 {
 	m_life -= _damage;
+
+	FallingText* fall = new FallingText();
+
+	fall->m_String = std::to_string(_damage);
+	fall->m_posX = m_posX;
+	fall->m_posY = m_posY - (m_sizeH / 2);
+	fall->m_originPosX = fall->m_posX;
+	fall->m_originPosY = fall->m_posY;
+
+	SDL_Color c;
+	c.r = 0;
+	c.g = 0;
+	c.b = 0;
+
+	fall->m_color = c;
+
+	TextManager::GetInstance().m_fallingText.push_back(fall);
 }

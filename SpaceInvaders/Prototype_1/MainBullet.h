@@ -5,7 +5,7 @@ class MainBullet : public Bullet
 public:
 	MainBullet();
 	MainBullet(float _posX, float _posY);
-	virtual ~MainBullet();
+	~MainBullet();
 
 	/**
 	* Virtual: Initialize the content of the Actor

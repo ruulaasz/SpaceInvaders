@@ -34,6 +34,8 @@ namespace LCF
 		*/
 		void render(int _x, int _y, SDL_Renderer* _renderer);
 
+		void resetAnimation();
+
 
 	public:
 		unsigned int m_numOfFrames;

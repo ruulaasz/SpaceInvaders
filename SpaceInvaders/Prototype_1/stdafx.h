@@ -13,16 +13,23 @@
 #include <spiGUI.h>
 
 #include "Pawn.h"
+
 #include "Wall.h"
-#include "SkyEnemy.h"
+
 #include "Bullet.h"
 #include "MainBullet.h"
 #include "SubBullet.h"
+
 #include "Weapon.h"
 #include "MainWeapon.h"
 #include "SideWeapon.h"
 #include "SideWeaponB.h"
+
 #include "PlayerVehicle.h"
+
+#include "Enemy.h"
+#include "SkyEnemy.h"
+#include "GroundEnemy.h"
 
 #define MAX_NUMBER_TO_THE_LEFT -2
 #define MAX_NUMBER_TO_THE_RIGHT 2

@@ -47,6 +47,7 @@ public:
 	LCF::Texture* m_weaponReadyTexture;
 	LCF::Sfx* m_shootSFX;
 	LCF::Sfx* m_changeWeaponSFX;
+	LCF::Animator* m_shootAnimation;
 
 	Pawn* m_Parent;
 };

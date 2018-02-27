@@ -180,6 +180,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GroundEnemy.h" />
     <ClInclude Include="MainBullet.h" />
     <ClInclude Include="MainWeapon.h" />
     <ClInclude Include="Pawn.h" />
@@ -197,6 +199,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GroundEnemy.cpp" />
     <ClCompile Include="MainBullet.cpp" />
     <ClCompile Include="MainWeapon.cpp" />
     <ClCompile Include="Pawn.cpp" />

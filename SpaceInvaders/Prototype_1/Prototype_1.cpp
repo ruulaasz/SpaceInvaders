@@ -18,9 +18,8 @@ LCF::Music* g_music;
 LCF::BackgroundTexture* g_background;
 
 SkyEnemy* g_testEnemy;
-SkyEnemy* g_testEnemy2;
-SkyEnemy* g_testEnemy3;
-SkyEnemy* g_testEnemy4;
+
+GroundEnemy* g_groundEnemy;
 
 bool initSystems()
 {
@@ -66,9 +65,6 @@ void loadContent()
 	assetName = "wall";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 
-	assetName = "sub_bullet_base";
-	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
-
 	assetName = "default";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 
@@ -76,7 +72,25 @@ void loadContent()
 	assetName = "main_bullet";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
+	assetName = "main_bullet_dead";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
 	assetName = "meteor";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "meteor_dead";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "meteor_small";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "meteor_small_dead";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "main_weapon_shoot";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "sub_bullet_base";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
 	//BACKGROUNDS
@@ -105,6 +119,9 @@ void loadContent()
 	assetName = "skyenemy_dead";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
+	assetName = "mainbullet_impact";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
 	//MUSIC
 	assetName = "background_music";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
@@ -125,6 +142,7 @@ void initControllers()
 	g_playerVehicleController.addFunctionAndValues(SDLK_UP, SDL_KEYUP, &PlayerVehicle::shootMainWeapon, new MovementInfo(0));
 	g_playerVehicleController.addFunctionAndValues(SDLK_RIGHT, SDL_KEYUP, &PlayerVehicle::shootRightWeapon, new MovementInfo(0));
 	g_playerVehicleController.addFunctionAndValues(SDLK_LEFT, SDL_KEYUP, &PlayerVehicle::shootLeftWeapon, new MovementInfo(0));
+	g_playerVehicleController.addFunctionAndValues(SDLK_SPACE, SDL_KEYUP, &PlayerVehicle::superShot, new MovementInfo(0));
 
 	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController);
 }
@@ -137,22 +155,16 @@ void initWorld()
 
 	g_testEnemy = new SkyEnemy();
 	g_testEnemy->init();
+	g_testEnemy->m_posX = 775;
+	g_testEnemy->m_posY = 100;
 	LCF::World::GetInstance().registerActor(g_testEnemy);
 
-	g_testEnemy2 = new SkyEnemy();
-	g_testEnemy2->init();
-	g_testEnemy2->m_posX = 800;
-	LCF::World::GetInstance().registerActor(g_testEnemy2);
-
-	//g_testEnemy3 = new SkyEnemy();
-	//g_testEnemy3->init();
-	//g_testEnemy3->m_posX = 1000;
-	//LCF::World::GetInstance().registerActor(g_testEnemy3);
-
-	//g_testEnemy4 = new SkyEnemy();
-	//g_testEnemy4->init();
-	//g_testEnemy4->m_posX = 1200;
-	//LCF::World::GetInstance().registerActor(g_testEnemy4);
+	g_groundEnemy = new GroundEnemy();
+	g_groundEnemy->init();
+	g_groundEnemy->m_posX = SCREEN_WIDTH - g_groundEnemy->m_sizeW;
+	g_groundEnemy->m_posY = SCREEN_HEIGHT-g_groundEnemy->m_sizeH;
+	g_groundEnemy->m_direction = DIRECTION_LEFT;
+	LCF::World::GetInstance().registerActor(g_groundEnemy);
 
 	g_leftWall = new Wall();
 	g_leftWall->init();
