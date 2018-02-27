@@ -3,6 +3,8 @@
 #include "Module.h"
 #include "SDL_Manager.h"
 
+#include "FileManager.h"
+
 #include "Asset.h"
 #include "Texture.h"
 #include "BackgroundTexture.h"
@@ -25,3 +27,5 @@
 
 #include "ColliderBox.h"
 #include "ColliderManager.h"
+
+#include "Factory.h"

@@ -192,6 +192,7 @@
     <ClInclude Include="ColliderManager.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Factory.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LCFramework.h" />
     <ClInclude Include="message.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="ColliderManager.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="SDL_Manager.cpp" />

@@ -34,6 +34,8 @@ bool initSystems()
 	LCF::ColliderManager::StartModule();
 	LCF::ColliderManager::GetInstance().Init();
 
+	LCF::FileManager::StartModule();
+	
 	if (!LCF::SDL_Manager::GetInstance().init("SpaceInvaders", SCREEN_WIDTH, SCREEN_HEIGHT))
 	{
 		return false;
