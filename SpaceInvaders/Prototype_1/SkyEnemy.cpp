@@ -2,9 +2,7 @@
 
 SkyEnemy::SkyEnemy()
 {
-	/*m_movementSpeed = 100.f;
-	m_life = 100;
-	m_damage = 10;*/
+
 }
 
 SkyEnemy::~SkyEnemy()
@@ -14,6 +12,8 @@ SkyEnemy::~SkyEnemy()
 
 void SkyEnemy::init()
 {
+	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
+
 	m_sizeW = (float)m_type->m_moveAnimation->m_frameWidth;
 	m_sizeH = (float)m_type->m_moveAnimation->m_frameHeight;
 	
@@ -21,22 +21,19 @@ void SkyEnemy::init()
 
 	m_type->m_moveSFX->play(-1, -1);
 
-	m_life = m_type->m_life;
+	m_weapon->init(this);
+	m_weapon->m_weaponSelected = true;
 
 	Pawn::init();
 }
 
 void SkyEnemy::update(float _deltaTime)
 {
-	//if (m_posY > 780 && m_dead != true)
-	//{
-	//	LCF::World::GetInstance().deleteActorByID(m_id);
-	//}
-
 	if (m_beDestroyed)
 	{
 		if (!m_dead)
 		{
+
 			LCF::AudioManager::GetInstance().StopChannel(m_type->m_moveSFX->m_currentChannel);
 			m_type->m_deadSFX->play(-1);
 			m_colliderBox->SetEnabled(false);
@@ -49,31 +46,47 @@ void SkyEnemy::update(float _deltaTime)
 			m_DestroyMe = true;
 		}
 	}
-
-	if (!m_dead)
+	else
 	{
 		m_posY += (m_type->m_movementSpeed * _deltaTime);
+
+		if (!m_dead)
+		{
+			m_weapon->update(_deltaTime);
+		}
 	}
 
 	m_currentAnimation->update(_deltaTime);
+}
+
+void SkyEnemy::render(SDL_Renderer * _renderer)
+{
+	Enemy::render(_renderer);
+
+	if (!m_dead)
+	{
+		m_weapon->render(_renderer);
+	}
 }
 
 void SkyEnemy::collision(const Actor * _actor)
 {
 	if (const MainBullet* temp = dynamic_cast<const MainBullet*>(_actor))
 	{
-		if (!temp->m_enemy)
+		if (!temp->m_type->m_enemy)
 		{
-			recieveDamage(temp->m_damage);
+			recieveDamage(temp->m_type->m_damage);
 			LCF::World::GetInstance().deleteActorByID(temp->m_id);
 		}
+
+		//m_weapon->shoot();
 	}
 
 	if (const SubBullet* temp = dynamic_cast<const SubBullet*>(_actor))
 	{
-		if (!temp->m_enemy)
+		if (!temp->m_type->m_enemy)
 		{
-			recieveDamage(temp->m_damage);
+			recieveDamage(temp->m_type->m_damage);
 			LCF::World::GetInstance().deleteActorByID(temp->m_id);
 		}
 	}
@@ -82,4 +95,5 @@ void SkyEnemy::collision(const Actor * _actor)
 void SkyEnemy::setType(EnemyType * _type)
 {
 	m_type = _type;
+	m_life = _type->m_life;
 }

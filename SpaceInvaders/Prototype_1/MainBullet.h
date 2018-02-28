@@ -4,7 +4,6 @@ class MainBullet : public Bullet
 {
 public:
 	MainBullet();
-	MainBullet(float _posX, float _posY);
 	~MainBullet();
 
 	/**
@@ -32,4 +31,6 @@ public:
 	virtual void update(float _deltaTime);
 
 	virtual void collision(const Actor* _actor);
+
+	void setType(BulletType* _type);
 };

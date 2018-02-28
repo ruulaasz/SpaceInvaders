@@ -44,8 +44,8 @@ void SideWeapon::update(float _deltaTime)
 void SideWeapon::render(SDL_Renderer * _renderer)
 {
 	Weapon::render(_renderer);
-
-	m_weaponType->m_shootAnimation->render(m_posX - m_sizeW + (28 * m_direction), m_posY + m_sizeH/4, _renderer);
+	int posx = (m_weaponType->m_shootAnimation->m_frameWidth * m_direction);
+	m_weaponType->m_shootAnimation->render(m_posX + posx, m_posY + m_sizeH/4, _renderer);
 }
 
 void SideWeapon::collision(const Actor * /*_actor*/)
@@ -64,18 +64,23 @@ void SideWeapon::shoot()
 		{
 			
 			posY = (int)m_posY + m_weaponType->m_weaponTexture->getHeight() / 2;
+			
+			SubBullet* b = new SubBullet();
+			b->m_direction = m_direction;
+			b->m_type = new BulletType(*m_bulletType);
+			b->init();
 
 			if (m_direction > DIRECTION_STOP)
 			{
-				posX = (int)m_Parent->m_posX + (m_Parent->m_texture->getWidth() + m_weaponType->m_weaponTexture->getWidth());
+				posX = (int)m_Parent->m_posX + m_Parent->m_sizeW - m_sizeW;
 			}
 			else
 			{
-				posX = (int)m_Parent->m_posX - m_weaponType->m_weaponTexture->getWidth();
+				posX = (int)m_Parent->m_posX - m_sizeW - m_bulletType->m_travelAnimation->m_frameWidth;
 			}
-			
-			SubBullet* b = new SubBullet((float)posX, (float)posY, m_direction);
-			b->init();
+
+			b->m_posX = posX;
+			b->m_posY = posY;
 			LCF::World::GetInstance().registerActor(b);
 
 			m_weaponType->m_shootSFX->play(-1);

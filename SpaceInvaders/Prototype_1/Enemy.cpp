@@ -17,16 +17,15 @@ void Enemy::render(SDL_Renderer * _renderer)
 
 void Enemy::recieveDamage(int _damage)
 {
-	if (!m_dead)
+
+	m_life -= _damage;
+
+	if (m_life <= 0)
 	{
-		m_life -= _damage;
-
-		if (m_life <= 0)
-		{
-			LCF::World::GetInstance().deleteActorByID(m_id);
-		}
+		LCF::World::GetInstance().deleteActorByID(m_id);
+		m_life = 0;
 	}
-
+	
 	FallingText* fall = new FallingText();
 
 	fall->m_String = std::to_string(_damage);

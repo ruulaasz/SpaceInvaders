@@ -16,6 +16,7 @@
 
 #include "Wall.h"
 
+#include "BulletType.h"
 #include "Bullet.h"
 #include "MainBullet.h"
 #include "SubBullet.h"

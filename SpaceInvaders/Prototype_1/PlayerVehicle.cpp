@@ -29,17 +29,14 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_posY = (float)_screenH - (float)m_texture->getHeight();
 
 	m_weapons[MAIN_WEAPON]->init(this);
-	m_weapons[MAIN_WEAPON]->m_direction = DIRECTION_STOP;
 	m_weapons[MAIN_WEAPON]->m_weaponSelected = true;
 	m_activeWeapon = MAIN_WEAPON;
 
 	m_weapons[RIGHT_WEAPON]->init(this);
 	m_weapons[RIGHT_WEAPON]->m_direction = DIRECTION_RIGHT;
-	m_weapons[RIGHT_WEAPON]->m_life = 100;
 
 	m_weapons[LEFT_WEAPON]->init(this);
 	m_weapons[LEFT_WEAPON]->m_direction = DIRECTION_LEFT;
-	m_weapons[LEFT_WEAPON]->m_life = 100;
 
 	m_moveSFX->play(-1);
 	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
@@ -124,8 +121,6 @@ void PlayerVehicle::update(float _deltaTime)
 {
 	if (m_beDestroyed)
 	{
-		//animacion o cualquier cosa que se requiera
-		//Usar esta bandera para que el manager lo elimine
 		m_DestroyMe = true;
 	}
 
@@ -314,6 +309,18 @@ void PlayerVehicle::collision(const Actor * _actor)
 		}
 
 		m_collisionDectected = true;
+	}
+
+	if (const MainBullet* temp = dynamic_cast<const MainBullet*>(_actor))
+	{
+		recieveDamage(temp->m_type->m_damage);
+
+		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
+		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
+
+		LCF::World::GetInstance().deleteActorByID(temp->m_id);
 	}
 }
 

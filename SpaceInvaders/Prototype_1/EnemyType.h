@@ -15,6 +15,4 @@ public:
 	int m_damage;
 
 	void init(std::string _info);
-
-	Weapon* m_weapon;
 };

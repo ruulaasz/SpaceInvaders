@@ -14,9 +14,9 @@ namespace LCF
 		{
 			LCF::FileManager::GetInstance().ReadFile(_name.c_str());
 			_Object* newObject = new _Object();
-			std::string fi = LCF::FileManager::GetInstance().GetLine();
+			std::string info = LCF::FileManager::GetInstance().GetLine();
 			_type* typeObject = new _type();
-			typeObject->init(fi);
+			typeObject->init(info);
 			newObject->setType(typeObject);
 			LCF::FileManager::GetInstance().CloseFile();
 			return newObject;

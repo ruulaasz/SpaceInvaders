@@ -9,6 +9,20 @@ namespace LCF
 		m_maxRepetitions = 0;
 	}
 
+	Animator::Animator(const Animator &_animator)
+	{
+		m_numOfFrames = _animator.m_numOfFrames;
+		m_currentJump = _animator.m_currentJump;
+		m_frameWidth = _animator.m_frameWidth;
+		m_frameHeight = _animator.m_frameHeight;
+		m_maxRepetitions = _animator.m_maxRepetitions;
+		m_currentRepetitions = _animator.m_currentRepetitions;
+		m_animSpeed = _animator.m_animSpeed;
+		m_timer = _animator.m_timer;
+		m_finished = _animator.m_finished;
+		m_sprite = _animator.m_sprite;
+	}
+
 	Animator::~Animator()
 	{
 

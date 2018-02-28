@@ -80,3 +80,9 @@ void Weapon::recieveDamage(int _damage)
 
 	TextManager::GetInstance().m_fallingText.push_back(fall);
 }
+
+void Weapon::setType(WeaponType * _type)
+{
+	m_weaponType = _type;
+	m_life = _type->m_life;
+}

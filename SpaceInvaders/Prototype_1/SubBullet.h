@@ -4,7 +4,6 @@ class SubBullet : public Bullet
 {
 public:
 	SubBullet();
-	SubBullet(float _posX, float _posY, int _direction);
 	~SubBullet();
 
 	/**
@@ -31,7 +30,9 @@ public:
 	*/
 	virtual void render(SDL_Renderer* _renderer);
 
-	virtual void collision(const Actor* /*_actor*/) {};
+	virtual void collision(const Actor* _actor);
+
+	void setType(BulletType* _type);
 
 	int m_direction;
 };

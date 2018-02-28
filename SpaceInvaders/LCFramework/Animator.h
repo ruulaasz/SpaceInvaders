@@ -8,6 +8,7 @@ namespace LCF
 	{
 	public:
 		Animator();
+		Animator(const Animator &_animator);
 		virtual ~Animator();
 
 		/**

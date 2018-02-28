@@ -10,7 +10,12 @@ PlayerVehicle* g_player;
 typedef LCF::Controller<PlayerVehicle, MovementInfo> PlayerVehicleController;
 PlayerVehicleController g_playerVehicleController;
 
-LCF::Factory<SkyEnemy, EnemyType> g_factory;
+LCF::Factory<SkyEnemy, EnemyType> g_skyEnemyFactory;
+LCF::Factory<GroundEnemy, EnemyType> g_groundEnemyFactory;
+LCF::Factory <MainWeapon , WeaponType > g_mainWeaponfactory;
+LCF::Factory <SideWeapon, WeaponType > g_sideWeaponfactory;
+LCF::Factory <MainBullet, BulletType > g_mainBulletFactory;
+LCF::Factory <SubBullet, BulletType > g_subBulletFactory;
 
 Wall* g_leftWall;
 Wall* g_rightWall;
@@ -19,15 +24,8 @@ LCF::Music* g_music;
 
 LCF::BackgroundTexture* g_background;
 
-SkyEnemy* g_testEnemy;
+SkyEnemy* g_skyEnemy;
 GroundEnemy* g_groundEnemy;
-
-EnemyType* g_skyEnemyType;
-EnemyType* g_groundEnemyType;
-
-WeaponType* g_mainWeaponType;
-WeaponType* g_sideWeaponType;
-WeaponType* g_sideWeaponType2;
 
 bool initSystems()
 {
@@ -70,9 +68,6 @@ void loadContent()
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 
 	assetName = "SideWeaponA_Selected";
-	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
-
-	assetName = "wall";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_TEXTURE);
 
 	assetName = "default";
@@ -132,6 +127,9 @@ void loadContent()
 	assetName = "mainbullet_impact";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
+	assetName = "shoot_main_enemy_weapon";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+	
 	//MUSIC
 	assetName = "background_music";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_MUSIC);
@@ -159,103 +157,62 @@ void initControllers()
 
 void initWorld()
 {
-	g_mainWeaponType = new WeaponType();
-	g_mainWeaponType->m_rateOfFire = 0.2f;
-
-	g_mainWeaponType->m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_mainweapon"));
-	g_mainWeaponType->m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon_Selected"));
-	g_mainWeaponType->m_weaponTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
-
-	g_mainWeaponType->m_shootAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("main_weapon_shoot"));
-	g_mainWeaponType->m_shootAnimation->m_frameHeight = 32;
-	g_mainWeaponType->m_shootAnimation->m_frameWidth = 90;
-	g_mainWeaponType->m_shootAnimation->m_animSpeed = 0.04f;
-	g_mainWeaponType->m_shootAnimation->m_numOfFrames = 8;
-	g_mainWeaponType->m_shootAnimation->m_maxRepetitions = 1;
-	g_mainWeaponType->m_shootAnimation->m_finished = true;
-
-	g_sideWeaponType = new WeaponType();
-	g_sideWeaponType->m_rateOfFire = 0.2f;
-
-	g_sideWeaponType->m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
-	g_sideWeaponType->m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA_Selected"));
-	g_sideWeaponType->m_weaponTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA"));
-
-	g_sideWeaponType->m_shootAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("main_weapon_shoot"));
-	g_sideWeaponType->m_shootAnimation->m_frameHeight = 32;
-	g_sideWeaponType->m_shootAnimation->m_frameWidth = 90;
-	g_sideWeaponType->m_shootAnimation->m_animSpeed = 0.04f;
-	g_sideWeaponType->m_shootAnimation->m_numOfFrames = 8;
-	g_sideWeaponType->m_shootAnimation->m_maxRepetitions = 1;
-	g_sideWeaponType->m_shootAnimation->m_finished = true;
-
-	g_sideWeaponType2 = new WeaponType();
-	g_sideWeaponType2->m_rateOfFire = 0.2f;
-
-	g_sideWeaponType2->m_shootSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("shoot_subweapon"));
-	g_sideWeaponType2->m_weaponReadyTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA_Selected"));
-	g_sideWeaponType2->m_weaponTexture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("SideWeaponA"));
-
-	g_sideWeaponType2->m_shootAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("main_weapon_shoot"));
-	g_sideWeaponType2->m_shootAnimation->m_frameHeight = 32;
-	g_sideWeaponType2->m_shootAnimation->m_frameWidth = 90;
-	g_sideWeaponType2->m_shootAnimation->m_animSpeed = 0.04f;
-	g_sideWeaponType2->m_shootAnimation->m_numOfFrames = 8;
-	g_sideWeaponType2->m_shootAnimation->m_maxRepetitions = 1;
-	g_sideWeaponType2->m_shootAnimation->m_finished = true;
-
+	std::string route;
 	g_player = new PlayerVehicle();
 
-	g_player->m_weapons[MAIN_WEAPON] = new MainWeapon();
-	reinterpret_cast<MainWeapon*>(g_player->m_weapons[MAIN_WEAPON])->m_weaponType = g_mainWeaponType;
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\main_bullet.txt";
+	MainBullet* bullet = g_mainBulletFactory.create(route);
 
-	g_player->m_weapons[RIGHT_WEAPON] = new SideWeapon();
-	reinterpret_cast<SideWeapon*>(g_player->m_weapons[RIGHT_WEAPON])->m_weaponType = g_sideWeaponType;
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\main_weapon.txt";
+	g_player->m_weapons[MAIN_WEAPON] = g_mainWeaponfactory.create(route);
+	reinterpret_cast<MainWeapon*>(g_player->m_weapons[MAIN_WEAPON])->m_bulletType = bullet->m_type;
 
-	g_player->m_weapons[LEFT_WEAPON] = new SideWeapon();
-	reinterpret_cast<SideWeapon*>(g_player->m_weapons[LEFT_WEAPON])->m_weaponType = g_sideWeaponType2;
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\sub_bullet.txt";
+	SubBullet* sbullet = g_subBulletFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\side_weapon.txt";
+	g_player->m_weapons[RIGHT_WEAPON] = g_sideWeaponfactory.create(route);
+	reinterpret_cast<SideWeapon*>(g_player->m_weapons[RIGHT_WEAPON])->m_bulletType = sbullet->m_type;
+
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\sub_bullet.txt";
+	sbullet = g_subBulletFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\side_weapon.txt";
+	g_player->m_weapons[LEFT_WEAPON] = g_sideWeaponfactory.create(route);
+	reinterpret_cast<SideWeapon*>(g_player->m_weapons[LEFT_WEAPON])->m_bulletType = sbullet->m_type;
 
 	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
 	LCF::World::GetInstance().registerActor(g_player);
 
-	//std::string c = "skyenemy skyenemy_dead 150 meteor 5 0.1 meteor_dead 5 0.1 1 200 50 ";
-	//g_skyEnemyType = new EnemyType();
-	//g_skyEnemyType->init(c);
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\main_enemy_bullet.txt";
+	bullet = g_mainBulletFactory.create(route);
 
-	std::string route = "..\\resources\\units\\";
+	route = "..\\resources\\units\\";
 	route = route + "enemy\\skyenemy.txt";
-	g_testEnemy = g_factory.create(route);
-	g_testEnemy->m_posX = 775;
-	g_testEnemy->m_posY = 100;
-	g_testEnemy->init();
-	LCF::World::GetInstance().registerActor(g_testEnemy);
+	g_skyEnemy = g_skyEnemyFactory.create(route);
+	g_skyEnemy->m_posX = 775;
+	g_skyEnemy->m_posY = 100;
 
-	g_groundEnemyType = new EnemyType();
-	g_groundEnemyType->m_damage = 10;
-	g_groundEnemyType->m_life = 25;
-	g_groundEnemyType->m_movementSpeed = 50;
-	
-	g_groundEnemyType->m_moveAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor_small"));
-	g_groundEnemyType->m_moveAnimation->m_frameHeight = g_groundEnemyType->m_moveAnimation->m_sprite->getHeight();
-	g_groundEnemyType->m_moveAnimation->m_numOfFrames = 5;
-	g_groundEnemyType->m_moveAnimation->m_frameWidth = g_groundEnemyType->m_moveAnimation->m_sprite->getWidth() / g_groundEnemyType->m_moveAnimation->m_numOfFrames;
-	g_groundEnemyType->m_moveAnimation->m_animSpeed = 0.1f;
-	
-	g_groundEnemyType->m_deadAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset("meteor_small_dead"));
-	g_groundEnemyType->m_deadAnimation->m_frameHeight = g_groundEnemyType->m_deadAnimation->m_sprite->getHeight();
-	g_groundEnemyType->m_deadAnimation->m_numOfFrames = 5;
-	g_groundEnemyType->m_deadAnimation->m_frameWidth = g_groundEnemyType->m_deadAnimation->m_sprite->getWidth() / g_groundEnemyType->m_deadAnimation->m_numOfFrames;
-	g_groundEnemyType->m_deadAnimation->m_animSpeed = 0.1f;
-	g_groundEnemyType->m_deadAnimation->m_maxRepetitions = 1;
-	
-	g_groundEnemyType->m_moveSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy")));
-	g_groundEnemyType->m_deadSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("skyenemy_dead"));
-	
-	g_groundEnemyType->m_weapon = new MainWeapon();
 
-	g_groundEnemy = new GroundEnemy();
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\main_enemy_weapon.txt";
+	g_skyEnemy->m_weapon = g_mainWeaponfactory.create(route);
+	g_skyEnemy->m_weapon->m_bulletType = bullet->m_type;
+
+	g_skyEnemy->init();
+	LCF::World::GetInstance().registerActor(g_skyEnemy);
+
+	route = "..\\resources\\units\\";
+	route = route + "enemy\\groundenemy.txt";
+	g_groundEnemy = g_groundEnemyFactory.create(route);
 	g_groundEnemy->m_direction = DIRECTION_LEFT;
-	g_groundEnemy->m_type = g_groundEnemyType;
 	g_groundEnemy->init();
 	g_groundEnemy->m_posX = SCREEN_WIDTH - g_groundEnemy->m_sizeW;
 	g_groundEnemy->m_posY = SCREEN_HEIGHT - g_groundEnemy->m_sizeH;

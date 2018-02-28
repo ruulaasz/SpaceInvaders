@@ -33,4 +33,6 @@ public:
 	virtual void collision(const Actor* _actor);
 
 	virtual void shoot();
+
+	BulletType* m_bulletType;
 };

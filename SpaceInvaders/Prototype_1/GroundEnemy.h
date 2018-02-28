@@ -23,6 +23,8 @@ public:
 
 	virtual void collision(const Actor* _actor);
 
+	void setType(EnemyType* _type);
+
 	int m_direction;
 
 	EnemyType* m_type;

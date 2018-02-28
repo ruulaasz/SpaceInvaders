@@ -2,8 +2,7 @@
 
 Bullet::Bullet()
 {
-	m_travelAnimation = new LCF::Animator();
-	m_deadAnimation = new LCF::Animator();
+
 }
 
 Bullet::~Bullet()

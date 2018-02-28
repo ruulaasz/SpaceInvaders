@@ -31,4 +31,6 @@ public:
 	virtual void render(SDL_Renderer* _renderer);
 
 	virtual void shoot();
+
+	BulletType* m_bulletType;
 };
