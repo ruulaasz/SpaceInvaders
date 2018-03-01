@@ -33,6 +33,7 @@
 #include "SkyEnemy.h"
 #include "GroundEnemy.h"
 
+#include "Spawner.h"
 #include "EnemySpawner.h"
 
 #define MAX_NUMBER_TO_THE_LEFT -2
@@ -51,6 +52,10 @@
 #define RIGHT_WEAPON 1
 #define LEFT_WEAPON 2
 #define NUMBEROF_PLAYERWEAPONS 3
+
+#define SKY_ENEMY 0
+#define GROUND_ENEMY_RIGHT 1
+#define GROUND_ENEMY_LEFT 2
 
 #pragma comment(lib, "LCFramework.lib")
 #pragma comment(lib, "spiGUI.lib")

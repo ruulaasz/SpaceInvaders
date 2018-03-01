@@ -2,7 +2,8 @@
 #include "Prototype_1.h"
 
 SDL_Renderer* g_renderer;
-
+float thisTime = 0.f;
+float lastTime = 0.f;
 bool g_quit;
 float g_deltaTime;
 
@@ -10,22 +11,13 @@ PlayerVehicle* g_player;
 typedef LCF::Controller<PlayerVehicle, MovementInfo> PlayerVehicleController;
 PlayerVehicleController g_playerVehicleController;
 
-LCF::Factory<SkyEnemy, EnemyType> g_skyEnemyFactory;
-LCF::Factory<GroundEnemy, EnemyType> g_groundEnemyFactory;
-LCF::Factory <MainWeapon , WeaponType > g_mainWeaponfactory;
-LCF::Factory <SideWeapon, WeaponType > g_sideWeaponfactory;
-LCF::Factory <MainBullet, BulletType > g_mainBulletFactory;
-LCF::Factory <SubBullet, BulletType > g_subBulletFactory;
+EnemySpawner g_enemySpawner;
 
 Wall* g_leftWall;
 Wall* g_rightWall;
 
 LCF::Music* g_music;
-
 LCF::BackgroundTexture* g_background;
-
-SkyEnemy* g_skyEnemy;
-GroundEnemy* g_groundEnemy;
 
 bool initSystems()
 {
@@ -153,77 +145,47 @@ void initControllers()
 	LCF::InputManager::GetInstance().AddController(&g_playerVehicleController);
 }
 
-void initWorld()
+void initPlayer()
 {
 	std::string route;
 	g_player = new PlayerVehicle();
 
 	route = "..\\resources\\units\\";
 	route = route + "bullet\\main_bullet.txt";
-	MainBullet* bullet = g_mainBulletFactory.create(route);
+	MainBullet* bullet = g_enemySpawner.m_mainBulletFactory.create(route);
 
 	route = "..\\resources\\units\\";
 	route = route + "weapon\\main_weapon.txt";
-	g_player->m_weapons[MAIN_WEAPON] = g_mainWeaponfactory.create(route);
+	g_player->m_weapons[MAIN_WEAPON] = g_enemySpawner.m_mainWeaponfactory.create(route);
 	reinterpret_cast<MainWeapon*>(g_player->m_weapons[MAIN_WEAPON])->m_bulletType = bullet->m_type;
 
 	route = "..\\resources\\units\\";
 	route = route + "bullet\\sub_bullet.txt";
-	SubBullet* sbullet = g_subBulletFactory.create(route);
+	SubBullet* sbullet = g_enemySpawner.m_subBulletFactory.create(route);
 
 	route = "..\\resources\\units\\";
 	route = route + "weapon\\side_weapon.txt";
-	g_player->m_weapons[RIGHT_WEAPON] = g_sideWeaponfactory.create(route);
+	g_player->m_weapons[RIGHT_WEAPON] = g_enemySpawner.m_sideWeaponfactory.create(route);
 	reinterpret_cast<SideWeapon*>(g_player->m_weapons[RIGHT_WEAPON])->m_bulletType = sbullet->m_type;
 
 	route = "..\\resources\\units\\";
 	route = route + "bullet\\sub_bullet.txt";
-	sbullet = g_subBulletFactory.create(route);
+	sbullet = g_enemySpawner.m_subBulletFactory.create(route);
 
 	route = "..\\resources\\units\\";
 	route = route + "weapon\\side_weapon.txt";
-	g_player->m_weapons[LEFT_WEAPON] = g_sideWeaponfactory.create(route);
+	g_player->m_weapons[LEFT_WEAPON] = g_enemySpawner.m_sideWeaponfactory.create(route);
 	reinterpret_cast<SideWeapon*>(g_player->m_weapons[LEFT_WEAPON])->m_bulletType = sbullet->m_type;
 
 	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
 	LCF::World::GetInstance().registerActor(g_player);
+}
 
-	route = "..\\resources\\units\\";
-	route = route + "bullet\\main_enemy_bullet.txt";
-	bullet = g_mainBulletFactory.create(route);
+void initWorld()
+{
+	g_enemySpawner.init();
 
-	route = "..\\resources\\units\\";
-	route = route + "enemy\\skyenemy.txt";
-	g_skyEnemy = g_skyEnemyFactory.create(route);
-	g_skyEnemy->m_posX = 775;
-	g_skyEnemy->m_posY = 100;
-
-	route = "..\\resources\\units\\";
-	route = route + "weapon\\main_enemy_weapon.txt";
-	g_skyEnemy->m_weapon = g_mainWeaponfactory.create(route);
-	g_skyEnemy->m_weapon->m_bulletType = bullet->m_type;
-
-	g_skyEnemy->init();
-	LCF::World::GetInstance().registerActor(g_skyEnemy);
-
-	route = "..\\resources\\units\\";
-	route = route + "bullet\\sub_enemy_bullet.txt";
-	sbullet = g_subBulletFactory.create(route);
-
-	route = "..\\resources\\units\\";
-	route = route + "enemy\\groundenemy.txt";
-	g_groundEnemy = g_groundEnemyFactory.create(route);
-
-	route = "..\\resources\\units\\";
-	route = route + "weapon\\side_enemy_weapon.txt";
-	g_groundEnemy->m_weapon = g_sideWeaponfactory.create(route);
-	g_groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
-
-	g_groundEnemy->m_direction = DIRECTION_LEFT;
-	g_groundEnemy->m_posX = float(SCREEN_WIDTH - g_groundEnemy->m_type->m_moveAnimation->m_frameWidth);
-	g_groundEnemy->m_posY = float(SCREEN_HEIGHT - g_groundEnemy->m_type->m_moveAnimation->m_frameHeight);
-	g_groundEnemy->init();
-	LCF::World::GetInstance().registerActor(g_groundEnemy);
+	initPlayer();
 
 	g_leftWall = new Wall();
 	g_leftWall->init();
@@ -243,6 +205,17 @@ void initWorld()
 	g_music->playFadeIn(1500);
 	LCF::AudioManager::GetInstance().SetMusicVolume(15);
 	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 15);
+}
+
+void init()
+{
+	initSystems();
+
+	loadContent();
+
+	initWorld();
+
+	initControllers();
 }
 
 void handleInputs()
@@ -275,6 +248,12 @@ void update()
 	TextManager::GetInstance().update(g_deltaTime);
 }
 
+void renderDebug()
+{
+	system("cls");
+	printf("%d", TextManager::GetInstance().m_fallingText.size());
+}
+
 void render()
 {
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0, 0, 0xFF);
@@ -288,13 +267,9 @@ void render()
 
 	TextManager::GetInstance().render(g_renderer);
 
-	SDL_RenderPresent(g_renderer);
-}
+	//renderDebug();
 
-void renderDebug()
-{
-	system("cls");
-	printf("%d", TextManager::GetInstance().m_fallingText.size());
+	SDL_RenderPresent(g_renderer);
 }
 
 //
@@ -321,32 +296,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 int _tmain(int /*argc*/, char** /*argv*/)
 {
-	if (initSystems())
+	init();
+
+	g_enemySpawner.create(SKY_ENEMY, 775.f, 100.f);
+
+	g_enemySpawner.create(GROUND_ENEMY_LEFT, 1500.f, 0);
+
+	g_enemySpawner.create(GROUND_ENEMY_RIGHT, 100.f, 0);
+
+	while (!g_quit)
 	{
-		float thisTime = 0.f;
-		float lastTime = 0.f;
+		thisTime = (float)SDL_GetTicks();
+		g_deltaTime = (float)(thisTime - lastTime) / 1000.0f;
+		lastTime = thisTime;
 
-		loadContent();
+		handleInputs();
 
-		initWorld();
+		update();
 
-		initControllers();
-
-		while (!g_quit)
-		{
-			thisTime = (float)SDL_GetTicks();
-			g_deltaTime = (float)(thisTime - lastTime) / 1000.0f;
-			lastTime = thisTime;
-
-			handleInputs();
-
-			update();
-
-			render();
-
-			//renderDebug();
-		}
+		render();
 	}
+	
 
 	LCF::SDL_Manager::GetInstance().destroy();
 	return 0;

@@ -10,32 +10,126 @@ EnemySpawner::~EnemySpawner()
 
 }
 
-void EnemySpawner::create(std::string _name, int _posX, int _posY)
+void EnemySpawner::create(int _unitType, float _posX, float _posY)
 {
-	
+	std::string route = "..\\resources\\units\\";
+
+	MainBullet* bullet = nullptr;
+	SkyEnemy* skyEnemy = nullptr;
+	SubBullet* sbullet = nullptr;
+	GroundEnemy* groundEnemy = nullptr;
+
+	switch (_unitType)
+	{
+	default:
+		break;
+
+	case SKY_ENEMY:
+		
+		route = route + "bullet\\main_enemy_bullet.txt";
+		bullet = m_mainBulletFactory.create(route);
+
+		route = route + "enemy\\skyenemy.txt";
+		skyEnemy = m_skyEnemyFactory.create(route);
+		skyEnemy->m_posX = _posX;
+		skyEnemy->m_posY = _posY;
+
+		route = route + "weapon\\main_enemy_weapon.txt";
+		skyEnemy->m_weapon = m_mainWeaponfactory.create(route);
+		skyEnemy->m_weapon->m_bulletType = bullet->m_type;
+
+		skyEnemy->init();
+		LCF::World::GetInstance().registerActor(skyEnemy);
+		break;
+
+	case GROUND_ENEMY_LEFT:
+
+		route = route + "bullet\\sub_enemy_bullet.txt";
+		sbullet = m_subBulletFactory.create(route);
+
+		route = route + "enemy\\groundenemy.txt";
+		groundEnemy = m_groundEnemyFactory.create(route);
+
+		route = route + "weapon\\side_enemy_weapon.txt";
+		groundEnemy->m_weapon = m_sideWeaponfactory.create(route);
+		groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
+
+		groundEnemy->m_direction = DIRECTION_LEFT;
+		groundEnemy->m_posX = _posX;
+		groundEnemy->m_posY = float(SCREEN_HEIGHT - groundEnemy->m_type->m_moveAnimation->m_frameHeight);
+
+		groundEnemy->init();
+		LCF::World::GetInstance().registerActor(groundEnemy);
+		break;
+
+	case GROUND_ENEMY_RIGHT:
+
+		route = route + "bullet\\sub_enemy_bullet.txt";
+		sbullet = m_subBulletFactory.create(route);
+
+		route = route + "enemy\\groundenemy.txt";
+		groundEnemy = m_groundEnemyFactory.create(route);
+
+		route = route + "weapon\\side_enemy_weapon.txt";
+		groundEnemy->m_weapon = m_sideWeaponfactory.create(route);
+		groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
+
+		groundEnemy->m_direction = DIRECTION_RIGHT;
+		groundEnemy->m_posX = _posX;
+		groundEnemy->m_posY = float(SCREEN_HEIGHT - groundEnemy->m_type->m_moveAnimation->m_frameHeight);
+
+		groundEnemy->init();
+		LCF::World::GetInstance().registerActor(groundEnemy);
+		break;
+	}
 }
 
 void EnemySpawner::init()
 {
 	std::string route;
 
-	/*route = "..\\resources\\units\\";
+	//enemy
+	route = "..\\resources\\units\\";
 	route = route + "enemy\\skyenemy.txt";
-	SkyEnemy* enemy = g_skyEnemyFactory.create(route);
+	m_skyEnemyFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "enemy\\groundenemy.txt";
+	m_groundEnemyFactory.create(route);
+
+
+	//bullet
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\main_bullet.txt";
+	m_mainBulletFactory.create(route);
 
 	route = "..\\resources\\units\\";
 	route = route + "bullet\\main_enemy_bullet.txt";
-	bullet = g_mainBulletFactory.create(route);
+	m_mainBulletFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\sub_bullet.txt";
+	m_subBulletFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "bullet\\sub_enemy_bullet.txt";
+	m_subBulletFactory.create(route);
 
 
+	//weapon
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\main_weapon.txt";
+	m_mainWeaponfactory.create(route);
 
 	route = "..\\resources\\units\\";
 	route = route + "weapon\\main_enemy_weapon.txt";
-	g_skyEnemy->m_weapon = g_mainWeaponfactory.create(route);
-	g_skyEnemy->m_weapon->m_bulletType = bullet->m_type;
+	m_mainWeaponfactory.create(route);
 
-	g_skyEnemy->m_posX = 775;
-	g_skyEnemy->m_posY = 100;
-	g_skyEnemy->init();
-	LCF::World::GetInstance().registerActor(g_skyEnemy);*/
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\side_weapon.txt";
+	m_sideWeaponfactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\side_enemy_weapon.txt";
+	m_sideWeaponfactory.create(route);
 }
