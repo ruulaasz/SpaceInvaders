@@ -8,6 +8,7 @@
 namespace LCF
 {
 	//idk why this shit is working
+	//Un dia se reparara esto
 	static std::vector<BaseController*> m_allControllers;
 
 	/**
