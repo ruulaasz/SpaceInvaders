@@ -42,7 +42,7 @@ void Weapon::update(float _deltaTime)
 	
 	if (m_direction < DIRECTION_STOP)
 	{
-		m_posX = m_Parent->m_posX - m_weaponType->m_weaponTexture->getWidth();
+		m_posX = m_Parent->m_posX - m_sizeW;
 	}
 	
 	if (m_direction == DIRECTION_STOP)
@@ -52,11 +52,6 @@ void Weapon::update(float _deltaTime)
 	}
 
 	m_weaponType->m_shootAnimation->update(_deltaTime);
-}
-
-void Weapon::collision(const Actor * /*_actor*/)
-{
-
 }
 
 void Weapon::recieveDamage(int _damage)
@@ -84,7 +79,8 @@ void Weapon::recieveDamage(int _damage)
 
 		if (m_life <= 0)
 		{
-			m_dead = true;
+			m_life = 0;
+			m_colliderBox->SetEnabled(false);
 		}
 	}
 }

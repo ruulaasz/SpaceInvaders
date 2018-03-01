@@ -10,15 +10,10 @@ Wall::~Wall()
 
 }
 
-void Wall::render(SDL_Renderer * /*_renderer*/)
-{
-
-}
-
 void Wall::init()
 {
-	m_sizeW = 20;
-	m_sizeH = 50;
+	m_sizeW = 20.f;
+	m_sizeH = 50.f;
 	m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - m_sizeH;
 	Pawn::init();
 }

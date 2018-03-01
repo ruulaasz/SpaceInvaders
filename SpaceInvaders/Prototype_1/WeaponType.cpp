@@ -42,7 +42,7 @@ void WeaponType::init(std::string _info)
 				break;
 
 			case 1:
-				m_rateOfFire = atof(value.c_str());
+				m_rateOfFire = (float)atof(value.c_str());
 				value.clear();
 				break;
 
@@ -67,7 +67,7 @@ void WeaponType::init(std::string _info)
 				break;
 
 			case 6:
-				m_shootAnimation->m_animSpeed = atof(value.c_str());
+				m_shootAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 

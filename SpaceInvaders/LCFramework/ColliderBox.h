@@ -1,6 +1,8 @@
 #pragma once
+
 #include "message.h"
 #include "SDL_Manager.h"
+
 namespace LCF
 {
 	class Actor;
@@ -58,7 +60,6 @@ namespace LCF
 		void(_type::*m_function)(const Actor*);
 		bool m_centerPosition;
 		bool m_enabled;
-		//bool m_rendered;
 		float m_left;
 		float m_right;
 		float m_top;
@@ -70,6 +71,7 @@ namespace LCF
 
 		float m_offsetX;
 		float m_offsetY;
+
 	public:
 		void SetSize(float _x, float _y, float _w, float _h)
 		{
@@ -77,9 +79,7 @@ namespace LCF
 			y = _y;
 			w = _w;
 			h = _h;
-			//std::cout << x << " " << y << " " << w << " " << h << "\n";
 			SetBox();
-
 		}
 
 		MESSAGE_LOG SetAutomaticOffset()
@@ -125,6 +125,7 @@ namespace LCF
 			m_function = NULL;
 			m_enabled = false;
 		}
+
 		MESSAGE_LOG SetActor(Actor* _actor, bool _centerPosition = false)
 		{
 			if (_actor == NULL)
@@ -262,7 +263,6 @@ namespace LCF
 			m_right = x + w;
 			m_top = y;
 			m_bot = y + h;
-			//std::cout << m_left << " " << m_right << " " << m_top << " " << m_bot << "\n";
 		}
 
 	public:

@@ -14,6 +14,9 @@ void SkyEnemy::init()
 {
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 
+	float resizeW = (float)(m_type->m_moveAnimation->m_frameWidth / 4);
+	float resizeH = (float)(m_type->m_moveAnimation->m_frameHeight / 4);
+
 	m_sizeW = (float)m_type->m_moveAnimation->m_frameWidth;
 	m_sizeH = (float)m_type->m_moveAnimation->m_frameHeight;
 	
@@ -25,6 +28,9 @@ void SkyEnemy::init()
 	m_weapon->m_weaponSelected = true;
 
 	Pawn::init();
+
+	m_colliderBox->SetSize(m_posX, m_posY, m_sizeW - resizeW, m_sizeH - resizeH);
+	m_colliderBox->SetOffset(resizeW / 2, resizeH / 2);
 }
 
 void SkyEnemy::update(float _deltaTime)
@@ -84,9 +90,8 @@ void SkyEnemy::collision(const Actor * _actor)
 		{
 			recieveDamage(temp->m_type->m_damage);
 			LCF::World::GetInstance().deleteActorByID(temp->m_id);
+			//m_weapon->shoot();
 		}
-
-		//m_weapon->shoot();
 	}
 
 	if (const SubBullet* temp = dynamic_cast<const SubBullet*>(_actor))

@@ -1,8 +1,10 @@
 #pragma once
+
 #include "message.h"
 #include <vector>
 #include "Module.h"
 #include "SDL_Manager.h"
+
 namespace LCF
 {
 	class BaseColliderBox;
@@ -13,11 +15,11 @@ namespace LCF
 	{
 	protected:
 		bool m_EnabledRender;
+
 	public:
 		static Uint64 autoID;
-	public:
-		void Init();
 
+	public:
 		void Update(float _deltaTime);
 
 		void Render(SDL_Renderer* _renderer);

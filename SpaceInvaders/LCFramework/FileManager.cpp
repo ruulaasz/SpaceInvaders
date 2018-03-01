@@ -1,6 +1,5 @@
 #include "FileManager.h"
 
-
 namespace LCF
 {
 	MESSAGE_LOG FileManager::ReadFile(const char* _fileName)
@@ -17,22 +16,26 @@ namespace LCF
 
 		return MESSAGE_SUCCESS("Succes on read File");
 	}
+
 	std::string FileManager::GetLine()
 	{
 		std::string StringLine;
 		std::getline(m_pFile, StringLine);
 		return StringLine;
 	}
+
 	void FileManager::CloseFile()
 	{
 		m_pFile.close();
 	}
+
 	FileManager::FileManager()
 	{
-	}
 
+	}
 
 	FileManager::~FileManager()
 	{
+
 	}
 }

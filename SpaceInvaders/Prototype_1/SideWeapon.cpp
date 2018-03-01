@@ -14,22 +14,24 @@ void SideWeapon::init(Pawn* _Parent)
 {
 	Weapon::init(_Parent);
 
+	float resizeW = (float)(m_weaponType->m_weaponTexture->getWidth() / 4);
+	float resizeH = (float)(m_weaponType->m_weaponTexture->getHeight() / 4);
+
 	m_posY = _Parent->m_posY;
 	m_posX = _Parent->m_posX;
+
 	m_sizeW = (float)m_weaponType->m_weaponTexture->getWidth();
 	m_sizeH = (float)m_weaponType->m_weaponTexture->getHeight();
 
 	Pawn::init();
+
+	m_colliderBox->SetSize(m_posX, m_posY, m_sizeW - resizeW, m_sizeH - resizeH);
+	m_colliderBox->SetOffset(resizeW / 2, resizeH / 2);
 }
 
 void SideWeapon::update(float _deltaTime)
 {
 	Weapon::update(_deltaTime);
-
-	if (m_life <= 0)
-	{
-		m_colliderBox->SetEnabled(false);
-	}
 
 	if (m_rateTimer < m_weaponType->m_rateOfFire)
 	{
@@ -53,12 +55,12 @@ void SideWeapon::render(SDL_Renderer * _renderer)
 	if (!m_bulletType->m_enemy)
 	{
 		posx = (m_weaponType->m_shootAnimation->m_frameWidth * m_direction);
-		m_weaponType->m_shootAnimation->render(m_posX + posx, m_posY + m_sizeH / 4, _renderer);
+		m_weaponType->m_shootAnimation->render(int(m_posX + posx), int(m_posY + m_sizeH / 4), _renderer);
 	}
 	else
 	{
 		posx = (m_weaponType->m_shootAnimation->m_frameWidth * m_direction);
-		m_weaponType->m_shootAnimation->render(m_posX, m_posY + m_Parent->m_sizeH/2 - m_weaponType->m_shootAnimation->m_frameWidth/2, _renderer);
+		m_weaponType->m_shootAnimation->render((int)m_posX, int(m_posY + m_Parent->m_sizeH / 2 - m_weaponType->m_shootAnimation->m_frameWidth / 2), _renderer);
 	}
 }
 
@@ -90,31 +92,31 @@ void SideWeapon::shoot()
 
 			if (!b->m_type->m_enemy)
 			{
-				posY = (int)m_posY + m_weaponType->m_weaponTexture->getHeight() / 2;
+				posY = int(m_posY + m_weaponType->m_weaponTexture->getHeight() / 2);
 			}
 			else
 			{
-				posY = (int)m_posY + m_Parent->m_sizeH - m_weaponType->m_weaponTexture->getHeight() / 2;
+				posY = int(m_posY + m_Parent->m_sizeH - m_weaponType->m_weaponTexture->getHeight() / 2);
 			}
 
 			if (m_direction > DIRECTION_STOP)
 			{
 				if (!b->m_type->m_enemy)
 				{
-					posX = (int)m_Parent->m_posX + m_Parent->m_sizeW - m_sizeW;
+					posX = int(m_Parent->m_posX + m_Parent->m_sizeW - m_sizeW);
 				}
 				else
 				{
-					posX = (int)m_Parent->m_posX + m_Parent->m_sizeW + m_bulletType->m_travelAnimation->m_frameWidth;
+					posX = int(m_Parent->m_posX + m_Parent->m_sizeW + m_bulletType->m_travelAnimation->m_frameWidth);
 				}
 			}
 			else
 			{
-				posX = (int)m_Parent->m_posX - m_sizeW - m_bulletType->m_travelAnimation->m_frameWidth;
+				posX = int(m_Parent->m_posX - m_sizeW - m_bulletType->m_travelAnimation->m_frameWidth);
 			}
 
-			b->m_posX = posX;
-			b->m_posY = posY;
+			b->m_posX = (float)posX;
+			b->m_posY = (float)posY;
 			LCF::World::GetInstance().registerActor(b);
 
 			m_weaponType->m_shootSFX->play(-1);

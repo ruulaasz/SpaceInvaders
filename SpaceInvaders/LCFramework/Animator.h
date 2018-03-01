@@ -1,4 +1,5 @@
 #pragma once
+
 #include "SDL_Manager.h"
 #include "Sprite.h"
 
@@ -37,18 +38,20 @@ namespace LCF
 
 		void resetAnimation();
 
-
 	public:
 		unsigned int m_numOfFrames;
-		unsigned int m_currentJump;
 		unsigned int m_frameWidth;
 		unsigned int m_frameHeight;
-		int m_maxRepetitions;
-		int m_currentRepetitions;
+
+		unsigned int m_maxRepetitions;
 		float m_animSpeed;
-		float m_timer;
 		bool m_finished;
 
 		Sprite* m_sprite;
+
+	private:
+		unsigned int m_currentJump;
+		unsigned int m_currentRepetitions;
+		float m_timer;
 	};
 }

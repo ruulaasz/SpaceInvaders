@@ -54,7 +54,7 @@ void EnemyType::init(std::string _info)
 				break;
 
 			case 3:
-				m_movementSpeed = atof(value.c_str());
+				m_movementSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
@@ -69,7 +69,7 @@ void EnemyType::init(std::string _info)
 				break;
 
 			case 6:
-				m_moveAnimation->m_animSpeed = atof(value.c_str());
+				m_moveAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
@@ -84,7 +84,7 @@ void EnemyType::init(std::string _info)
 				break;
 
 			case 9:
-				m_deadAnimation->m_animSpeed = atof(value.c_str());
+				m_deadAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 

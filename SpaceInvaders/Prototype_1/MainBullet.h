@@ -13,15 +13,6 @@ public:
 	virtual void init();
 
 	/**
-	* Virtual: Render the content of the Actor
-	*
-	* @param _renderer
-	* a SDL renderer
-	*
-	*/
-	virtual void render(SDL_Renderer* _renderer);
-
-	/**
 	* Virtual: Updates the content of the Actor
 	*
 	* @param _deltaTime

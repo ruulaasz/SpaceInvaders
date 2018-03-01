@@ -30,7 +30,7 @@ public:
 	*/
 	virtual void update(float _deltaTime);
 
-	virtual void collision(const Actor* _actor);
+	virtual void collision(const Actor* /*_actor*/) {};
 
 	virtual void shoot() {};
 

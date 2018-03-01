@@ -4,10 +4,6 @@
 namespace LCF
 {
 	Uint64 ColliderManager::autoID = 0;
-	void ColliderManager::Init()
-	{
-
-	}
 
 	void ColliderManager::Update(float _deltaTime)
 	{

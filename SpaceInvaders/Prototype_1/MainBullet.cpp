@@ -12,19 +12,18 @@ MainBullet::~MainBullet()
 
 void MainBullet::init()
 {
-	m_sizeW = (float)m_type->m_travelAnimation->m_frameWidth - 10;
-	m_sizeH = (float)m_type->m_travelAnimation->m_frameHeight - 10;
+	float resizeW = float(m_type->m_travelAnimation->m_frameWidth / 4);
+	float resizeH = float(m_type->m_travelAnimation->m_frameHeight / 4);
+
+	m_sizeW = (float)m_type->m_travelAnimation->m_frameWidth;
+	m_sizeH = (float)m_type->m_travelAnimation->m_frameHeight;
 
 	m_currentAnimation = m_type->m_travelAnimation;
 
 	Pawn::init();
 
-	m_colliderBox->SetOffset(5, 5);
-}
-
-void MainBullet::render(SDL_Renderer * _renderer)
-{
-	m_currentAnimation->render((int)m_posX, (int)m_posY, _renderer);
+	m_colliderBox->SetSize(m_posX, m_posY, m_sizeW - resizeW, m_sizeH - resizeH);
+	m_colliderBox->SetOffset(resizeW / 2, resizeH / 2);
 }
 
 void MainBullet::update(float _deltaTime)
@@ -57,19 +56,24 @@ void MainBullet::update(float _deltaTime)
 	}
 
 	m_currentAnimation->update(_deltaTime);
-	
 }
 
 void MainBullet::collision(const Actor * _actor)
 {
 	if (const SkyEnemy* temp = dynamic_cast<const SkyEnemy*>(_actor))
 	{
-		m_type->m_impactSFX->play(-1);
+		if (!m_type->m_enemy)
+		{
+			m_type->m_impactSFX->play(-1);
+		}
 	}
 
 	if (const PlayerVehicle* temp = dynamic_cast<const PlayerVehicle*>(_actor))
 	{
-		m_type->m_impactSFX->play(-1);
+		if (m_type->m_enemy)
+		{
+			m_type->m_impactSFX->play(-1);
+		}
 	}
 }
 

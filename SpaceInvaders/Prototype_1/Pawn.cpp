@@ -1,6 +1,5 @@
 #include "stdafx.h"
 
-
 Pawn::Pawn()
 {
 	m_enabled = true;

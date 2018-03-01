@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Module.h"
-#include "SDL_Manager.h"
+#include "Tools.h"
 
+#include "SDL_Manager.h"
 #include "FileManager.h"
 
 #include "Asset.h"
@@ -29,5 +30,3 @@
 #include "ColliderManager.h"
 
 #include "Factory.h"
-
-#include "Tools.h"

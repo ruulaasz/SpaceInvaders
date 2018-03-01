@@ -62,6 +62,7 @@ namespace LCF
 		*
 		*/
 		void update(float _deltaTime);
+
 	protected:
 		void CheckAndDelete();
 	};

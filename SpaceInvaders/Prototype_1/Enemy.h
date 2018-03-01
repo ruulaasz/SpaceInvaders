@@ -28,7 +28,7 @@ public:
 	* the change of time
 	*
 	*/
-	virtual void update(float _deltaTime) {};
+	virtual void update(float /*_deltaTime*/) {};
 
 	void recieveDamage(int _damage);
 

@@ -8,7 +8,7 @@ public:
 	virtual ~BulletType();
 
 	float m_movementSpeed;
-	int m_damage;
+	unsigned int m_damage;
 	LCF::Animator* m_travelAnimation;
 	LCF::Animator* m_deadAnimation;
 	LCF::Sfx* m_impactSFX;

@@ -1,7 +1,9 @@
 #pragma once
+
 #include "SDL_Manager.h"
 #include "Texture.h"
 #include "ColliderBox.h"
+
 namespace LCF
 {
 	/**
@@ -40,14 +42,14 @@ namespace LCF
 		float m_posY;
 		float m_sizeW;
 		float m_sizeH;
-		//bool used to triger animations of death
-		bool m_beDestroyed;
-		//bool used to destroy an actor
-		bool m_DestroyMe;
-		Texture* m_texture;
 
-		static Uint64 autoID;
+		bool m_beDestroyed;
+		bool m_DestroyMe;
+
+		Texture* m_texture;
 		Uint64 m_id;
 		std::string m_name;
+
+		static Uint64 autoID;
 	};
 }

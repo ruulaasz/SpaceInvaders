@@ -11,7 +11,7 @@ namespace LCF
 {
 	AssetManager::AssetManager()
 	{
-
+		m_renderer = SDL_Manager::GetInstance().m_renderer;
 	}
 
 	AssetManager::~AssetManager()
@@ -40,11 +40,7 @@ namespace LCF
 
 				newAsset->setName(_name);
 
-				if (reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer))
-				{
-					
-				}
-				else
+				if (!reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer))
 				{
 					path = "..\\resources\\textures\\default.png";
 					reinterpret_cast<Texture*>(newAsset)->loadFromFile(path, m_renderer);
@@ -63,11 +59,7 @@ namespace LCF
 
 				newAsset->setName(_name);
 
-				if (reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer))
-				{
-					
-				}
-				else
+				if (!reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer))
 				{
 					path = "..\\resources\\background_textures\\default.png";
 					reinterpret_cast<BackgroundTexture*>(newAsset)->loadFromFile(path, m_renderer);
@@ -86,11 +78,7 @@ namespace LCF
 
 				newAsset->setName(_name);
 
-				if (reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
-				{
-					
-				}
-				else
+				if (!reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer))
 				{
 					path = "..\\resources\\sprites\\default.png";
 					reinterpret_cast<Sprite*>(newAsset)->loadFromFile(path, m_renderer);
@@ -109,11 +97,7 @@ namespace LCF
 
 				newAsset->setName(_name);
 
-				if (reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path))
-				{
-						
-				}
-				else
+				if (!reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path))
 				{
 					path = "..\\resources\\sfx\\default.wav";
 					reinterpret_cast<Sfx*>(newAsset)->loadFromFile(path);
@@ -132,11 +116,7 @@ namespace LCF
 
 				newAsset->setName(_name);
 
-				if (reinterpret_cast<Music*>(newAsset)->loadFromFile(path))
-				{
-					
-				}
-				else
+				if (!reinterpret_cast<Music*>(newAsset)->loadFromFile(path))
 				{
 					path = "..\\resources\\music\\default.mp3";
 					reinterpret_cast<Music*>(newAsset)->loadFromFile(path);
@@ -180,10 +160,5 @@ namespace LCF
 		{
 			return m_allAssets["default"];
 		}
-	}
-
-	void AssetManager::init(SDL_Renderer * _renderer)
-	{
-		m_renderer = _renderer;
 	}
 }

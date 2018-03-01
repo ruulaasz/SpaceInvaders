@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include "message.h"
 #include "SDL_Manager.h"
@@ -27,13 +28,16 @@ namespace LCF
 			Uint32 UtypeEvent;
 
 		};
+
 #define BIIterator std::vector<BasicInformation*>::iterator
 #define BIVector std::vector<BasicInformation*> 
+
 	protected:
 		//Member of the functions
 		BIVector m_BasicInformations;
 		//pointer to de class
 		_type* m_Object;
+
 	public:
 		//Add the object
 		inline MESSAGE_LOG addObject(_type* _object)
@@ -48,6 +52,7 @@ namespace LCF
 			m_Object = _object;
 			return MESSAGE_SUCCESS("to add");
 		}
+
 		//function to add functions in the map
 		inline MESSAGE_LOG addFunctionAndValues(int _input, Uint32 _typeEvent, void(_type::*_foo)(_struct), _struct* _value)
 		{
@@ -75,6 +80,7 @@ namespace LCF
 			m_BasicInformations.push_back(addToVector);
 			return MESSAGE_SUCCESS("Succes to add");
 		}
+
 		//Checking if this controler have function
 		virtual inline MESSAGE_LOG checkInput(int _input, Uint32 _typeEvent)
 		{
@@ -91,6 +97,7 @@ namespace LCF
 
 			return MESSAGE_WARNING("Error to find The input and the type event");
 		}
+
 		inline MESSAGE_LOG CheckForExistInput(int _input, Uint32 _typeEvent)
 		{
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
@@ -102,6 +109,7 @@ namespace LCF
 			}
 			return MESSAGE_SUCCESS("That input dont Exist");
 		}
+
 		inline void DestroyController()
 		{
 			for (size_t i = 0; i < m_BasicInformations.size(); i++)
@@ -112,10 +120,9 @@ namespace LCF
 			m_BasicInformations.clear();
 			m_Object = NULL;
 		}
-	public:
 
+	public:
 		Controller() { m_Object = NULL; };
 		virtual ~Controller() {};
 	};
 }
-

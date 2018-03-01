@@ -68,19 +68,8 @@ namespace LCF
 		*/
 		Asset* getAsset(std::string _name);
 
-		/**
-		* Dispatch any kind of message
-		*
-		* @param _renderer
-		* a sdl renderer
-		*
-		*/
-		void init(SDL_Renderer* _renderer);
-
-	public:
-		std::map<std::string, Asset*> m_allAssets;
-
 	private:
 		SDL_Renderer* m_renderer;
+		std::map<std::string, Asset*> m_allAssets;
 	};
 }

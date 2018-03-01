@@ -16,6 +16,7 @@ void MainWeapon::init(Pawn * _Parent)
 
 	m_posX = _Parent->m_posX;
 	m_posY = _Parent->m_posY;
+
 	m_sizeW = (float)m_weaponType->m_weaponTexture->getWidth();
 	m_sizeH = (float)m_weaponType->m_weaponTexture->getHeight();
 
@@ -47,11 +48,11 @@ void MainWeapon::render(SDL_Renderer * _renderer)
 
 	if (!m_bulletType->m_enemy)
 	{
-		m_weaponType->m_shootAnimation->render(m_posX + m_weaponType->m_shootAnimation->m_frameWidth / 2, m_posY - m_sizeH / 2, _renderer);
+		m_weaponType->m_shootAnimation->render(int(m_posX + m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_posY - m_sizeH / 2), _renderer);
 	}
 	else
 	{
-		m_weaponType->m_shootAnimation->render(m_Parent->m_posX + m_Parent->m_sizeW/2 - m_weaponType->m_shootAnimation->m_frameWidth / 2, m_Parent->m_posY + m_Parent->m_sizeH, _renderer);
+		m_weaponType->m_shootAnimation->render(int(m_Parent->m_posX + m_Parent->m_sizeW / 2 - m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_Parent->m_posY + m_Parent->m_sizeH), _renderer);
 	}
 }
 
@@ -67,8 +68,8 @@ void MainWeapon::shoot()
 			
 			if (!b->m_type->m_enemy)
 			{
-				b->m_posX = m_posX + ((float)m_weaponType->m_weaponTexture->getWidth() / 2) - (b->m_type->m_travelAnimation->m_frameWidth / 2);
-				b->m_posY = m_posY - b->m_type->m_travelAnimation->m_frameHeight * 1.5;
+				b->m_posX = m_posX + (m_sizeW / 2) - (b->m_type->m_travelAnimation->m_frameWidth / 2);
+				b->m_posY = m_posY - float(b->m_type->m_travelAnimation->m_frameHeight * 1.5);
 			}
 			else
 			{

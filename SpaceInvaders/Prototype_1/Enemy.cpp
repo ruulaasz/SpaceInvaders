@@ -17,7 +17,6 @@ void Enemy::render(SDL_Renderer * _renderer)
 
 void Enemy::recieveDamage(int _damage)
 {
-
 	m_life -= _damage;
 
 	if (m_life <= 0)

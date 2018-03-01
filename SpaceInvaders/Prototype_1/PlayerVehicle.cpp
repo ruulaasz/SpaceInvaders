@@ -11,6 +11,8 @@ PlayerVehicle::PlayerVehicle()
 	m_energyRegenerationRate = 10;
 	m_energyMax = 100;
 	m_energy = m_energyMax;
+
+	m_collisionDectected = false;
 }
 
 PlayerVehicle::~PlayerVehicle()
@@ -20,8 +22,6 @@ PlayerVehicle::~PlayerVehicle()
 
 void PlayerVehicle::init(int _screenW, int _screenH)
 {
-	m_collisionDectected = false;
-
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
 
@@ -43,6 +43,7 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 	m_sizeW = (float)m_texture->getWidth();
 	m_sizeH = (float)m_texture->getHeight();
+
 	Pawn::init();
 
 	m_colliderBox->SetSize(m_posX, m_posY, (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), (float)m_texture->getHeight());
@@ -104,7 +105,7 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 void PlayerVehicle::render(SDL_Renderer * _renderer)
 {
-	//m_texture->render(m_posX, m_posY, _renderer);
+	m_texture->render((int)m_posX, (int)m_posY, _renderer);
 	
 	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
 	{

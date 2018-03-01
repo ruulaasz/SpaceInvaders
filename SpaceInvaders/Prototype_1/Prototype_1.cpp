@@ -32,7 +32,6 @@ bool initSystems()
 	LCF::SDL_Manager::StartModule();
 
 	LCF::ColliderManager::StartModule();
-	LCF::ColliderManager::GetInstance().Init();
 
 	LCF::FileManager::StartModule();
 	
@@ -44,7 +43,6 @@ bool initSystems()
 	g_renderer = LCF::SDL_Manager::GetInstance().m_renderer;
 
 	LCF::AssetManager::StartModule();
-	LCF::AssetManager::GetInstance().init(g_renderer);
 
 	LCF::AudioManager::StartModule();
 
@@ -222,8 +220,8 @@ void initWorld()
 	g_groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
 
 	g_groundEnemy->m_direction = DIRECTION_LEFT;
-	g_groundEnemy->m_posX = SCREEN_WIDTH - g_groundEnemy->m_type->m_moveAnimation->m_frameWidth;
-	g_groundEnemy->m_posY = SCREEN_HEIGHT - g_groundEnemy->m_type->m_moveAnimation->m_frameHeight;
+	g_groundEnemy->m_posX = float(SCREEN_WIDTH - g_groundEnemy->m_type->m_moveAnimation->m_frameWidth);
+	g_groundEnemy->m_posY = float(SCREEN_HEIGHT - g_groundEnemy->m_type->m_moveAnimation->m_frameHeight);
 	g_groundEnemy->init();
 	LCF::World::GetInstance().registerActor(g_groundEnemy);
 
@@ -272,8 +270,8 @@ void handleInputs()
 
 void update()
 {
-	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
 	LCF::World::GetInstance().update(g_deltaTime);
+	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
 	TextManager::GetInstance().update(g_deltaTime);
 }
 
@@ -281,7 +279,7 @@ void render()
 {
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0, 0, 0xFF);
 	SDL_RenderClear(g_renderer);
-
+	
 	g_background->render(0, 0, g_renderer);
 
 	LCF::World::GetInstance().render(g_renderer);

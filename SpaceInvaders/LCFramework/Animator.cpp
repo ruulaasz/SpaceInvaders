@@ -4,9 +4,7 @@ namespace LCF
 {
 	Animator::Animator()
 	{
-		m_timer = 0.0f;
-		m_currentJump = 0;
-		m_maxRepetitions = 0;
+
 	}
 
 	Animator::Animator(const Animator &_animator)

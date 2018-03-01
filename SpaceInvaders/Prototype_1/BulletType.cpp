@@ -47,7 +47,7 @@ void BulletType::init(std::string _info)
 				break;
 
 			case 2:
-				m_movementSpeed = atof(value.c_str());
+				m_movementSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
@@ -67,7 +67,7 @@ void BulletType::init(std::string _info)
 				break;
 
 			case 6:
-				m_travelAnimation->m_animSpeed = atof(value.c_str());
+				m_travelAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
@@ -82,7 +82,7 @@ void BulletType::init(std::string _info)
 				break;
 
 			case 9:
-				m_deadAnimation->m_animSpeed = atof(value.c_str());
+				m_deadAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
@@ -92,7 +92,14 @@ void BulletType::init(std::string _info)
 				break;
 
 			case 11:
-				m_enemy = atoi(value.c_str());
+				if (atoi(value.c_str()) == 0)
+				{
+					m_enemy = false;
+				}
+				else
+				{
+					m_enemy = true;
+				}
 				value.clear();
 				break;
 			}

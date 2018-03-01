@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <algorithm>
 
@@ -23,7 +24,9 @@ namespace LCF
 
 		std::reverse(name.begin(), name.end());
 
-		for (size_t i = 0; i < 4; i++)
+		i = 0;
+
+		for (i; i < 4; i++)
 		{
 			name.pop_back();
 		}

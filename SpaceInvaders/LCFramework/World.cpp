@@ -52,6 +52,7 @@ namespace LCF
 	{
 		bool anyDestroyed = false;
 		std::vector<int> allInts;
+
 		for (size_t i = 0; i < m_allActors.size(); i++)
 		{
 			if (m_allActors[i]->m_DestroyMe)
@@ -60,6 +61,7 @@ namespace LCF
 				anyDestroyed = true;
 			}
 		}
+
 		if (anyDestroyed)
 		{
 			for (size_t i = 0; i < allInts.size(); i++)
@@ -69,7 +71,9 @@ namespace LCF
 				delete m_allActors[j];
 				m_allActors[j] = NULL;
 			}
+
 			int number = 0;
+
 			for (size_t i = 0; i < allInts.size(); i++)
 			{
 				int j = allInts[i];
