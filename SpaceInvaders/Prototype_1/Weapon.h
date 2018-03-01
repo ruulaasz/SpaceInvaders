@@ -46,6 +46,7 @@ public:
 	LCF::Sfx* m_changeWeaponSFX;
 	Pawn* m_Parent;
 	int m_life;
+	bool m_dead;
 
 	WeaponType* m_weaponType;
 };

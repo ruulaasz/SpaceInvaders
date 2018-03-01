@@ -33,6 +33,8 @@
 #include "SkyEnemy.h"
 #include "GroundEnemy.h"
 
+#include "EnemySpawner.h"
+
 #define MAX_NUMBER_TO_THE_LEFT -2
 #define MAX_NUMBER_TO_THE_RIGHT 2
 

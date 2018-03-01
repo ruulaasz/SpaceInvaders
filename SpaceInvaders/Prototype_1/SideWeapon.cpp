@@ -43,14 +43,35 @@ void SideWeapon::update(float _deltaTime)
 
 void SideWeapon::render(SDL_Renderer * _renderer)
 {
-	Weapon::render(_renderer);
-	int posx = (m_weaponType->m_shootAnimation->m_frameWidth * m_direction);
-	m_weaponType->m_shootAnimation->render(m_posX + posx, m_posY + m_sizeH/4, _renderer);
+	if (!m_bulletType->m_enemy)
+	{
+		Weapon::render(_renderer);
+	}
+
+	int posx = 0;
+
+	if (!m_bulletType->m_enemy)
+	{
+		posx = (m_weaponType->m_shootAnimation->m_frameWidth * m_direction);
+		m_weaponType->m_shootAnimation->render(m_posX + posx, m_posY + m_sizeH / 4, _renderer);
+	}
+	else
+	{
+		posx = (m_weaponType->m_shootAnimation->m_frameWidth * m_direction);
+		m_weaponType->m_shootAnimation->render(m_posX, m_posY + m_Parent->m_sizeH/2 - m_weaponType->m_shootAnimation->m_frameWidth/2, _renderer);
+	}
 }
 
-void SideWeapon::collision(const Actor * /*_actor*/)
+void SideWeapon::collision(const Actor * _actor)
 {
-
+	if (const SubBullet* temp = dynamic_cast<const SubBullet*>(_actor))
+	{
+		if (temp->m_type->m_enemy)
+		{
+			recieveDamage(temp->m_type->m_damage);
+			LCF::World::GetInstance().deleteActorByID(temp->m_id);
+		}
+	}
 }
 
 void SideWeapon::shoot()
@@ -62,17 +83,30 @@ void SideWeapon::shoot()
 	{
 		if (m_canShoot)
 		{
-			
-			posY = (int)m_posY + m_weaponType->m_weaponTexture->getHeight() / 2;
-			
 			SubBullet* b = new SubBullet();
 			b->m_direction = m_direction;
 			b->m_type = new BulletType(*m_bulletType);
 			b->init();
 
+			if (!b->m_type->m_enemy)
+			{
+				posY = (int)m_posY + m_weaponType->m_weaponTexture->getHeight() / 2;
+			}
+			else
+			{
+				posY = (int)m_posY + m_Parent->m_sizeH - m_weaponType->m_weaponTexture->getHeight() / 2;
+			}
+
 			if (m_direction > DIRECTION_STOP)
 			{
-				posX = (int)m_Parent->m_posX + m_Parent->m_sizeW - m_sizeW;
+				if (!b->m_type->m_enemy)
+				{
+					posX = (int)m_Parent->m_posX + m_Parent->m_sizeW - m_sizeW;
+				}
+				else
+				{
+					posX = (int)m_Parent->m_posX + m_Parent->m_sizeW + m_bulletType->m_travelAnimation->m_frameWidth;
+				}
 			}
 			else
 			{

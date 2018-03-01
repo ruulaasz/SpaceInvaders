@@ -29,11 +29,18 @@ void SkyEnemy::init()
 
 void SkyEnemy::update(float _deltaTime)
 {
+	if (m_posY > SCREEN_HEIGHT)
+	{
+		if (!m_dead)
+		{
+			LCF::World::GetInstance().deleteActorByID(m_id);
+		}
+	}
+
 	if (m_beDestroyed)
 	{
 		if (!m_dead)
 		{
-
 			LCF::AudioManager::GetInstance().StopChannel(m_type->m_moveSFX->m_currentChannel);
 			m_type->m_deadSFX->play(-1);
 			m_colliderBox->SetEnabled(false);

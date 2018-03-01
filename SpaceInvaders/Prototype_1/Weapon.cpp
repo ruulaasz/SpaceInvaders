@@ -37,7 +37,7 @@ void Weapon::update(float _deltaTime)
 {
 	if (m_direction > DIRECTION_STOP)
 	{
-		m_posX = m_Parent->m_posX + m_Parent->m_texture->getWidth();
+		m_posX = m_Parent->m_posX + m_Parent->m_sizeW;
 	}
 	
 	if (m_direction < DIRECTION_STOP)
@@ -61,24 +61,32 @@ void Weapon::collision(const Actor * /*_actor*/)
 
 void Weapon::recieveDamage(int _damage)
 {
-	m_life -= _damage;
+	if (!m_dead)
+	{
+		m_life -= _damage;
 
-	FallingText* fall = new FallingText();
+		FallingText* fall = new FallingText();
 
-	fall->m_String = std::to_string(_damage);
-	fall->m_posX = m_posX;
-	fall->m_posY = m_posY - (m_sizeH / 2);
-	fall->m_originPosX = fall->m_posX;
-	fall->m_originPosY = fall->m_posY;
+		fall->m_String = std::to_string(_damage);
+		fall->m_posX = m_posX;
+		fall->m_posY = m_posY - (m_sizeH / 2);
+		fall->m_originPosX = fall->m_posX;
+		fall->m_originPosY = fall->m_posY;
 
-	SDL_Color c;
-	c.r = 0;
-	c.g = 0;
-	c.b = 0;
+		SDL_Color c;
+		c.r = 0;
+		c.g = 0;
+		c.b = 0;
 
-	fall->m_color = c;
+		fall->m_color = c;
 
-	TextManager::GetInstance().m_fallingText.push_back(fall);
+		TextManager::GetInstance().m_fallingText.push_back(fall);
+
+		if (m_life <= 0)
+		{
+			m_dead = true;
+		}
+	}
 }
 
 void Weapon::setType(WeaponType * _type)

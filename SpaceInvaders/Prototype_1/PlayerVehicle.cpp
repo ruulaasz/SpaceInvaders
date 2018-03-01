@@ -42,8 +42,11 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 
 	m_sizeW = (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
+	//m_sizeW = (float)m_texture->getWidth();
 	m_sizeH = (float)m_texture->getHeight();
 	Pawn::init();
+	//m_colliderBox->sizeW = (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
+	//m_colliderBox->m_sizeH = (float)m_texture->getHeight();
 	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), 0);
 
 	m_coreCollider = new PlayerVehicleBox();
@@ -54,8 +57,6 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	m_coreCollider->SetOffset(5, 5);
 
 	m_coreLifeText = new spiText();
-
-	m_coreLifeText->m_String = "Core Life: " + std::to_string(m_life);
 	m_coreLifeText->m_posX = 0;
 	m_coreLifeText->m_posY = 0;
 
@@ -70,7 +71,6 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 
 	m_leftShieldText = new spiText();
 
-	m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
 	m_leftShieldText->m_posX = 0;
 	m_leftShieldText->m_posY = 25;
 
@@ -83,8 +83,6 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	TextManager::GetInstance().m_fallingText.push_back(m_leftShieldText);
 
 	m_rightShieldText = new spiText();
-
-	m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
 	m_rightShieldText->m_posX = 0;
 	m_rightShieldText->m_posY = 50;
 
@@ -93,8 +91,6 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	TextManager::GetInstance().m_fallingText.push_back(m_rightShieldText);
 
 	m_energyText = new spiText();
-
-	m_energyText->m_String = "Energy: " + std::to_string(m_energy);
 	m_energyText->m_posX = 0;
 	m_energyText->m_posY = 100;
 
@@ -138,7 +134,7 @@ void PlayerVehicle::update(float _deltaTime)
 		m_energy = m_energyMax;
 	}
 
-	m_energyText->m_String = "Energy: " + std::to_string(m_energy);
+
 
 	if (m_currentDirection == MAX_NUMBER_TO_THE_LEFT)
 	{
@@ -150,6 +146,11 @@ void PlayerVehicle::update(float _deltaTime)
 	}
 
 	m_posX += (m_currentDirection * m_movementSpeed * _deltaTime);
+
+	m_energyText->m_String = "Energy: " + std::to_string(m_energy);
+	m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
+	m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
+	m_coreLifeText->m_String = "Core Life: " + std::to_string(m_life);
 }
 
 void PlayerVehicle::move(MovementInfo _info)
@@ -238,8 +239,6 @@ void PlayerVehicle::recieveDamage(int _damage)
 	fall->m_color = c;
 
 	TextManager::GetInstance().m_fallingText.push_back(fall);
-
-	m_coreLifeText->m_String = "Core Life: " + std::to_string(m_life);
 }
 
 void PlayerVehicle::superShot(MovementInfo /*_info*/)
@@ -270,9 +269,7 @@ void PlayerVehicle::collision(const Actor * _actor)
 		recieveDamage(temp->m_type->m_damage);
 
 		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage)/4);
-		m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
 		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage)/4);
-		m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
 
 		LCF::AudioManager::GetInstance().StopChannel(temp->m_type->m_moveSFX->m_currentChannel);
 		LCF::World::GetInstance().deleteActorByID(temp->m_id);
@@ -282,13 +279,25 @@ void PlayerVehicle::collision(const Actor * _actor)
 	{
 		if (temp->m_direction < 0)
 		{
-			m_weapons[RIGHT_WEAPON]->recieveDamage(temp->m_type->m_damage);
-			m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
+			if (!m_weapons[RIGHT_WEAPON]->m_dead)
+			{
+				m_weapons[RIGHT_WEAPON]->recieveDamage(temp->m_type->m_damage);
+			}
+			else
+			{
+				recieveDamage(temp->m_type->m_damage);
+			}
 		}
 		else
 		{
-			m_weapons[LEFT_WEAPON]->recieveDamage(temp->m_type->m_damage);
-			m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
+			if (!m_weapons[LEFT_WEAPON]->m_dead)
+			{
+				m_weapons[LEFT_WEAPON]->recieveDamage(temp->m_type->m_damage);
+			}
+			else
+			{
+				recieveDamage(temp->m_type->m_damage);
+			}
 		}
 
 		LCF::AudioManager::GetInstance().StopChannel(temp->m_type->m_moveSFX->m_currentChannel);
@@ -316,9 +325,7 @@ void PlayerVehicle::collision(const Actor * _actor)
 		recieveDamage(temp->m_type->m_damage);
 
 		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
-		m_rightShieldText->m_String = "Right Shield: " + std::to_string(m_weapons[RIGHT_WEAPON]->m_life);
 		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
-		m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
 
 		LCF::World::GetInstance().deleteActorByID(temp->m_id);
 	}
@@ -326,5 +333,12 @@ void PlayerVehicle::collision(const Actor * _actor)
 
 void PlayerVehicle::coreColision(const Actor * _actor)
 {
-
+	if (const SubBullet* temp = dynamic_cast<const SubBullet*>(_actor))
+	{
+		if (temp->m_type->m_enemy)
+		{
+			recieveDamage(temp->m_type->m_damage);
+			LCF::World::GetInstance().deleteActorByID(temp->m_id);
+		}
+	}
 }

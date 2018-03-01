@@ -19,6 +19,12 @@ void GroundEnemy::init()
 
 	m_type->m_moveSFX->play(-1, -1);
 
+	m_weapon->init(this);
+	m_weapon->m_weaponSelected = true;
+	m_weapon->m_direction = m_direction;
+
+	m_weapon->m_colliderBox->SetEnabled(false);
+
 	Pawn::init();
 }
 
@@ -44,17 +50,37 @@ void GroundEnemy::update(float _deltaTime)
 	else
 	{
 		m_posX += (m_direction * m_type->m_movementSpeed * _deltaTime);
+
+		if (!m_dead)
+		{
+			m_weapon->update(_deltaTime);
+		}
 	}
 
 	m_currentAnimation->update(_deltaTime);
+}
+
+void GroundEnemy::render(SDL_Renderer * _renderer)
+{
+	Enemy::render(_renderer);
+
+	if (!m_dead)
+	{
+		m_weapon->render(_renderer);
+	}
 }
 
 void GroundEnemy::collision(const Actor * _actor)
 {
 	if (const SubBullet* temp = dynamic_cast<const SubBullet*>(_actor))
 	{
-		recieveDamage(temp->m_type->m_damage);
-		LCF::World::GetInstance().deleteActorByID(temp->m_id);
+		if (!temp->m_type->m_enemy)
+		{
+			recieveDamage(temp->m_type->m_damage);
+			LCF::World::GetInstance().deleteActorByID(temp->m_id);
+		}
+
+		//m_weapon->shoot();
 	}
 }
 

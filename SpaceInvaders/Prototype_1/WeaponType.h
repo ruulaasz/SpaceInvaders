@@ -4,6 +4,7 @@ class WeaponType
 {
 public:
 	WeaponType();
+	WeaponType(const WeaponType &_type);
 	virtual ~WeaponType();
 
 	float m_rateOfFire;

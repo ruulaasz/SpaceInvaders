@@ -200,7 +200,6 @@ void initWorld()
 	g_skyEnemy->m_posX = 775;
 	g_skyEnemy->m_posY = 100;
 
-
 	route = "..\\resources\\units\\";
 	route = route + "weapon\\main_enemy_weapon.txt";
 	g_skyEnemy->m_weapon = g_mainWeaponfactory.create(route);
@@ -210,12 +209,22 @@ void initWorld()
 	LCF::World::GetInstance().registerActor(g_skyEnemy);
 
 	route = "..\\resources\\units\\";
+	route = route + "bullet\\sub_enemy_bullet.txt";
+	sbullet = g_subBulletFactory.create(route);
+
+	route = "..\\resources\\units\\";
 	route = route + "enemy\\groundenemy.txt";
 	g_groundEnemy = g_groundEnemyFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\side_enemy_weapon.txt";
+	g_groundEnemy->m_weapon = g_sideWeaponfactory.create(route);
+	g_groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
+
 	g_groundEnemy->m_direction = DIRECTION_LEFT;
+	g_groundEnemy->m_posX = SCREEN_WIDTH - g_groundEnemy->m_type->m_moveAnimation->m_frameWidth;
+	g_groundEnemy->m_posY = SCREEN_HEIGHT - g_groundEnemy->m_type->m_moveAnimation->m_frameHeight;
 	g_groundEnemy->init();
-	g_groundEnemy->m_posX = SCREEN_WIDTH - g_groundEnemy->m_sizeW;
-	g_groundEnemy->m_posY = SCREEN_HEIGHT - g_groundEnemy->m_sizeH;
 	LCF::World::GetInstance().registerActor(g_groundEnemy);
 
 	g_leftWall = new Wall();

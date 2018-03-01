@@ -25,6 +25,7 @@ void SubBullet::update(float _deltaTime)
 	if (m_beDestroyed)
 	{
 		m_colliderBox->SetEnabled(false);
+
 		m_currentAnimation = m_type->m_deadAnimation;
 
 		if (m_type->m_deadAnimation->m_finished)
@@ -59,12 +60,26 @@ void SubBullet::collision(const Actor * _actor)
 {
 	if (const SkyEnemy* temp = dynamic_cast<const SkyEnemy*>(_actor))
 	{
-		m_type->m_impactSFX->play(-1);
+		if (!m_type->m_enemy)
+		{
+			m_type->m_impactSFX->play(-1);
+		}
 	}
 
 	if (const GroundEnemy* temp = dynamic_cast<const GroundEnemy*>(_actor))
 	{
-		m_type->m_impactSFX->play(-1);
+		if (!m_type->m_enemy)
+		{
+			m_type->m_impactSFX->play(-1);
+		}
+	}
+
+	if (const PlayerVehicle* temp = dynamic_cast<const PlayerVehicle*>(_actor))
+	{
+		if (m_type->m_enemy)
+		{
+			m_type->m_impactSFX->play(-1);
+		}
 	}
 }
 

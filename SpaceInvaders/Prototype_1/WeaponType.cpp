@@ -5,6 +5,17 @@ WeaponType::WeaponType()
 	m_shootAnimation = new LCF::Animator();
 }
 
+WeaponType::WeaponType(const WeaponType & _type)
+{
+	float m_rateOfFire = _type.m_rateOfFire;
+	LCF::Texture* m_weaponTexture = _type.m_weaponTexture;
+	LCF::Texture* m_weaponReadyTexture = _type.m_weaponReadyTexture;
+	LCF::Animator* m_shootAnimation = new LCF::Animator(*_type.m_shootAnimation);
+	LCF::Sfx* m_shootSFX = new LCF::Sfx(*_type.m_shootSFX);
+	std::string m_bulletType = _type.m_bulletType;
+	int m_life = _type.m_life;
+}
+
 WeaponType::~WeaponType()
 {
 

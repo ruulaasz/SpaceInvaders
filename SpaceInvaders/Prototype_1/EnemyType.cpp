@@ -1,10 +1,21 @@
 #include "stdafx.h"
-#include "EnemyType.h"
 
 EnemyType::EnemyType()
 {
 	m_moveAnimation = new LCF::Animator();
 	m_deadAnimation = new LCF::Animator();
+}
+
+EnemyType::EnemyType(const EnemyType & _type)
+{
+	LCF::Sfx* m_moveSFX = new LCF::Sfx(*_type.m_moveSFX);
+	LCF::Sfx* m_deadSFX = new LCF::Sfx(*_type.m_deadSFX);
+	float m_movementSpeed = _type.m_movementSpeed;
+	LCF::Animator* m_moveAnimation = new LCF::Animator(*_type.m_moveAnimation);
+	LCF::Animator* m_deadAnimation = new LCF::Animator(*_type.m_deadAnimation);
+	int m_life = _type.m_life;
+	int m_damage = _type.m_damage;
+	std::string m_weapon = _type.m_weapon;
 }
 
 EnemyType::~EnemyType()
@@ -89,6 +100,11 @@ void EnemyType::init(std::string _info)
 
 			case 12:
 				m_damage = atoi(value.c_str());
+				value.clear();
+				break;
+
+			case 13:
+				m_weapon = value;
 				value.clear();
 				break;
 			}

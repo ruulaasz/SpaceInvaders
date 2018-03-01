@@ -4,6 +4,7 @@ class EnemyType
 {
 public:
 	EnemyType();
+	EnemyType(const EnemyType &_type);
 	virtual ~EnemyType();
 
 	LCF::Sfx* m_moveSFX;
@@ -13,6 +14,7 @@ public:
 	LCF::Animator* m_deadAnimation;
 	int m_life;
 	int m_damage;
+	std::string m_weapon;
 
 	void init(std::string _info);
 };

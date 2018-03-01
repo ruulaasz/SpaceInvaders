@@ -29,3 +29,5 @@
 #include "ColliderManager.h"
 
 #include "Factory.h"
+
+#include "Tools.h"
