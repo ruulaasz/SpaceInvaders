@@ -7,13 +7,13 @@ WeaponType::WeaponType()
 
 WeaponType::WeaponType(const WeaponType & _type)
 {
-	float m_rateOfFire = _type.m_rateOfFire;
-	LCF::Texture* m_weaponTexture = _type.m_weaponTexture;
-	LCF::Texture* m_weaponReadyTexture = _type.m_weaponReadyTexture;
-	LCF::Animator* m_shootAnimation = new LCF::Animator(*_type.m_shootAnimation);
-	LCF::Sfx* m_shootSFX = new LCF::Sfx(*_type.m_shootSFX);
-	std::string m_bulletType = _type.m_bulletType;
-	int m_life = _type.m_life;
+	m_rateOfFire = _type.m_rateOfFire;
+	m_weaponTexture = _type.m_weaponTexture;
+	m_weaponReadyTexture = _type.m_weaponReadyTexture;
+	m_shootAnimation = new LCF::Animator(*_type.m_shootAnimation);
+	m_shootSFX = new LCF::Sfx(*_type.m_shootSFX);
+	m_bulletType = _type.m_bulletType;
+	m_life = _type.m_life;
 }
 
 WeaponType::~WeaponType()

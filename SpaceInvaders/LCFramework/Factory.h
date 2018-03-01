@@ -14,6 +14,8 @@ namespace LCF
 		Factory() {};
 		virtual ~Factory() {};
 
+		std::map<std::string, _type*> m_loadedTypes;
+
 		_type* getObject(std::string _name)
 		{
 			std::map<std::string, _type*>::iterator it;
@@ -33,15 +35,16 @@ namespace LCF
 		{
 			std::string name = getFileName(_name);
 			_Object* newObject = new _Object();
-			_type* typeObject = new _type();
+			//_type* typeObject = new _type();
+			_type* typeObject;
 
 			typeObject = getObject(name);
 
-			if (typeObject)
+			if (typeObject != NULL)
 			{
 				_type* final = new _type(*typeObject);
 				newObject->setType(final);
-				delete typeObject;
+				//delete typeObject;
 			}
 			else
 			{
@@ -55,12 +58,13 @@ namespace LCF
 				typeObject->init(info);
 				newObject->setType(typeObject);
 
-				m_loadedTypes[name] = typeObject;
+				//m_loadedTypes[name] = typeObject;
+				m_loadedTypes.insert(std::pair<std::string, _type*>(name, typeObject));
 			}
 
 			return newObject;
 		}
 
-		std::map<std::string, _type*> m_loadedTypes;
+		
 	};
 }
