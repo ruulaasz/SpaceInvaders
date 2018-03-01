@@ -272,8 +272,8 @@ void handleInputs()
 
 void update()
 {
-	LCF::World::GetInstance().update(g_deltaTime);
 	LCF::ColliderManager::GetInstance().Update(g_deltaTime);
+	LCF::World::GetInstance().update(g_deltaTime);
 	TextManager::GetInstance().update(g_deltaTime);
 }
 
