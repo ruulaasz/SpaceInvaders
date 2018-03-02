@@ -21,15 +21,29 @@ void Weapon::init(Pawn * _Parent)
 	m_canShoot = true;
 }
 
-void Weapon::render(SDL_Renderer * _renderer)
+void Weapon::render(SDL_Renderer * _renderer, bool _flip)
 {
 	if (m_weaponSelected)
 	{
-		m_weaponType->m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer);
+		if (m_direction > 0)
+		{
+			m_weaponType->m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer);
+		}
+		else
+		{
+			m_weaponType->m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer, true);
+		}
 	}
 	else
 	{
-		m_weaponType->m_weaponTexture->render((int)m_posX, (int)m_posY, _renderer);
+		if (m_direction > 0)
+		{
+			m_weaponType->m_weaponTexture->render((int)m_posX, (int)m_posY, _renderer);
+		}
+		else
+		{
+			m_weaponType->m_weaponTexture->render((int)m_posX, (int)m_posY, _renderer, true);
+		}
 	}
 }
 

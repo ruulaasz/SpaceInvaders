@@ -22,7 +22,7 @@ void SkyEnemy::init()
 	
 	m_currentAnimation = m_type->m_moveAnimation;
 
-	m_type->m_moveSFX->play(-1, -1);
+	//m_type->m_moveSFX->play(-1, -1);
 
 	m_weapon->init(this);
 	m_weapon->m_weaponSelected = true;

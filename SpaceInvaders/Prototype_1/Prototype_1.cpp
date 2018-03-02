@@ -76,16 +76,19 @@ void loadContent()
 	assetName = "meteor_dead";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
-	assetName = "meteor_small";
-	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
-
-	assetName = "meteor_small_dead";
-	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
-
 	assetName = "main_weapon_shoot";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
 	assetName = "sub_bullet_base";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "hooper_mecha";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "hooper_mecha_dead"; 
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "sideweapon_shoot_base";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
 	//BACKGROUNDS
@@ -177,7 +180,9 @@ void initPlayer()
 	g_player->m_weapons[LEFT_WEAPON] = g_enemySpawner.m_sideWeaponfactory.create(route);
 	reinterpret_cast<SideWeapon*>(g_player->m_weapons[LEFT_WEAPON])->m_bulletType = sbullet->m_type;
 
-	g_player->init(LCF::SDL_Manager::GetInstance().m_windowWidth, LCF::SDL_Manager::GetInstance().m_windowHeight);
+	g_player->m_posX = 800;
+	g_player->m_posY = 700;
+	g_player->init();
 	LCF::World::GetInstance().registerActor(g_player);
 }
 
@@ -194,7 +199,7 @@ void initWorld()
 
 	g_rightWall = new Wall();
 	g_rightWall->init();
-	g_rightWall->m_posY = LCF::SDL_Manager::GetInstance().m_windowHeight - g_rightWall->m_sizeH;
+	g_rightWall->m_posY = 700;
 	g_rightWall->m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - g_rightWall->m_sizeW;
 
 	LCF::World::GetInstance().registerActor(g_rightWall);
@@ -202,9 +207,9 @@ void initWorld()
 	g_music = reinterpret_cast<LCF::Music*>(LCF::AssetManager::GetInstance().getAsset("background_music"));
 	g_background = reinterpret_cast<LCF::BackgroundTexture*>(LCF::AssetManager::GetInstance().getAsset("background"));
 
-	g_music->playFadeIn(1500);
+	//g_music->playFadeIn(1500);
 	LCF::AudioManager::GetInstance().SetMusicVolume(15);
-	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 15);
+	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 5);
 }
 
 void init()
@@ -298,17 +303,29 @@ int _tmain(int /*argc*/, char** /*argv*/)
 {
 	init();
 
-	g_enemySpawner.create(SKY_ENEMY, 775.f, 100.f);
+	g_enemySpawner.create(SKY_ENEMY, 775.f, 0.f);
 
-	g_enemySpawner.create(GROUND_ENEMY_LEFT, 1500.f, 0);
+	g_enemySpawner.create(GROUND_ENEMY_LEFT, 1500.f, 700);
 
-	g_enemySpawner.create(GROUND_ENEMY_RIGHT, 100.f, 0);
+	g_enemySpawner.create(GROUND_ENEMY_RIGHT, 100.f, 700);
+
+	float m_spawnTimer = 0.0f;
+	float m_spawnTime = 3.0f;
 
 	while (!g_quit)
 	{
 		thisTime = (float)SDL_GetTicks();
 		g_deltaTime = (float)(thisTime - lastTime) / 1000.0f;
 		lastTime = thisTime;
+
+		m_spawnTimer += g_deltaTime;
+
+		if (m_spawnTimer >= m_spawnTime)
+		{
+			g_enemySpawner.create(GROUND_ENEMY_LEFT, 1500.f, 700);
+			g_enemySpawner.create(GROUND_ENEMY_RIGHT, 100.f, 700);
+			m_spawnTimer = 0.0f;
+		}
 
 		handleInputs();
 

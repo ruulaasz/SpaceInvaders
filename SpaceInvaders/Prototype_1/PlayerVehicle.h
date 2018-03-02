@@ -20,7 +20,7 @@ public:
 	* Virtual: Initialize the content of the Actor
 	*
 	*/
-	virtual void init(int _screenW, int _screenH);
+	virtual void init();
 
 	/**
 	* Virtual: Render the content of the Actor
@@ -29,7 +29,7 @@ public:
 	* a SDL renderer
 	*
 	*/
-	virtual void render(SDL_Renderer* _renderer);
+	virtual void render(SDL_Renderer* _renderer, bool _flip = false);
 
 	/**
 	* Virtual: Updates the content of the Actor

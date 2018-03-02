@@ -20,7 +20,7 @@ void GroundEnemy::init()
 
 	m_currentAnimation = m_type->m_moveAnimation;
 
-	m_type->m_moveSFX->play(-1, -1);
+	//m_type->m_moveSFX->play(-1, -1);
 
 	m_weapon->init(this);
 	m_weapon->m_weaponSelected = true;
@@ -66,9 +66,17 @@ void GroundEnemy::update(float _deltaTime)
 	m_currentAnimation->update(_deltaTime);
 }
 
-void GroundEnemy::render(SDL_Renderer * _renderer)
+void GroundEnemy::render(SDL_Renderer * _renderer, bool _flip)
 {
-	Enemy::render(_renderer);
+	if (m_direction == DIRECTION_RIGHT)
+	{
+		Enemy::render(_renderer, true);
+	}
+	else
+	{
+
+		Enemy::render(_renderer);
+	}
 
 	if (!m_dead)
 	{

@@ -54,7 +54,7 @@ namespace LCF
 		}
 	}
 
-	void Animator::render(int _x, int _y, SDL_Renderer * _renderer)
+	void Animator::render(int _x, int _y, SDL_Renderer * _renderer, bool _flip)
 	{
 		if (!m_finished)
 		{
@@ -70,7 +70,7 @@ namespace LCF
 			srcRect.w = m_frameWidth;
 			srcRect.h = m_frameHeight;
 
-			m_sprite->render(dstRect, srcRect, _renderer);
+			m_sprite->render(dstRect, srcRect, _renderer, _flip);
 		}
 	}
 

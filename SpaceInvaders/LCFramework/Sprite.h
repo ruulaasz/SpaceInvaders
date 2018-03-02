@@ -26,6 +26,6 @@ namespace LCF
 		* a SDL renderer
 		*
 		*/
-		void render(SDL_Rect _dstRect , SDL_Rect _srcRect , SDL_Renderer* _renderer);
+		void render(SDL_Rect _dstRect , SDL_Rect _srcRect , SDL_Renderer* _renderer, bool _flip = false);
 	};
 }

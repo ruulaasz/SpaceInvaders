@@ -34,7 +34,7 @@ namespace LCF
 		* a SDL renderer
 		*
 		*/
-		void render(int _x, int _y, SDL_Renderer* _renderer);
+		void render(int _x, int _y, SDL_Renderer* _renderer, bool _flip = false);
 
 		void resetAnimation();
 

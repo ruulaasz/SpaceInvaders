@@ -56,7 +56,7 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY)
 
 		groundEnemy->m_direction = DIRECTION_LEFT;
 		groundEnemy->m_posX = _posX;
-		groundEnemy->m_posY = float(SCREEN_HEIGHT - groundEnemy->m_type->m_moveAnimation->m_frameHeight);
+		groundEnemy->m_posY = _posY + groundEnemy->m_type->m_moveAnimation->m_frameHeight / 2;
 
 		groundEnemy->init();
 		LCF::World::GetInstance().registerActor(groundEnemy);
@@ -75,10 +75,9 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY)
 		groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
 
 		groundEnemy->m_direction = DIRECTION_RIGHT;
-		groundEnemy->m_posX = _posX;
-		groundEnemy->m_posY = float(SCREEN_HEIGHT - groundEnemy->m_type->m_moveAnimation->m_frameHeight);
-
 		groundEnemy->init();
+		groundEnemy->m_posX = _posX;
+		groundEnemy->m_posY = _posY + groundEnemy->m_type->m_moveAnimation->m_frameHeight/2;
 		LCF::World::GetInstance().registerActor(groundEnemy);
 		break;
 	}

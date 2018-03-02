@@ -39,7 +39,7 @@ namespace LCF
 		* Reference to a SDL_Renderer.
 		*
 		*/
-		void render(int _x, int _y, SDL_Renderer* _renderer);
+		void render(int _x, int _y, SDL_Renderer* _renderer, bool _flip = false);
 
 		/**
 		* Render the given section of a texture in a given rect.
@@ -72,7 +72,7 @@ namespace LCF
 		* Reference to a SDL_Renderer.
 		*
 		*/
-		void renderEx(SDL_Rect* _dstRect, SDL_Rect* _srcRect, double _angle, SDL_Renderer* _renderer);
+		void renderEx(SDL_Rect* _dstRect, SDL_Rect* _srcRect, double _angle, SDL_Renderer* _renderer, bool _flip = false);
 
 		/**
 		* Render the texture in a given screen coordinate with a given rotation.

@@ -20,13 +20,10 @@ PlayerVehicle::~PlayerVehicle()
 	
 }
 
-void PlayerVehicle::init(int _screenW, int _screenH)
+void PlayerVehicle::init()
 {
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
-
-	m_posX = ((float)_screenW / 2) - ((float)m_texture->getWidth() / 2);
-	m_posY = (float)_screenH - (float)m_texture->getHeight();
 
 	m_weapons[MAIN_WEAPON]->init(this);
 	m_weapons[MAIN_WEAPON]->m_weaponSelected = true;
@@ -103,13 +100,13 @@ void PlayerVehicle::init(int _screenW, int _screenH)
 	TextManager::GetInstance().m_fallingText.push_back(m_energyText);
 }
 
-void PlayerVehicle::render(SDL_Renderer * _renderer)
+void PlayerVehicle::render(SDL_Renderer * _renderer, bool _flip)
 {
 	m_texture->render((int)m_posX, (int)m_posY, _renderer);
 	
 	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
 	{
-		m_weapons[i]->render(_renderer);
+		m_weapons[i]->render(_renderer, _flip);
 	}
 }
 

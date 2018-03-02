@@ -39,20 +39,20 @@ void MainWeapon::update(float _deltaTime)
 	}
 }
 
-void MainWeapon::render(SDL_Renderer * _renderer)
+void MainWeapon::render(SDL_Renderer * _renderer, bool _flip)
 {
 	if (!m_bulletType->m_enemy)
 	{
-		Weapon::render(_renderer);
+		Weapon::render(_renderer, _flip);
 	}
 
 	if (!m_bulletType->m_enemy)
 	{
-		m_weaponType->m_shootAnimation->render(int(m_posX + m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_posY - m_sizeH / 2), _renderer);
+		m_weaponType->m_shootAnimation->render(int(m_posX + m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_posY - m_sizeH / 2), _renderer, _flip);
 	}
 	else
 	{
-		m_weaponType->m_shootAnimation->render(int(m_Parent->m_posX + m_Parent->m_sizeW / 2 - m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_Parent->m_posY + m_Parent->m_sizeH), _renderer);
+		m_weaponType->m_shootAnimation->render(int(m_Parent->m_posX + m_Parent->m_sizeW / 2 - m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_Parent->m_posY + m_Parent->m_sizeH), _renderer, _flip);
 	}
 }
 
