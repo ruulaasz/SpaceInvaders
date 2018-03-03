@@ -12,7 +12,7 @@ Enemy::~Enemy()
 
 void Enemy::render(SDL_Renderer * _renderer, bool _flip)
 {
-	m_currentAnimation->render((int)m_posX, (int)m_posY, _renderer, _flip);
+	m_currentAnimation->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer, _flip);
 }
 
 void Enemy::recieveDamage(int _damage)
@@ -28,8 +28,8 @@ void Enemy::recieveDamage(int _damage)
 	FallingText* fall = new FallingText();
 
 	fall->m_String = std::to_string(_damage);
-	fall->m_posX = m_posX + m_sizeW;
-	fall->m_posY = m_posY - (m_sizeH / 2);
+	fall->m_posX = m_transform.m_posX + m_transform.m_sizeW;
+	fall->m_posY = m_transform.m_posY - (m_transform.m_sizeH / 2);
 	fall->m_originPosX = fall->m_posX;
 	fall->m_originPosY = fall->m_posY;
 

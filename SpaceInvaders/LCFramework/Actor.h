@@ -3,7 +3,7 @@
 #include "SDL_Manager.h"
 #include "Texture.h"
 #include "ColliderBox.h"
-
+#include "Transform.h"
 namespace LCF
 {
 	/**
@@ -38,11 +38,7 @@ namespace LCF
 		virtual void destroy() = 0;
 
 	public:
-		float m_posX;
-		float m_posY;
-		float m_sizeW;
-		float m_sizeH;
-
+		Transform m_transform;
 		bool m_beDestroyed;
 		bool m_DestroyMe;
 

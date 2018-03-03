@@ -28,8 +28,8 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY, int _directio
 	
 		route = route + "enemy\\skyenemy.txt";
 		skyEnemy = m_skyEnemyFactory.create(route);
-		skyEnemy->m_posX = _posX;
-		skyEnemy->m_posY = _posY;
+		skyEnemy->m_transform.m_posX = _posX;
+		skyEnemy->m_transform.m_posY = _posY;
 
 		route = route + "weapon\\";
 		route = route + skyEnemy->m_type->m_weapon;
@@ -52,8 +52,8 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY, int _directio
 		route = route + "enemy\\groundenemy.txt";
 		groundEnemy = m_groundEnemyFactory.create(route);
 		groundEnemy->m_direction = _direction;
-		groundEnemy->m_posX = _posX;
-		groundEnemy->m_posY = _posY;
+		groundEnemy->m_transform.m_posX = _posX;
+		groundEnemy->m_transform.m_posY = _posY;
 
 		route = route + "weapon\\";
 		route = route + groundEnemy->m_type->m_weapon;
@@ -76,8 +76,8 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY, int _directio
 		route = route + "enemy\\groundenemy_large.txt";
 		groundEnemy = m_groundEnemyFactory.create(route);
 		groundEnemy->m_direction = _direction;
-		groundEnemy->m_posX = _posX;
-		groundEnemy->m_posY = _posY;
+		groundEnemy->m_transform.m_posX = _posX;
+		groundEnemy->m_transform.m_posY = _posY;
 
 		route = route + "weapon\\";
 		route = route + groundEnemy->m_type->m_weapon;

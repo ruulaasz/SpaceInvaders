@@ -15,14 +15,14 @@ void MainBullet::init()
 	float resizeW = float(m_type->m_travelAnimation->m_frameWidth / 4);
 	float resizeH = float(m_type->m_travelAnimation->m_frameHeight / 4);
 
-	m_sizeW = (float)m_type->m_travelAnimation->m_frameWidth;
-	m_sizeH = (float)m_type->m_travelAnimation->m_frameHeight;
+	m_transform.m_sizeW = (float)m_type->m_travelAnimation->m_frameWidth;
+	m_transform.m_sizeH = (float)m_type->m_travelAnimation->m_frameHeight;
 
 	m_currentAnimation = m_type->m_travelAnimation;
 
 	Pawn::init();
 
-	m_colliderBox->SetSize(m_posX, m_posY, m_sizeW - resizeW, m_sizeH - resizeH);
+	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, m_transform.m_sizeW - resizeW, m_transform.m_sizeH - resizeH);
 	m_colliderBox->SetOffset(resizeW / 2, resizeH / 2);
 }
 
@@ -37,7 +37,7 @@ void MainBullet::update(float _deltaTime)
 
 			if (!m_type->m_enemy)
 			{
-				m_posY = m_posY - m_sizeH;
+				m_transform.m_posY = m_transform.m_posY - m_transform.m_sizeH;
 			}
 			else
 			{
@@ -56,18 +56,18 @@ void MainBullet::update(float _deltaTime)
 	{
 		if (!m_type->m_enemy)
 		{
-			m_posY -= m_type->m_movementSpeed * _deltaTime;
+			m_transform.m_posY -= m_type->m_movementSpeed * _deltaTime;
 
-			if (m_posY < -100)
+			if (m_transform.m_posY < -100)
 			{
 				LCF::World::GetInstance().deleteActorByID(m_id);
 			}
 		}
 		else
 		{
-			m_posY += m_type->m_movementSpeed * _deltaTime;
+			m_transform.m_posY += m_type->m_movementSpeed * _deltaTime;
 
-			if (m_posY > 750)
+			if (m_transform.m_posY > 750)
 			{
 				LCF::World::GetInstance().deleteActorByID(m_id);
 			}

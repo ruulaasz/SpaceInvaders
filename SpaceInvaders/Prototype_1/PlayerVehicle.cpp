@@ -40,18 +40,18 @@ void PlayerVehicle::init()
 	//m_moveSFX->play(-1);
 	//LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 
-	m_sizeW = (float)m_texture->getWidth();
-	m_sizeH = (float)m_texture->getHeight();
+	m_transform.m_sizeW = (float)m_texture->getWidth();
+	m_transform.m_sizeH = (float)m_texture->getHeight();
 
 	Pawn::init();
 
-	m_colliderBox->SetSize(m_posX, m_posY, (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), (float)m_texture->getHeight());
+	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), (float)m_texture->getHeight());
 	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), 0);
 
 	m_coreCollider = new PlayerVehicleBox();
 	m_coreCollider->SetActor(this);
 	m_coreCollider->SetFunction(&PlayerVehicle::coreColision);
-	m_coreCollider->SetSize(m_posX, m_posY, (float)m_texture->getWidth() -10, (float)m_texture->getHeight() - 10);
+	m_coreCollider->SetSize(m_transform.m_posX, m_transform.m_posY, (float)m_texture->getWidth() -10, (float)m_texture->getHeight() - 10);
 	LCF::ColliderManager::GetInstance().RegistrerCollider(m_coreCollider);
 	m_coreCollider->SetOffset(5, 5);
 
@@ -104,7 +104,7 @@ void PlayerVehicle::init()
 
 void PlayerVehicle::render(SDL_Renderer * _renderer, bool _flip)
 {
-	m_texture->render((int)m_posX, (int)m_posY, _renderer);
+	m_texture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer);
 	
 	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
 	{
@@ -144,7 +144,7 @@ void PlayerVehicle::update(float _deltaTime)
 		return;
 	}
 
-	m_posX += (m_currentDirection * m_movementSpeed * _deltaTime);
+	m_transform.m_posX += (m_currentDirection * m_movementSpeed * _deltaTime);
 
 	m_energyText->m_String = "Energy: " + std::to_string(m_energy);
 	m_leftShieldText->m_String = "Left Shield: " + std::to_string(m_weapons[LEFT_WEAPON]->m_life);
@@ -227,8 +227,8 @@ void PlayerVehicle::recieveDamage(int _damage)
 	FallingText* fall = new FallingText();
 
 	fall->m_String = std::to_string(_damage);
-	fall->m_posX = m_posX;
-	fall->m_posY = m_posY - (m_sizeH / 2);
+	fall->m_posX = m_transform.m_posX;
+	fall->m_posY = m_transform.m_posY - (m_transform.m_sizeH / 2);
 	fall->m_originPosX = fall->m_posX;
 	fall->m_originPosY = fall->m_posY;
 
@@ -316,12 +316,12 @@ void PlayerVehicle::collision(const Actor * _actor)
 	{
 		if (m_currentDirection < DIRECTION_STOP)
 		{
-			m_posX = temp->m_posX + temp->m_colliderBox->GetW() + m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
+			m_transform.m_posX = temp->m_transform.m_posX + temp->m_colliderBox->GetW() + m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
 			m_currentDirection = MAX_NUMBER_TO_THE_LEFT;
 		}
 		else
 		{
-			m_posX = temp->m_posX - m_colliderBox->GetW() + m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
+			m_transform.m_posX = temp->m_transform.m_posX - m_colliderBox->GetW() + m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth();
 			m_currentDirection = MAX_NUMBER_TO_THE_RIGHT;
 		}
 

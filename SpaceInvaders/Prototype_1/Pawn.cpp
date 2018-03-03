@@ -17,7 +17,7 @@ void Pawn::init()
 	m_colliderBox->SetFunction(&Actor::collision);
 	m_colliderBox->SetActor(this, false);
 	
-	m_colliderBox->SetSize(m_posX, m_posY, m_sizeW, m_sizeH);
+	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, m_transform.m_sizeW, m_transform.m_sizeH);
 
 	m_colliderBox->SetAutomaticOffset();
 

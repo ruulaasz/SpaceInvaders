@@ -15,8 +15,8 @@ void Weapon::init(Pawn * _Parent)
 	m_changeWeaponSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("change_weapon"));
 
 	m_Parent = _Parent;
-	m_posX = _Parent->m_posX;
-	m_posY = _Parent->m_posY;
+	m_transform.m_posX = _Parent->m_transform.m_posX;
+	m_transform.m_posY = _Parent->m_transform.m_posY;
 
 	m_canShoot = true;
 }
@@ -27,22 +27,22 @@ void Weapon::render(SDL_Renderer * _renderer, bool _flip)
 	{
 		if (m_direction > 0)
 		{
-			m_weaponType->m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer);
+			m_weaponType->m_weaponReadyTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer);
 		}
 		else
 		{
-			m_weaponType->m_weaponReadyTexture->render((int)m_posX, (int)m_posY, _renderer, true);
+			m_weaponType->m_weaponReadyTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer, true);
 		}
 	}
 	else
 	{
 		if (m_direction > 0)
 		{
-			m_weaponType->m_weaponTexture->render((int)m_posX, (int)m_posY, _renderer);
+			m_weaponType->m_weaponTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer);
 		}
 		else
 		{
-			m_weaponType->m_weaponTexture->render((int)m_posX, (int)m_posY, _renderer, true);
+			m_weaponType->m_weaponTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer, true);
 		}
 	}
 }
@@ -54,24 +54,24 @@ void Weapon::update(float _deltaTime)
 
 		if (m_direction > DIRECTION_STOP)
 		{
-			m_posX = m_Parent->m_posX + m_Parent->m_sizeW;
+			m_transform.m_posX = m_Parent->m_transform.m_posX + m_Parent->m_transform.m_sizeW;
 		}
 
 		if (m_direction < DIRECTION_STOP)
 		{
-			m_posX = m_Parent->m_posX - m_sizeW;
+			m_transform.m_posX = m_Parent->m_transform.m_posX - m_transform.m_sizeW;
 		}
 
 		if (m_direction == DIRECTION_STOP)
 		{
-			m_posX = m_Parent->m_posX;
-			m_posY = m_Parent->m_posY;
+			m_transform.m_posX = m_Parent->m_transform.m_posX;
+			m_transform.m_posY = m_Parent->m_transform.m_posY;
 		}
 	}
 	else
 	{
-		m_posX = m_Parent->m_posX;
-		m_posY = m_Parent->m_posY;
+		m_transform.m_posX = m_Parent->m_transform.m_posX;
+		m_transform.m_posY = m_Parent->m_transform.m_posY;
 	}
 
 	m_weaponType->m_shootAnimation->update(_deltaTime);
@@ -86,8 +86,8 @@ void Weapon::recieveDamage(int _damage)
 		FallingText* fall = new FallingText();
 
 		fall->m_String = std::to_string(_damage);
-		fall->m_posX = m_posX;
-		fall->m_posY = m_posY - (m_sizeH / 2);
+		fall->m_posX = m_transform.m_posX;
+		fall->m_posY = m_transform.m_posY - (m_transform.m_sizeH / 2);
 		fall->m_originPosX = fall->m_posX;
 		fall->m_originPosY = fall->m_posY;
 

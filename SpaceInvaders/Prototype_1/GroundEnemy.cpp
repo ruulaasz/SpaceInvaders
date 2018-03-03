@@ -16,8 +16,8 @@ void GroundEnemy::init()
 	float resizeW = float(m_type->m_moveAnimation->m_frameWidth / 4);
 	float resizeH = float(m_type->m_moveAnimation->m_frameHeight / 4);
 
-	m_sizeW = (float)m_type->m_moveAnimation->m_frameWidth;
-	m_sizeH = (float)m_type->m_moveAnimation->m_frameHeight;
+	m_transform.m_sizeW = (float)m_type->m_moveAnimation->m_frameWidth;
+	m_transform.m_sizeH = (float)m_type->m_moveAnimation->m_frameHeight;
 
 	m_currentAnimation = m_type->m_moveAnimation;
 
@@ -31,7 +31,7 @@ void GroundEnemy::init()
 
 	Pawn::init();
 
-	m_colliderBox->SetSize(m_posX, m_posY, m_sizeW - resizeW, m_sizeH - resizeH);
+	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, m_transform.m_sizeW - resizeW, m_transform.m_sizeH - resizeH);
 	m_colliderBox->SetOffset(resizeW / 2, resizeH / 2);
 }
 
@@ -47,7 +47,7 @@ void GroundEnemy::update(float _deltaTime)
 
 			if (m_direction > DIRECTION_STOP)
 			{
-				m_posX += m_sizeW - m_type->m_deadAnimation->m_frameWidth;
+				m_transform.m_posX += m_transform.m_sizeW - m_type->m_deadAnimation->m_frameWidth;
 			}
 
 			m_currentAnimation = m_type->m_deadAnimation;
@@ -61,7 +61,7 @@ void GroundEnemy::update(float _deltaTime)
 	}
 	else
 	{
-		m_posX += (m_direction * m_type->m_movementSpeed * _deltaTime);
+		m_transform.m_posX += (m_direction * m_type->m_movementSpeed * _deltaTime);
 		m_weapon->update(_deltaTime);
 
 		m_shootTimer += _deltaTime;

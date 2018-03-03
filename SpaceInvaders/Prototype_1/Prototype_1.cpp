@@ -213,8 +213,8 @@ void initPlayer()
 	g_player->m_weapons[LEFT_WEAPON] = g_enemySpawner.m_sideWeaponfactory.create(route);
 	reinterpret_cast<SideWeapon*>(g_player->m_weapons[LEFT_WEAPON])->m_bulletType = sbullet->m_type;
 
-	g_player->m_posX = 800;
-	g_player->m_posY = 700;
+	g_player->m_transform.m_posX = 800;
+	g_player->m_transform.m_posY = 700;
 	g_player->init();
 	LCF::World::GetInstance().registerActor(g_player);
 }
@@ -232,8 +232,8 @@ void initWorld()
 
 	g_rightWall = new Wall();
 	g_rightWall->init();
-	g_rightWall->m_posY = 700;
-	g_rightWall->m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - g_rightWall->m_sizeW;
+	g_rightWall->m_transform.m_posY = 700;
+	g_rightWall->m_transform.m_posX = LCF::SDL_Manager::GetInstance().m_windowWidth - g_rightWall->m_transform.m_sizeW;
 
 	LCF::World::GetInstance().registerActor(g_rightWall);
 

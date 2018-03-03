@@ -87,8 +87,8 @@ namespace LCF
 			if (m_actor == NULL)
 				return MESSAGE_WARNING("The actor is NULL");
 
-			m_offsetX = x - m_actor->m_posX;
-			m_offsetY = y - m_actor->m_posY;
+			m_offsetX = x - m_actor->m_transform.m_posX;
+			m_offsetY = y - m_actor->m_transform.m_posY;
 
 			Update(0.0);
 
@@ -107,13 +107,13 @@ namespace LCF
 			{
 				if (m_centerPosition)
 				{
-					x = (m_actor->m_posX / w) + m_offsetX;
-					y = (m_actor->m_posY / h) + m_offsetY;
+					x = (m_actor->m_transform.m_posX / w) + m_offsetX;
+					y = (m_actor->m_transform.m_posY / h) + m_offsetY;
 				}
 				else
 				{
-					x = m_actor->m_posX + m_offsetX;
-					y = m_actor->m_posY + m_offsetY;
+					x = m_actor->m_transform.m_posX + m_offsetX;
+					y = m_actor->m_transform.m_posY + m_offsetY;
 				}
 				SetBox();
 			}
