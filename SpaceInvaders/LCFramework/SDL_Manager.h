@@ -10,8 +10,11 @@
 
 #include "Module.h"
 
+
 namespace LCF
 {
+	class Transform;
+	class Texture;
 	/**
 	* Manager class for SDL 2.0
 	*/
@@ -54,6 +57,18 @@ namespace LCF
 		*/
 		void destroy();
 
+		/**
+		* Render a texture
+		*
+		*/
+		void RenderTexture(Transform _transform, Texture* _texture, bool _flip = false);
+
+		/**
+		* Render a animation
+		*
+		*/
+		void RenderAnimation(Texture* _texture, SDL_Rect * _dstRect, SDL_Rect * _srcRect,  bool _flip = false, double _angle = 0.0f);
+
 	private:
 		/**
 		* Initialize SDL 2.0 subsystems.
@@ -87,6 +102,7 @@ namespace LCF
 		*
 		*/
 		void createRenderer();
+		
 
 	public:
 		SDL_Renderer* m_renderer;

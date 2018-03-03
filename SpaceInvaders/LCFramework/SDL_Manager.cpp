@@ -1,5 +1,7 @@
 #include "SDL_Manager.h"
 #include <cstdio>
+#include "Transform.h"
+#include "Texture.h"
 
 namespace LCF
 {
@@ -68,6 +70,32 @@ namespace LCF
 		m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 		SDL_SetRenderDrawColor(m_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	}
+
+	void SDL_Manager::RenderTexture(Transform _transform, Texture* _texture, bool _flip)
+	{
+		SDL_Rect renderQuad = { _transform.m_posX, _transform.m_posY, _transform.m_sizeW, _transform.m_sizeH };
+
+		if (!_flip)
+		{
+			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, nullptr, &renderQuad, 0, nullptr, SDL_FLIP_NONE);
+		}
+		else
+		{
+			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, nullptr, &renderQuad, 0, nullptr, SDL_FLIP_HORIZONTAL);
+		}
+	}
+
+	void SDL_Manager::RenderAnimation(Texture* _texture, SDL_Rect * _dstRect, SDL_Rect * _srcRect, bool _flip , double _angle)
+	{
+		if (!_flip)
+		{
+			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, _srcRect, _dstRect, _angle, nullptr, SDL_FLIP_NONE);
+		}
+		else
+		{
+			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, _srcRect, _dstRect, _angle, nullptr, SDL_FLIP_HORIZONTAL);
+		}
 	}
 
 	bool SDL_Manager::init()
