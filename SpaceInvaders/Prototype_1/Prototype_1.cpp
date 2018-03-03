@@ -135,7 +135,13 @@ void loadContent()
 	assetName = "skyenemy_dead";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
+	assetName = "skyenemy_spawn";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
 	assetName = "hooper_dead";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
+	assetName = "hooper_spawn";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
 	assetName = "mainbullet_impact";

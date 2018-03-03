@@ -16,6 +16,7 @@ public:
 	int m_damage;
 	std::string m_weapon;
 	LCF::Sfx* m_damageSFX;
+	LCF::Sfx* m_spawnSFX;
 
 	void init(std::string _info);
 };

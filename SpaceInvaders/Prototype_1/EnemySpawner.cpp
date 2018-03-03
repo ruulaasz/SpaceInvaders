@@ -44,6 +44,7 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY, int _directio
 
 		skyEnemy->init();
 		LCF::World::GetInstance().registerActor(skyEnemy);
+		skyEnemy->m_type->m_spawnSFX->play(-1);
 		break;
 
 	case GROUND_ENEMY:
@@ -67,6 +68,7 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY, int _directio
 
 		groundEnemy->init();
 		LCF::World::GetInstance().registerActor(groundEnemy);
+		groundEnemy->m_type->m_spawnSFX->play(-1);
 		break;
 
 	case GROUND_ENEMY_LARGE:
@@ -90,6 +92,7 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY, int _directio
 
 		groundEnemy->init();
 		LCF::World::GetInstance().registerActor(groundEnemy);
+		groundEnemy->m_type->m_spawnSFX->play(-1);
 		break;
 	}
 }
