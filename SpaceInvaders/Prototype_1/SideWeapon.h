@@ -34,5 +34,9 @@ public:
 
 	virtual void shoot();
 
+	virtual void recieveDamage(int _damage);
+
 	BulletType* m_bulletType;
+
+	LCF::Sfx* m_shieldDamageSFX;
 };

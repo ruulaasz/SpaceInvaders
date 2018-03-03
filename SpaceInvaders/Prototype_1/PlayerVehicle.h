@@ -67,7 +67,9 @@ public:
 
 	Weapon* m_weapons[3];
 	PlayerVehicleBox* m_coreCollider;
+
 	LCF::Sfx* m_moveSFX;
+	LCF::Sfx* m_coreDamageSFX;
 
 	spiText* m_coreLifeText;
 	spiText* m_leftShieldText;

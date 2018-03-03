@@ -66,29 +66,7 @@ void SubBullet::update(float _deltaTime)
 
 void SubBullet::collision(const Actor * _actor)
 {
-	if (const SkyEnemy* temp = dynamic_cast<const SkyEnemy*>(_actor))
-	{
-		if (!m_type->m_enemy)
-		{
-			m_type->m_impactSFX->play(-1);
-		}
-	}
-
-	if (const GroundEnemy* temp = dynamic_cast<const GroundEnemy*>(_actor))
-	{
-		if (!m_type->m_enemy)
-		{
-			m_type->m_impactSFX->play(-1);
-		}
-	}
-
-	if (const PlayerVehicle* temp = dynamic_cast<const PlayerVehicle*>(_actor))
-	{
-		if (m_type->m_enemy)
-		{
-			m_type->m_impactSFX->play(-1);
-		}
-	}
+	
 }
 
 void SubBullet::setType(BulletType * _type)

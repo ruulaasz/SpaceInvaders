@@ -30,7 +30,7 @@ public:
 	*/
 	virtual void update(float /*_deltaTime*/) {};
 
-	void recieveDamage(int _damage);
+	virtual void recieveDamage(int _damage);
 
 	LCF::Animator* m_currentAnimation;
 	int m_life;

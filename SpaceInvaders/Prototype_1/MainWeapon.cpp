@@ -52,7 +52,7 @@ void MainWeapon::render(SDL_Renderer * _renderer, bool _flip)
 	}
 	else
 	{
-		m_weaponType->m_shootAnimation->render(int(m_Parent->m_posX + m_Parent->m_sizeW / 2 - m_weaponType->m_shootAnimation->m_frameWidth / 2), int(m_Parent->m_posY + m_Parent->m_sizeH), _renderer, _flip);
+		m_weaponType->m_shootAnimation->render(int(m_posX), int(m_posY), _renderer, _flip);
 	}
 }
 

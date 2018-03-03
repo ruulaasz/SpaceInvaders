@@ -23,7 +23,9 @@ PlayerVehicle::~PlayerVehicle()
 void PlayerVehicle::init()
 {
 	m_texture = reinterpret_cast<LCF::Texture*>(LCF::AssetManager::GetInstance().getAsset("MainWeapon"));
+
 	m_moveSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("moving"));
+	m_coreDamageSFX = reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset("core_damage"));
 
 	m_weapons[MAIN_WEAPON]->init(this);
 	m_weapons[MAIN_WEAPON]->m_weaponSelected = true;
@@ -220,6 +222,8 @@ void PlayerVehicle::recieveDamage(int _damage)
 {
 	m_life -= _damage;
 
+	m_coreDamageSFX->play(-1);
+
 	FallingText* fall = new FallingText();
 
 	fall->m_String = std::to_string(_damage);
@@ -265,8 +269,15 @@ void PlayerVehicle::collision(const Actor * _actor)
 	{
 		recieveDamage(temp->m_type->m_damage);
 
-		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage)/4);
-		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage)/4);
+		if (!m_weapons[RIGHT_WEAPON]->m_dead)
+		{
+			m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		}
+
+		if (!m_weapons[LEFT_WEAPON]->m_dead)
+		{
+			m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		}
 
 		LCF::AudioManager::GetInstance().StopChannel(temp->m_type->m_moveSFX->m_currentChannel);
 		LCF::World::GetInstance().deleteActorByID(temp->m_id);
@@ -321,8 +332,15 @@ void PlayerVehicle::collision(const Actor * _actor)
 	{
 		recieveDamage(temp->m_type->m_damage);
 
-		m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
-		m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		if (!m_weapons[RIGHT_WEAPON]->m_dead)
+		{
+			m_weapons[RIGHT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		}
+
+		if (!m_weapons[LEFT_WEAPON]->m_dead)
+		{
+			m_weapons[LEFT_WEAPON]->recieveDamage((temp->m_type->m_damage) / 4);
+		}
 
 		LCF::World::GetInstance().deleteActorByID(temp->m_id);
 	}

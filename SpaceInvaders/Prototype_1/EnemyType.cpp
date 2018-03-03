@@ -10,9 +10,12 @@ EnemyType::EnemyType(const EnemyType & _type)
 {
 	m_moveSFX = new LCF::Sfx(*_type.m_moveSFX);
 	m_deadSFX = new LCF::Sfx(*_type.m_deadSFX);
-	m_movementSpeed = _type.m_movementSpeed;
+	m_damageSFX = new LCF::Sfx(*_type.m_damageSFX);
+
 	m_moveAnimation = new LCF::Animator(*_type.m_moveAnimation);
 	m_deadAnimation = new LCF::Animator(*_type.m_deadAnimation);
+
+	m_movementSpeed = _type.m_movementSpeed;
 	m_life = _type.m_life;
 	m_damage = _type.m_damage;
 	m_weapon = _type.m_weapon;
@@ -105,6 +108,11 @@ void EnemyType::init(std::string _info)
 
 			case 13:
 				m_weapon = value;
+				value.clear();
+				break;
+
+			case 14:
+				m_damageSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset(value)));
 				value.clear();
 				break;
 			}

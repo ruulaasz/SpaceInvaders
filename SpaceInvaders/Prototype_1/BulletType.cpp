@@ -10,7 +10,6 @@ BulletType::BulletType(const BulletType & _type)
 {
 	m_damage = _type.m_damage;
 	m_deadAnimation = new LCF::Animator(*_type.m_deadAnimation);
-	m_impactSFX = _type.m_impactSFX;
 	m_movementSpeed = _type.m_movementSpeed;
 	m_travelAnimation = new LCF::Animator(*_type.m_travelAnimation);
 	m_enemy = _type.m_enemy;
@@ -42,51 +41,46 @@ void BulletType::init(std::string _info)
 				break;
 
 			case 1:
-				m_impactSFX = new LCF::Sfx(*reinterpret_cast<LCF::Sfx*>(LCF::AssetManager::GetInstance().getAsset(value)));
-				value.clear();
-				break;
-
-			case 2:
 				m_movementSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
-			case 3:
+			case 2:
 				m_damage = atoi(value.c_str());
 				value.clear();
 				break;
 
-			case 4:
+			case 3:
 				m_travelAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset(value));
 				value.clear();
 				break;
 
-			case 5:
+			case 4:
 				m_travelAnimation->m_numOfFrames = atoi(value.c_str());
 				value.clear();
 				break;
 
-			case 6:
+			case 5:
 				m_travelAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
-			case 7:
+			case 6:
 				m_deadAnimation->m_sprite = reinterpret_cast<LCF::Sprite*>(LCF::AssetManager::GetInstance().getAsset(value));
 				value.clear();
 				break;
 
-			case 8:
+			case 7:
 				m_deadAnimation->m_numOfFrames = atoi(value.c_str());
 				value.clear();
 				break;
 
-			case 9:
+			case 8:
 				m_deadAnimation->m_animSpeed = (float)atof(value.c_str());
 				value.clear();
 				break;
 
-			case 10:
+			case 9:
 				m_deadAnimation->m_maxRepetitions = atoi(value.c_str());
 				value.clear();
 				break;

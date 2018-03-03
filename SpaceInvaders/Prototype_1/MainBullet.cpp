@@ -70,7 +70,6 @@ void MainBullet::update(float _deltaTime)
 			if (m_posY > 750)
 			{
 				LCF::World::GetInstance().deleteActorByID(m_id);
-				m_type->m_impactSFX->play(-1);
 			}
 		}
 	}
@@ -80,21 +79,7 @@ void MainBullet::update(float _deltaTime)
 
 void MainBullet::collision(const Actor * _actor)
 {
-	if (const SkyEnemy* temp = dynamic_cast<const SkyEnemy*>(_actor))
-	{
-		if (!m_type->m_enemy)
-		{
-			m_type->m_impactSFX->play(-1);
-		}
-	}
-
-	if (const PlayerVehicle* temp = dynamic_cast<const PlayerVehicle*>(_actor))
-	{
-		if (m_type->m_enemy)
-		{
-			m_type->m_impactSFX->play(-1);
-		}
-	}
+	
 }
 
 void MainBullet::setType(BulletType * _type)

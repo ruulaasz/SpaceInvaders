@@ -34,6 +34,8 @@ public:
 
 	void setType(EnemyType* _type);
 
+	virtual void recieveDamage(int _damage);
+
 	int m_direction;
 	EnemyType* m_type;
 	SideWeapon* m_weapon;

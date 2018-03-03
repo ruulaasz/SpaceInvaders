@@ -34,6 +34,8 @@ public:
 
 	void setType(EnemyType* _type);
 
+	virtual void recieveDamage(int _damage);
+
 	EnemyType* m_type;
 	MainWeapon* m_weapon;
 

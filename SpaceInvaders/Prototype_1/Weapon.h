@@ -34,7 +34,7 @@ public:
 
 	virtual void shoot() {};
 
-	void recieveDamage(int _damage);
+	virtual void recieveDamage(int _damage);
 
 	void setType(WeaponType* _type);
 	

@@ -104,6 +104,7 @@ void Weapon::recieveDamage(int _damage)
 		{
 			m_life = 0;
 			m_colliderBox->SetEnabled(false);
+			m_dead = true;
 		}
 	}
 }

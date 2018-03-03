@@ -144,6 +144,10 @@ void EnemySpawner::init()
 	m_sideWeaponfactory.create(route);
 
 	route = "..\\resources\\units\\";
-	route = route + "weapon\\side_enemy_weapon.txt";
+	route = route + "weapon\\groundenemy_hooper_large.txt";
+	m_sideWeaponfactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "weapon\\groundenemy_hooper.txt";
 	m_sideWeaponfactory.create(route);
 }

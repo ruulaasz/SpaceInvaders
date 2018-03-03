@@ -76,6 +76,9 @@ void loadContent()
 	assetName = "meteor_dead";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
+	assetName = "meteor_shoot";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
 	assetName = "main_weapon_shoot";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
@@ -86,6 +89,9 @@ void loadContent()
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
 	assetName = "hooper_mecha_large";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "hooper_mecha_shoot";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
 	assetName = "hooper_mecha_large_shoot";
@@ -103,6 +109,12 @@ void loadContent()
 
 	//SFX
 	assetName = "moving";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
+	assetName = "core_damage";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
+	assetName = "shield_damage";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
 	assetName = "after_shoot_subweapon";
@@ -123,10 +135,19 @@ void loadContent()
 	assetName = "skyenemy_dead";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
+	assetName = "hooper_dead";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
 	assetName = "mainbullet_impact";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 
 	assetName = "shoot_main_enemy_weapon";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
+	assetName = "shoot_sub_enemy_weapon";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
+
+	assetName = "skyenemy_damage";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SFX);
 	
 	//MUSIC
@@ -215,7 +236,7 @@ void initWorld()
 
 	//g_music->playFadeIn(1500);
 	LCF::AudioManager::GetInstance().SetMusicVolume(15);
-	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 5);
+	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 25);
 }
 
 void init()
@@ -328,7 +349,7 @@ int _tmain(int /*argc*/, char** /*argv*/)
 
 		if (m_spawnTimer >= m_spawnTime)
 		{
-			//g_enemySpawner.create(GROUND_ENEMY, 1600.f, 713, DIRECTION_LEFT);
+			g_enemySpawner.create(GROUND_ENEMY, 1600.f, 713, DIRECTION_LEFT);
 			//g_enemySpawner.create(GROUND_ENEMY, -100.f, 713, DIRECTION_RIGHT);
 			m_spawnTimer = 0.0f;
 		}
@@ -336,7 +357,7 @@ int _tmain(int /*argc*/, char** /*argv*/)
 		if (m_spawnLargeTimer >= m_spawnLargeTime)
 		{
 			g_enemySpawner.create(GROUND_ENEMY_LARGE, -100.f, 700, DIRECTION_RIGHT);
-			g_enemySpawner.create(GROUND_ENEMY_LARGE, 1600.f, 700, DIRECTION_LEFT);
+			//g_enemySpawner.create(GROUND_ENEMY_LARGE, 1600.f, 700, DIRECTION_LEFT);
 
 			m_spawnLargeTimer = 0.0f;
 		}

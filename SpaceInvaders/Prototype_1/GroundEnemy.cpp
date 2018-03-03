@@ -110,3 +110,10 @@ void GroundEnemy::setType(EnemyType * _type)
 	m_type = _type;
 	m_life = m_type->m_life;
 }
+
+void GroundEnemy::recieveDamage(int _damage)
+{
+	Enemy::recieveDamage(_damage);
+
+	m_type->m_damageSFX->play(-1);
+}
