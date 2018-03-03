@@ -49,9 +49,11 @@ void PlayerVehicle::init()
 	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), 0);
 
 	m_coreCollider = new PlayerVehicleBox();
+	m_coreCollider->SetFlags(true, false, false);
 	m_coreCollider->SetActor(this);
 	m_coreCollider->SetFunction(&PlayerVehicle::coreColision);
-	m_coreCollider->SetSize(m_transform.m_posX, m_transform.m_posY, (float)m_texture->getWidth() -10, (float)m_texture->getHeight() - 10);
+	m_coreCollider->SetSize(m_transform.m_posX, m_transform.m_posY, (float)m_texture->getWidth() - 10, (float)m_texture->getHeight()- 10);
+	m_coreCollider->SetAutomaticOffset();
 	LCF::ColliderManager::GetInstance().RegistrerCollider(m_coreCollider);
 	m_coreCollider->SetOffset(5, 5);
 

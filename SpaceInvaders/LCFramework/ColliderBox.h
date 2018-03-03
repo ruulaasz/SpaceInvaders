@@ -2,6 +2,7 @@
 
 #include "message.h"
 #include "SDL_Manager.h"
+#include "Transform.h"
 
 namespace LCF
 {
@@ -47,7 +48,7 @@ namespace LCF
 		virtual MESSAGE_LOG CheckCollision(const BaseColliderBox* _target) = 0;
 
 	public:
-		BaseColliderBox(){}
+		BaseColliderBox() {}
 		virtual ~BaseColliderBox() {}
 	};
 
@@ -60,25 +61,41 @@ namespace LCF
 		void(_type::*m_function)(const Actor*);
 		bool m_centerPosition;
 		bool m_enabled;
+
+		bool m_followActor;
+		bool m_resizeActor;
+		bool m_rotateActor;
+
 		float m_left;
 		float m_right;
 		float m_top;
 		float m_bot;
-		float x;
-		float y;
-		float w;
-		float h;
 
-		float m_offsetX;
-		float m_offsetY;
+		Transform m_transform;
+
+		Transform m_transformOffset;
 
 	public:
-		void SetSize(float _x, float _y, float _w, float _h)
+		void SetFlags(bool _followActor, bool _automaticResize, bool _automaticRotate)
 		{
-			x = _x;
-			y = _y;
-			w = _w;
-			h = _h;
+			m_followActor = _followActor;
+			m_resizeActor = _automaticResize;
+			m_rotateActor = _automaticRotate;
+		}
+
+		void SetSize(float _x, float _y, float _w, float _h, float _angle = 0.0f)
+		{
+			m_transform.m_posX = _x;
+			m_transform.m_posY = _y;
+			m_transform.m_sizeW = _w;
+			m_transform.m_sizeH = _h;
+			m_transform.m_angle = _angle;
+			SetBox();
+		}
+
+		void SetSize(Transform _transform)
+		{
+			m_transform = _transform;
 			SetBox();
 		}
 
@@ -87,33 +104,64 @@ namespace LCF
 			if (m_actor == NULL)
 				return MESSAGE_WARNING("The actor is NULL");
 
-			m_offsetX = x - m_actor->m_transform.m_posX;
-			m_offsetY = y - m_actor->m_transform.m_posY;
+			m_transformOffset.m_posX = m_transform.m_posX - m_actor->m_transform.m_posX;
+			m_transformOffset.m_posY = m_transform.m_posY - m_actor->m_transform.m_posY;
 
-			Update(0.0);
+			m_transformOffset.m_sizeW = m_transform.m_sizeW - m_actor->m_transform.m_sizeW;
+			m_transformOffset.m_sizeH = m_transform.m_sizeH - m_actor->m_transform.m_sizeH;
+
+			m_transformOffset.m_angle = m_transform.m_angle - m_actor->m_transform.m_angle;
+
+			Update(0.0f);
 
 			return MESSAGE_SUCCESS("The offset is generated");
 		}
 
-		void SetOffset(float _offsetX, float _offsetY)
+		void SetOffset(float _offsetX, float _offsetY, float _offsetW = 0.0f, float _offsetH = 0.0f, float _offsetAngle = 0.0f)
 		{
-			m_offsetX = _offsetX;
-			m_offsetY = _offsetY;
+			m_transformOffset.m_posX = _offsetX;
+			m_transformOffset.m_posY = _offsetY;
+
+			m_transformOffset.m_sizeW = _offsetW;
+			m_transformOffset.m_sizeH = _offsetH;
+
+			m_transformOffset.m_angle = _offsetAngle;
+
+			Update(0.0f);
+		}
+
+		void SetOffset(Transform _offset)
+		{
+			m_transformOffset = _offset;
+
+			Update(0.0f);
 		}
 
 		virtual void Update(float /*_deltaTime*/)
 		{
 			if (m_actor != NULL)
 			{
-				if (m_centerPosition)
+				if (m_followActor)
 				{
-					x = (m_actor->m_transform.m_posX / w) + m_offsetX;
-					y = (m_actor->m_transform.m_posY / h) + m_offsetY;
+					if (m_centerPosition)
+					{
+						m_transform.m_posX = (m_actor->m_transform.m_posX / m_transform.m_sizeW) + m_transformOffset.m_posX;
+						m_transform.m_posY = (m_actor->m_transform.m_posY / m_transform.m_sizeH) + m_transformOffset.m_posY;
+					}
+					else
+					{
+						m_transform.m_posX = m_actor->m_transform.m_posX + m_transformOffset.m_posX;
+						m_transform.m_posY = m_actor->m_transform.m_posY + m_transformOffset.m_posY;
+					}
 				}
-				else
+				if (m_resizeActor)
 				{
-					x = m_actor->m_transform.m_posX + m_offsetX;
-					y = m_actor->m_transform.m_posY + m_offsetY;
+					m_transform.m_sizeW = m_actor->m_transform.m_sizeW + m_transformOffset.m_sizeW;
+					m_transform.m_sizeH = m_actor->m_transform.m_sizeH + m_transformOffset.m_sizeH;
+				}
+				if (m_rotateActor)
+				{
+					m_transform.m_angle = m_actor->m_transform.m_angle + m_transformOffset.m_angle;
 				}
 				SetBox();
 			}
@@ -208,32 +256,32 @@ namespace LCF
 
 		virtual float GetX() const
 		{
-			return x;
+			return m_transform.m_posX;
 		}
 
 		virtual float GetY() const
 		{
-			return y;
+			return m_transform.m_posY;
 		}
 
 		virtual float GetW() const
 		{
-			return w;
+			return m_transform.m_sizeW;
 		}
 
 		virtual float GetH() const
 		{
-			return h;
+			return m_transform.m_sizeH;
 		}
 
 		virtual float GetOffsetX() const
 		{
-			return m_offsetX;
+			return m_transformOffset.m_posX;
 		}
 
 		virtual float GetOffsetY() const
 		{
-			return m_offsetY;
+			return m_transformOffset.m_posY;
 		}
 
 		virtual void SetEnabled(bool _value)
@@ -259,21 +307,21 @@ namespace LCF
 	protected:
 		void SetBox()
 		{
-			m_left = x;
-			m_right = x + w;
-			m_top = y;
-			m_bot = y + h;
+			m_left = m_transform.m_posX;
+			m_right = m_transform.m_posX + m_transform.m_sizeW;
+			m_top = m_transform.m_posY;
+			m_bot = m_transform.m_posY + m_transform.m_sizeH;
 		}
 
 	public:
-		ColliderBox()
+		ColliderBox() : m_followActor(true),
+			m_resizeActor(true),
+			m_rotateActor(true),
+			m_actor(NULL),
+			m_centerPosition(false),
+			m_enabled(true)
 		{
-			m_actor = NULL;
 			m_function = NULL;
-			m_centerPosition = false;
-			m_enabled = true;
-			m_offsetX = 0.0;
-			m_offsetY = 0.0;
 		}
 
 		virtual ~ColliderBox() {};

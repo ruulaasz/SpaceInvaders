@@ -14,9 +14,11 @@ void Pawn::init()
 {
 	m_colliderBox = new LCF::ColliderBox<Actor>();
 
+	m_colliderBox->SetFlags(true, false, false);
+
 	m_colliderBox->SetFunction(&Actor::collision);
 	m_colliderBox->SetActor(this, false);
-	
+
 	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, m_transform.m_sizeW, m_transform.m_sizeH);
 
 	m_colliderBox->SetAutomaticOffset();
