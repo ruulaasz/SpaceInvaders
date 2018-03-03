@@ -14,6 +14,7 @@ WeaponType::WeaponType(const WeaponType & _type)
 	m_shootSFX = new LCF::Sfx(*_type.m_shootSFX);
 	m_bulletType = _type.m_bulletType;
 	m_life = _type.m_life;
+	m_enemy = _type.m_enemy;
 }
 
 WeaponType::~WeaponType()
@@ -83,6 +84,18 @@ void WeaponType::init(std::string _info)
 
 			case 9:
 				m_life = atoi(value.c_str());
+				value.clear();
+				break;
+
+			case 10:
+				if (atoi(value.c_str()) == 0)
+				{
+					m_enemy = false;
+				}
+				else
+				{
+					m_enemy = true;
+				}
 				value.clear();
 				break;
 			}

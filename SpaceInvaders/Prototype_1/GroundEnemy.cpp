@@ -2,7 +2,8 @@
 
 GroundEnemy::GroundEnemy()
 {
-
+	m_shootTimer = 0.f;
+	m_shootTime = 3.3f;
 }
 
 GroundEnemy::~GroundEnemy()
@@ -40,10 +41,15 @@ void GroundEnemy::update(float _deltaTime)
 	{
 		if (!m_dead)
 		{
-
 			LCF::AudioManager::GetInstance().StopChannel(m_type->m_moveSFX->m_currentChannel);
 			m_type->m_deadSFX->play(-1);
 			m_colliderBox->SetEnabled(false);
+
+			if (m_direction > DIRECTION_STOP)
+			{
+				m_posX += m_sizeW - m_type->m_deadAnimation->m_frameWidth;
+			}
+
 			m_currentAnimation = m_type->m_deadAnimation;
 			m_dead = true;
 		}
@@ -56,10 +62,14 @@ void GroundEnemy::update(float _deltaTime)
 	else
 	{
 		m_posX += (m_direction * m_type->m_movementSpeed * _deltaTime);
+		m_weapon->update(_deltaTime);
 
-		if (!m_dead)
+		m_shootTimer += _deltaTime;
+
+		if (m_shootTimer >= m_shootTime)
 		{
-			m_weapon->update(_deltaTime);
+			m_weapon->shoot();
+			m_shootTimer = 0;
 		}
 	}
 
@@ -74,7 +84,6 @@ void GroundEnemy::render(SDL_Renderer * _renderer, bool _flip)
 	}
 	else
 	{
-
 		Enemy::render(_renderer);
 	}
 
@@ -93,8 +102,6 @@ void GroundEnemy::collision(const Actor * _actor)
 			recieveDamage(temp->m_type->m_damage);
 			LCF::World::GetInstance().deleteActorByID(temp->m_id);
 		}
-
-		//m_weapon->shoot();
 	}
 }
 

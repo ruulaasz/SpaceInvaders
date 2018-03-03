@@ -18,4 +18,5 @@ public:
 	LCF::Animator* m_currentAnimation;
 
 	BulletType* m_type;
+	bool m_dead;
 };

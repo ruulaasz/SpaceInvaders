@@ -37,4 +37,7 @@ public:
 	int m_direction;
 	EnemyType* m_type;
 	SideWeapon* m_weapon;
+
+	float m_shootTimer;
+	float m_shootTime;
 };

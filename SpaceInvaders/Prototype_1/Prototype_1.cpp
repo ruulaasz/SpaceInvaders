@@ -85,6 +85,12 @@ void loadContent()
 	assetName = "hooper_mecha";
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
+	assetName = "hooper_mecha_large";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
+	assetName = "hooper_mecha_large_shoot";
+	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
+
 	assetName = "hooper_mecha_dead"; 
 	LCF::AssetManager::GetInstance().loadAsset(assetName, AT_SPRITE);
 
@@ -303,14 +309,13 @@ int _tmain(int /*argc*/, char** /*argv*/)
 {
 	init();
 
-	g_enemySpawner.create(SKY_ENEMY, 775.f, 0.f);
-
-	g_enemySpawner.create(GROUND_ENEMY_LEFT, 1500.f, 700);
-
-	g_enemySpawner.create(GROUND_ENEMY_RIGHT, 100.f, 700);
+	g_enemySpawner.create(SKY_ENEMY, 775.f, -100.f);
 
 	float m_spawnTimer = 0.0f;
-	float m_spawnTime = 3.0f;
+	float m_spawnTime = 5.0f;
+
+	float m_spawnLargeTimer = 13.0f;
+	float m_spawnLargeTime = 13.0f;
 
 	while (!g_quit)
 	{
@@ -319,12 +324,21 @@ int _tmain(int /*argc*/, char** /*argv*/)
 		lastTime = thisTime;
 
 		m_spawnTimer += g_deltaTime;
+		m_spawnLargeTimer += g_deltaTime;
 
 		if (m_spawnTimer >= m_spawnTime)
 		{
-			g_enemySpawner.create(GROUND_ENEMY_LEFT, 1500.f, 700);
-			g_enemySpawner.create(GROUND_ENEMY_RIGHT, 100.f, 700);
+			//g_enemySpawner.create(GROUND_ENEMY, 1600.f, 713, DIRECTION_LEFT);
+			//g_enemySpawner.create(GROUND_ENEMY, -100.f, 713, DIRECTION_RIGHT);
 			m_spawnTimer = 0.0f;
+		}
+
+		if (m_spawnLargeTimer >= m_spawnLargeTime)
+		{
+			g_enemySpawner.create(GROUND_ENEMY_LARGE, -100.f, 700, DIRECTION_RIGHT);
+			g_enemySpawner.create(GROUND_ENEMY_LARGE, 1600.f, 700, DIRECTION_LEFT);
+
+			m_spawnLargeTimer = 0.0f;
 		}
 
 		handleInputs();

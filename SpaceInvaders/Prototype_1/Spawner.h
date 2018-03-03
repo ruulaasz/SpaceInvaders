@@ -13,6 +13,6 @@ public:
 	LCF::Factory <MainBullet, BulletType> m_mainBulletFactory;
 	LCF::Factory <SubBullet, BulletType> m_subBulletFactory;
 
-	virtual void create(int _unitType, float _posX, float _posY) = 0;
+	virtual void create(int _unitType, float _posX, float _posY, int _direction) = 0;
 	virtual void init() = 0;
 };

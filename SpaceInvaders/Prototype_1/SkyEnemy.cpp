@@ -2,7 +2,8 @@
 
 SkyEnemy::SkyEnemy()
 {
-
+	m_shootTimer = 0.f;
+	m_shootTime = 6.5f;
 }
 
 SkyEnemy::~SkyEnemy()
@@ -63,16 +64,21 @@ void SkyEnemy::update(float _deltaTime)
 	{
 		m_posY += (m_type->m_movementSpeed * _deltaTime);
 
-		if (!m_dead)
+		m_weapon->update(_deltaTime);
+		
+		m_shootTimer += _deltaTime;
+
+		if (m_shootTimer >= m_shootTime)
 		{
-			m_weapon->update(_deltaTime);
+			m_weapon->shoot();
+			m_shootTimer = 0;
 		}
 	}
 
 	m_currentAnimation->update(_deltaTime);
 }
 
-void SkyEnemy::render(SDL_Renderer * _renderer)
+void SkyEnemy::render(SDL_Renderer * _renderer, bool _flip)
 {
 	Enemy::render(_renderer);
 
@@ -90,7 +96,6 @@ void SkyEnemy::collision(const Actor * _actor)
 		{
 			recieveDamage(temp->m_type->m_damage);
 			LCF::World::GetInstance().deleteActorByID(temp->m_id);
-			//m_weapon->shoot();
 		}
 	}
 

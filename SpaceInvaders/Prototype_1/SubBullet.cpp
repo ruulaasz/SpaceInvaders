@@ -30,9 +30,16 @@ void SubBullet::update(float _deltaTime)
 {
 	if (m_beDestroyed)
 	{
-		m_colliderBox->SetEnabled(false);
+		if (!m_dead)
+		{
+			m_colliderBox->SetEnabled(false);
+			m_currentAnimation = m_type->m_deadAnimation;
 
-		m_currentAnimation = m_type->m_deadAnimation;
+			m_posY = m_posY - m_type->m_deadAnimation->m_frameHeight/2;
+
+			m_dead = true;
+		}
+
 
 		if (m_type->m_deadAnimation->m_finished)
 		{

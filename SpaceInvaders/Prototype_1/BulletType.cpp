@@ -90,18 +90,6 @@ void BulletType::init(std::string _info)
 				m_deadAnimation->m_maxRepetitions = atoi(value.c_str());
 				value.clear();
 				break;
-
-			case 11:
-				if (atoi(value.c_str()) == 0)
-				{
-					m_enemy = false;
-				}
-				else
-				{
-					m_enemy = true;
-				}
-				value.clear();
-				break;
 			}
 		}
 	}

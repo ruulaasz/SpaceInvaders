@@ -30,8 +30,22 @@ void MainBullet::update(float _deltaTime)
 {
 	if (m_beDestroyed)
 	{
-		m_colliderBox->SetEnabled(false);
-		m_currentAnimation = m_type->m_deadAnimation;
+		if (!m_dead)
+		{
+			m_colliderBox->SetEnabled(false);
+			m_currentAnimation = m_type->m_deadAnimation;
+
+			if (!m_type->m_enemy)
+			{
+				m_posY = m_posY - m_sizeH;
+			}
+			else
+			{
+
+			}
+
+			m_dead = true;
+		}
 
 		if (m_type->m_deadAnimation->m_finished)
 		{
@@ -43,15 +57,21 @@ void MainBullet::update(float _deltaTime)
 		if (!m_type->m_enemy)
 		{
 			m_posY -= m_type->m_movementSpeed * _deltaTime;
+
+			if (m_posY < -100)
+			{
+				LCF::World::GetInstance().deleteActorByID(m_id);
+			}
 		}
 		else
 		{
 			m_posY += m_type->m_movementSpeed * _deltaTime;
-		}
 
-		if (m_posY < -100)
-		{
-			LCF::World::GetInstance().deleteActorByID(m_id);
+			if (m_posY > 750)
+			{
+				LCF::World::GetInstance().deleteActorByID(m_id);
+				m_type->m_impactSFX->play(-1);
+			}
 		}
 	}
 

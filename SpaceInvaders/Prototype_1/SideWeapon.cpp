@@ -45,18 +45,32 @@ void SideWeapon::update(float _deltaTime)
 
 void SideWeapon::render(SDL_Renderer * _renderer, bool _flip)
 {
-	if (!m_bulletType->m_enemy)
+	if (!m_weaponType->m_enemy)
 	{
 		Weapon::render(_renderer, _flip);
 	}
 
 	if (m_direction > 0)
 	{
-		m_weaponType->m_shootAnimation->render(m_posX, m_posY, _renderer);
+		if (!m_weaponType->m_enemy)
+		{
+			m_weaponType->m_shootAnimation->render(m_posX, m_posY, _renderer);
+		}
+		else
+		{
+			m_weaponType->m_shootAnimation->render(m_posX, m_posY, _renderer, true);
+		}
 	}
 	else
 	{
-		m_weaponType->m_shootAnimation->render(m_posX - m_sizeW/2, m_posY, _renderer, true);
+		if (!m_weaponType->m_enemy)
+		{
+			m_weaponType->m_shootAnimation->render(m_posX - m_sizeW / 2, m_posY, _renderer, true);
+		}
+		else
+		{
+			m_weaponType->m_shootAnimation->render(m_posX, m_posY, _renderer);
+		}
 	}
 }
 
@@ -85,26 +99,13 @@ void SideWeapon::shoot()
 			b->m_direction = m_direction;
 			b->m_type = new BulletType(*m_bulletType);
 			b->init();
+			b->m_type->m_enemy = m_weaponType->m_enemy;
 
-			if (!b->m_type->m_enemy)
-			{
-				posY = int(m_posY + m_weaponType->m_weaponTexture->getHeight() / 2);
-			}
-			else
-			{
-				posY = int(m_posY + m_Parent->m_sizeH - m_weaponType->m_weaponTexture->getHeight() / 2);
-			}
+			posY = int(m_posY + m_weaponType->m_weaponTexture->getHeight() / 2);
 
 			if (m_direction > DIRECTION_STOP)
 			{
-				if (!b->m_type->m_enemy)
-				{
-					posX = int(m_Parent->m_posX + m_Parent->m_sizeW + m_sizeW);
-				}
-				else
-				{
-					posX = int(m_Parent->m_posX + m_Parent->m_sizeW + m_bulletType->m_travelAnimation->m_frameWidth);
-				}
+				posX = int(m_Parent->m_posX + m_Parent->m_sizeW + m_sizeW);
 			}
 			else
 			{

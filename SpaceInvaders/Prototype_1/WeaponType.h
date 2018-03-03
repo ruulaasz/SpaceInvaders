@@ -14,6 +14,7 @@ public:
 	LCF::Sfx* m_shootSFX;
 	std::string m_bulletType;
 	int m_life;
+	bool m_enemy;
 
 	void init(std::string _info);
 };

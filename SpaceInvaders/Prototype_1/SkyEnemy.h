@@ -28,7 +28,7 @@ public:
 	* a SDL renderer
 	*
 	*/
-	virtual void render(SDL_Renderer* _renderer);
+	virtual void render(SDL_Renderer* _renderer, bool _flip = false);
 
 	virtual void collision(const Actor* _actor);
 
@@ -36,4 +36,7 @@ public:
 
 	EnemyType* m_type;
 	MainWeapon* m_weapon;
+
+	float m_shootTimer;
+	float m_shootTime;
 };

@@ -49,17 +49,26 @@ void Weapon::render(SDL_Renderer * _renderer, bool _flip)
 
 void Weapon::update(float _deltaTime)
 {
-	if (m_direction > DIRECTION_STOP)
+	if (!m_weaponType->m_enemy)
 	{
-		m_posX = m_Parent->m_posX + m_Parent->m_sizeW;
+
+		if (m_direction > DIRECTION_STOP)
+		{
+			m_posX = m_Parent->m_posX + m_Parent->m_sizeW;
+		}
+
+		if (m_direction < DIRECTION_STOP)
+		{
+			m_posX = m_Parent->m_posX - m_sizeW;
+		}
+
+		if (m_direction == DIRECTION_STOP)
+		{
+			m_posX = m_Parent->m_posX;
+			m_posY = m_Parent->m_posY;
+		}
 	}
-	
-	if (m_direction < DIRECTION_STOP)
-	{
-		m_posX = m_Parent->m_posX - m_sizeW;
-	}
-	
-	if (m_direction == DIRECTION_STOP)
+	else
 	{
 		m_posX = m_Parent->m_posX;
 		m_posY = m_Parent->m_posY;

@@ -35,8 +35,8 @@ void PlayerVehicle::init()
 	m_weapons[LEFT_WEAPON]->init(this);
 	m_weapons[LEFT_WEAPON]->m_direction = DIRECTION_LEFT;
 
-	m_moveSFX->play(-1);
-	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
+	//m_moveSFX->play(-1);
+	//LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 
 	m_sizeW = (float)m_texture->getWidth();
 	m_sizeH = (float)m_texture->getHeight();
@@ -167,29 +167,29 @@ void PlayerVehicle::move(MovementInfo _info)
 			return;
 		}
 
-		LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
+		//LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 		return;
 	}
 
 	m_currentDirection = _info.direction;
 
-	if (m_currentDirection != DIRECTION_STOP)
-	{
-		if (!LCF::AudioManager::GetInstance().PlayingChannel(m_moveSFX->m_currentChannel))
-		{
-			m_moveSFX->play(-1);
-			LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
-		}
+	//if (m_currentDirection != DIRECTION_STOP)
+	//{
+	//	if (!LCF::AudioManager::GetInstance().PlayingChannel(m_moveSFX->m_currentChannel))
+	//	{
+	//		m_moveSFX->play(-1);
+	//		LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
+	//	}
 
-		if (LCF::AudioManager::GetInstance().PausedChannel(m_moveSFX->m_currentChannel))
-		{
-			LCF::AudioManager::GetInstance().ResumeChannel(m_moveSFX->m_currentChannel);
-		}
-	}
-	else
-	{
-		LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
-	}
+	//	if (LCF::AudioManager::GetInstance().PausedChannel(m_moveSFX->m_currentChannel))
+	//	{
+	//		LCF::AudioManager::GetInstance().ResumeChannel(m_moveSFX->m_currentChannel);
+	//	}
+	//}
+	//else
+	//{
+	//	LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
+	//}
 }
 
 void PlayerVehicle::shootMainWeapon(MovementInfo /*_info*/)

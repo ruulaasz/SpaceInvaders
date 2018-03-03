@@ -10,7 +10,7 @@ EnemySpawner::~EnemySpawner()
 
 }
 
-void EnemySpawner::create(int _unitType, float _posX, float _posY)
+void EnemySpawner::create(int _unitType, float _posX, float _posY, int _direction)
 {
 	std::string route = "..\\resources\\units\\";
 
@@ -25,59 +25,70 @@ void EnemySpawner::create(int _unitType, float _posX, float _posY)
 		break;
 
 	case SKY_ENEMY:
-		
-		route = route + "bullet\\main_enemy_bullet.txt";
-		bullet = m_mainBulletFactory.create(route);
-
+	
 		route = route + "enemy\\skyenemy.txt";
 		skyEnemy = m_skyEnemyFactory.create(route);
 		skyEnemy->m_posX = _posX;
 		skyEnemy->m_posY = _posY;
 
-		route = route + "weapon\\main_enemy_weapon.txt";
+		route = route + "weapon\\";
+		route = route + skyEnemy->m_type->m_weapon;
+		route = route + ".txt";
 		skyEnemy->m_weapon = m_mainWeaponfactory.create(route);
+
+		route = route + "bullet\\";
+		route = route + skyEnemy->m_weapon->m_weaponType->m_bulletType;
+		route = route + ".txt";
+		bullet = m_mainBulletFactory.create(route);
 		skyEnemy->m_weapon->m_bulletType = bullet->m_type;
 
 		skyEnemy->init();
 		LCF::World::GetInstance().registerActor(skyEnemy);
 		break;
 
-	case GROUND_ENEMY_LEFT:
-
-		route = route + "bullet\\sub_enemy_bullet.txt";
-		sbullet = m_subBulletFactory.create(route);
+	case GROUND_ENEMY:
 
 		route = route + "enemy\\groundenemy.txt";
 		groundEnemy = m_groundEnemyFactory.create(route);
-
-		route = route + "weapon\\side_enemy_weapon.txt";
-		groundEnemy->m_weapon = m_sideWeaponfactory.create(route);
-		groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
-
-		groundEnemy->m_direction = DIRECTION_LEFT;
+		groundEnemy->m_direction = _direction;
 		groundEnemy->m_posX = _posX;
-		groundEnemy->m_posY = _posY + groundEnemy->m_type->m_moveAnimation->m_frameHeight / 2;
+		groundEnemy->m_posY = _posY;
+
+		route = route + "weapon\\";
+		route = route + groundEnemy->m_type->m_weapon;
+		route = route + ".txt";
+		groundEnemy->m_weapon = m_sideWeaponfactory.create(route);
+
+		route = route + "bullet\\";
+		route = route + groundEnemy->m_weapon->m_weaponType->m_bulletType;
+		route = route + ".txt";
+		sbullet = m_subBulletFactory.create(route);
+		groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
 
 		groundEnemy->init();
 		LCF::World::GetInstance().registerActor(groundEnemy);
 		break;
 
-	case GROUND_ENEMY_RIGHT:
+	case GROUND_ENEMY_LARGE:
 
-		route = route + "bullet\\sub_enemy_bullet.txt";
-		sbullet = m_subBulletFactory.create(route);
-
-		route = route + "enemy\\groundenemy.txt";
+		route = route + "enemy\\groundenemy_large.txt";
 		groundEnemy = m_groundEnemyFactory.create(route);
+		groundEnemy->m_direction = _direction;
+		groundEnemy->m_posX = _posX;
+		groundEnemy->m_posY = _posY;
 
-		route = route + "weapon\\side_enemy_weapon.txt";
+		route = route + "weapon\\";
+		route = route + groundEnemy->m_type->m_weapon;
+		route = route + ".txt";
 		groundEnemy->m_weapon = m_sideWeaponfactory.create(route);
+
+		route = route + "bullet\\";
+		route = route + groundEnemy->m_weapon->m_weaponType->m_bulletType;
+		route = route + ".txt";
+		sbullet = m_subBulletFactory.create(route);
 		groundEnemy->m_weapon->m_bulletType = sbullet->m_type;
 
-		groundEnemy->m_direction = DIRECTION_RIGHT;
 		groundEnemy->init();
-		groundEnemy->m_posX = _posX;
-		groundEnemy->m_posY = _posY + groundEnemy->m_type->m_moveAnimation->m_frameHeight/2;
 		LCF::World::GetInstance().registerActor(groundEnemy);
 		break;
 	}
@@ -94,6 +105,10 @@ void EnemySpawner::init()
 
 	route = "..\\resources\\units\\";
 	route = route + "enemy\\groundenemy.txt";
+	m_groundEnemyFactory.create(route);
+
+	route = "..\\resources\\units\\";
+	route = route + "enemy\\groundenemy_large.txt";
 	m_groundEnemyFactory.create(route);
 
 
