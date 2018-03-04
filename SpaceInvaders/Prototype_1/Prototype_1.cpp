@@ -297,7 +297,7 @@ void render()
 	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0, 0, 0xFF);
 	SDL_RenderClear(g_renderer);
 	
-	g_background->render(0, 0, g_renderer);
+	LCF::SDL_Manager::GetInstance().RenderTexture(LCF::Transform(0.0f,0.0f, g_background->getWidth(), g_background->getHeight(), 0.0f), g_background);
 
 	LCF::World::GetInstance().render(g_renderer);
 

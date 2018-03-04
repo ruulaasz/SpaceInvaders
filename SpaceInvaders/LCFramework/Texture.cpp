@@ -9,9 +9,14 @@ namespace LCF
 		m_height = 0;
 	}
 
+	Texture::Texture(SDL_Texture * _copy)
+	{
+		m_sdlTexture = _copy;
+	}
+
 	Texture::~Texture()
 	{
-		free();
+		//free();
 	}
 
 	bool Texture::loadFromFile(std::string _path, SDL_Renderer* _renderer)
@@ -49,12 +54,6 @@ namespace LCF
 		return m_sdlTexture != nullptr;
 	}
 
-	void Texture::renderEx(int _x, int _y, float _w, float _h, double _angle, SDL_Renderer * _renderer)
-	{
-		SDL_Rect renderQuad = { _x, _y, m_width * (int)_w, m_height * (int)_h };
-		SDL_RenderCopyEx(_renderer, m_sdlTexture, nullptr, &renderQuad, _angle, nullptr, SDL_FLIP_NONE);
-	}
-
 	void Texture::free()
 	{
 		if (m_sdlTexture != nullptr)
@@ -65,35 +64,8 @@ namespace LCF
 			m_height = 0;
 		}
 	}
-
-	void Texture::render(int _x, int _y, SDL_Renderer* _renderer, bool _flip)
+	void Texture::Destroy()
 	{
-		SDL_Rect renderQuad = { _x, _y, m_width, m_height };
-		
-		if (!_flip)
-		{
-			SDL_RenderCopyEx(_renderer, m_sdlTexture, nullptr, &renderQuad, 0, nullptr, SDL_FLIP_NONE);
-		}
-		else
-		{
-			SDL_RenderCopyEx(_renderer, m_sdlTexture, nullptr, &renderQuad, 0, nullptr, SDL_FLIP_HORIZONTAL);
-		}
-	}
-
-	void Texture::render(SDL_Rect* _dstRect, SDL_Rect* _srcRect, SDL_Renderer* _renderer)
-	{
-		SDL_RenderCopy(_renderer, m_sdlTexture, _srcRect, _dstRect);
-	}
-
-	void Texture::renderEx(SDL_Rect * _dstRect, SDL_Rect * _srcRect, double _angle, SDL_Renderer * _renderer, bool _flip)
-	{
-		if (_flip)
-		{
-			SDL_RenderCopyEx(_renderer, m_sdlTexture, _srcRect, _dstRect, _angle, nullptr, SDL_FLIP_HORIZONTAL);
-		}
-		else
-		{
-			SDL_RenderCopyEx(_renderer, m_sdlTexture, _srcRect, _dstRect, _angle, nullptr, SDL_FLIP_NONE);
-		}
+		free();
 	}
 }

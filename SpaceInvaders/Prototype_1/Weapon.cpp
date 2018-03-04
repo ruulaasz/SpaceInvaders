@@ -27,22 +27,22 @@ void Weapon::render(SDL_Renderer * _renderer, bool _flip)
 	{
 		if (m_direction > 0)
 		{
-			m_weaponType->m_weaponReadyTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer);
+			LCF::SDL_Manager::GetInstance().RenderTexture(m_transform, m_weaponType->m_weaponReadyTexture);
 		}
 		else
 		{
-			m_weaponType->m_weaponReadyTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer, true);
+			LCF::SDL_Manager::GetInstance().RenderTexture(m_transform, m_weaponType->m_weaponReadyTexture, true);
 		}
 	}
 	else
 	{
 		if (m_direction > 0)
 		{
-			m_weaponType->m_weaponTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer);
+			LCF::SDL_Manager::GetInstance().RenderTexture(m_transform, m_weaponType->m_weaponTexture);
 		}
 		else
 		{
-			m_weaponType->m_weaponTexture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer, true);
+			LCF::SDL_Manager::GetInstance().RenderTexture(m_transform, m_weaponType->m_weaponTexture, true);
 		}
 	}
 }

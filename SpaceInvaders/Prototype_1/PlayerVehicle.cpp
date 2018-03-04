@@ -106,7 +106,7 @@ void PlayerVehicle::init()
 
 void PlayerVehicle::render(SDL_Renderer * _renderer, bool _flip)
 {
-	m_texture->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer);
+	LCF::SDL_Manager::GetInstance().RenderTexture(m_transform, m_texture);
 	
 	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
 	{

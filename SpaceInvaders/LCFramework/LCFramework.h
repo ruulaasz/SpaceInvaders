@@ -20,6 +20,8 @@
 
 #include "AudioManager.h"
 
+#include "Transform.h"
+
 #include "World.h"
 #include "Actor.h"
 

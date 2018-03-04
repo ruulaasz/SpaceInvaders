@@ -70,7 +70,7 @@ namespace LCF
 			srcRect.w = m_frameWidth;
 			srcRect.h = m_frameHeight;
 
-			m_sprite->render(dstRect, srcRect, _renderer, _flip);
+			LCF::SDL_Manager::GetInstance().RenderAnimation(m_sprite, &dstRect, &srcRect, _flip);
 		}
 	}
 
