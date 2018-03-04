@@ -22,7 +22,7 @@ namespace LCF
 	public:
 		void Update(float _deltaTime);
 
-		void Render(SDL_Renderer* _renderer);
+		void Render();
 
 		void Destroy();
 

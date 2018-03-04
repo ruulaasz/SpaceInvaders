@@ -301,7 +301,7 @@ void render()
 
 	LCF::World::GetInstance().render();
 
-	LCF::ColliderManager::GetInstance().Render(g_renderer);
+	LCF::ColliderManager::GetInstance().Render();
 
 	TextManager::GetInstance().render(g_renderer);
 

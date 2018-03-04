@@ -23,7 +23,7 @@ namespace LCF
 		}
 	}
 
-	void ColliderManager::Render(SDL_Renderer * _renderer)
+	void ColliderManager::Render()
 	{
 #ifdef _DEBUG
 		if (m_EnabledRender)
@@ -32,8 +32,7 @@ namespace LCF
 			{
 				if (m_allColliders[i]->GetEnabled())
 				{
-					SDL_Rect renderQuad = { (int)m_allColliders[i]->GetX(), (int)m_allColliders[i]->GetY(), (int)m_allColliders[i]->GetW(), (int)m_allColliders[i]->GetH() };
-					SDL_RenderDrawRect(_renderer, &renderQuad);
+					LCF::SDL_Manager::GetInstance().RenderBox(m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH());
 				}
 			}
 		}

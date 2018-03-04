@@ -69,6 +69,18 @@ namespace LCF
 		*/
 		void RenderAnimation(Texture* _texture, SDL_Rect * _dstRect, SDL_Rect * _srcRect,  bool _flip = false, double _angle = 0.0f);
 
+		/**
+		* Render a box
+		*
+		*/
+		void RenderBox(float _x, float _y, float _w, float _h);
+
+		/**
+		* Render aline
+		*
+		*/
+		void RenderLine(int _x, int _y, int _x1, int _y1);
+
 	private:
 		/**
 		* Initialize SDL 2.0 subsystems.

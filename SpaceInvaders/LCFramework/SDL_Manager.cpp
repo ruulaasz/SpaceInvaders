@@ -98,6 +98,17 @@ namespace LCF
 		}
 	}
 
+	void SDL_Manager::RenderBox(float _x, float _y, float _w, float _h)
+	{
+		SDL_Rect renderQuad = { (int)_x, (int)_y, (int)_w, (int)_h };
+		SDL_RenderDrawRect(m_renderer, &renderQuad);
+	}
+
+	void SDL_Manager::RenderLine(int _x, int _y, int _x1, int _y1)
+	{
+		SDL_RenderDrawLine(m_renderer, _x, _y, _x1, _y1);
+	}
+
 	bool SDL_Manager::init()
 	{
 		if (initSubSystems())
