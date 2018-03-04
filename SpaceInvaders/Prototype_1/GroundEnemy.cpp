@@ -76,20 +76,20 @@ void GroundEnemy::update(float _deltaTime)
 	m_currentAnimation->update(_deltaTime);
 }
 
-void GroundEnemy::render(SDL_Renderer * _renderer, bool _flip)
+void GroundEnemy::render(bool _flip)
 {
 	if (m_direction == DIRECTION_RIGHT)
 	{
-		Enemy::render(_renderer, true);
+		Enemy::render(true);
 	}
 	else
 	{
-		Enemy::render(_renderer);
+		Enemy::render();
 	}
 
 	if (!m_dead)
 	{
-		m_weapon->render(_renderer);
+		m_weapon->render();
 	}
 }
 

@@ -52,7 +52,7 @@ namespace LCF
 		* a SDL renderer
 		*
 		*/
-		void render(SDL_Renderer* _renderer);
+		void render();
 
 		/**
 		* Updates the content of the world

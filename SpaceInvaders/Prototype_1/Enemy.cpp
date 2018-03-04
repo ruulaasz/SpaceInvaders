@@ -10,9 +10,9 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::render(SDL_Renderer * _renderer, bool _flip)
+void Enemy::render(bool _flip)
 {
-	m_currentAnimation->render((int)m_transform.m_posX, (int)m_transform.m_posY, _renderer, _flip);
+	m_currentAnimation->render((int)m_transform.m_posX, (int)m_transform.m_posY, _flip);
 }
 
 void Enemy::recieveDamage(int _damage)

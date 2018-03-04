@@ -21,7 +21,7 @@ void Weapon::init(Pawn * _Parent)
 	m_canShoot = true;
 }
 
-void Weapon::render(SDL_Renderer * _renderer, bool _flip)
+void Weapon::render(bool _flip)
 {
 	if (m_weaponSelected)
 	{

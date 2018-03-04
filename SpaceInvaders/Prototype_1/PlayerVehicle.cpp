@@ -104,13 +104,13 @@ void PlayerVehicle::init()
 	TextManager::GetInstance().m_fallingText.push_back(m_energyText);
 }
 
-void PlayerVehicle::render(SDL_Renderer * _renderer, bool _flip)
+void PlayerVehicle::render(bool _flip)
 {
 	LCF::SDL_Manager::GetInstance().RenderTexture(m_transform, m_texture);
 	
 	for (size_t i = 0; i < NUMBEROF_PLAYERWEAPONS; i++)
 	{
-		m_weapons[i]->render(_renderer, _flip);
+		m_weapons[i]->render(_flip);
 	}
 }
 

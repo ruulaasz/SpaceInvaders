@@ -54,7 +54,7 @@ namespace LCF
 		}
 	}
 
-	void Animator::render(int _x, int _y, SDL_Renderer * _renderer, bool _flip)
+	void Animator::render(int _x, int _y, bool _flip)
 	{
 		if (!m_finished)
 		{

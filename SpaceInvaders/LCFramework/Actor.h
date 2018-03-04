@@ -22,7 +22,7 @@ namespace LCF
 		* a SDL renderer
 		*
 		*/
-		virtual void render(SDL_Renderer* _renderer, bool _flip = false) = 0;
+		virtual void render(bool _flip = false) = 0;
 
 		/**
 		* Virtual: Updates the content of the Actor

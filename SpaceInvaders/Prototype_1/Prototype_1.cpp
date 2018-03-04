@@ -299,7 +299,7 @@ void render()
 	
 	LCF::SDL_Manager::GetInstance().RenderTexture(LCF::Transform(0.0f,0.0f, g_background->getWidth(), g_background->getHeight(), 0.0f), g_background);
 
-	LCF::World::GetInstance().render(g_renderer);
+	LCF::World::GetInstance().render();
 
 	LCF::ColliderManager::GetInstance().Render(g_renderer);
 

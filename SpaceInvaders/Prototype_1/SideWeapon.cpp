@@ -56,33 +56,33 @@ void SideWeapon::update(float _deltaTime)
 	}
 }
 
-void SideWeapon::render(SDL_Renderer * _renderer, bool _flip)
+void SideWeapon::render(bool _flip)
 {
 	if (!m_weaponType->m_enemy)
 	{
-		Weapon::render(_renderer, _flip);
+		Weapon::render(_flip);
 	}
 
 	if (m_direction > 0)
 	{
 		if (!m_weaponType->m_enemy)
 		{
-			m_weaponType->m_shootAnimation->render(m_transform.m_posX, m_transform.m_posY, _renderer);
+			m_weaponType->m_shootAnimation->render(m_transform.m_posX, m_transform.m_posY);
 		}
 		else
 		{
-			m_weaponType->m_shootAnimation->render(m_transform.m_posX, m_transform.m_posY, _renderer, true);
+			m_weaponType->m_shootAnimation->render(m_transform.m_posX, m_transform.m_posY, true);
 		}
 	}
 	else
 	{
 		if (!m_weaponType->m_enemy)
 		{
-			m_weaponType->m_shootAnimation->render(m_transform.m_posX - m_transform.m_sizeW / 2, m_transform.m_posY, _renderer, true);
+			m_weaponType->m_shootAnimation->render(m_transform.m_posX - m_transform.m_sizeW / 2, m_transform.m_posY, true);
 		}
 		else
 		{
-			m_weaponType->m_shootAnimation->render(m_transform.m_posX, m_transform.m_posY, _renderer);
+			m_weaponType->m_shootAnimation->render(m_transform.m_posX, m_transform.m_posY);
 		}
 	}
 }

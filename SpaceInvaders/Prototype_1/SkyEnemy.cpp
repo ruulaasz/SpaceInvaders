@@ -78,13 +78,13 @@ void SkyEnemy::update(float _deltaTime)
 	m_currentAnimation->update(_deltaTime);
 }
 
-void SkyEnemy::render(SDL_Renderer * _renderer, bool _flip)
+void SkyEnemy::render(bool _flip)
 {
-	Enemy::render(_renderer);
+	Enemy::render();
 
 	if (!m_dead)
 	{
-		m_weapon->render(_renderer);
+		m_weapon->render();
 	}
 }
 

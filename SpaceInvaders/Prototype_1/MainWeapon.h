@@ -28,7 +28,7 @@ public:
 	* a SDL renderer
 	*
 	*/
-	virtual void render(SDL_Renderer* _renderer, bool _flip = false);
+	virtual void render(bool _flip = false);
 
 	virtual void shoot();
 
