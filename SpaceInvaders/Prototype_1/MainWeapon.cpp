@@ -43,7 +43,7 @@ void MainWeapon::render(bool _flip)
 {
 	if (!m_weaponType->m_enemy)
 	{
-		Weapon::render(_flip);
+		//Weapon::render(_flip);
 	}
 
 	if (!m_weaponType->m_enemy)

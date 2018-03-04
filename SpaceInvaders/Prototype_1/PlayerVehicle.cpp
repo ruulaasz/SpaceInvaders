@@ -40,20 +40,20 @@ void PlayerVehicle::init()
 	//m_moveSFX->play(-1);
 	//LCF::AudioManager::GetInstance().PauseChannel(m_moveSFX->m_currentChannel);
 
-	m_transform.m_sizeW = (float)m_texture->getWidth();
-	m_transform.m_sizeH = (float)m_texture->getHeight();
-
+	m_transform.m_sizeW = (float)m_texture->getWidth() * 2;
+	m_transform.m_sizeH = (float)m_texture->getHeight() * 2;
+	m_transform.m_angle = 150;
 	Pawn::init();
 
-	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, (float)m_texture->getWidth() + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), (float)m_texture->getHeight());
+	m_colliderBox->SetSize(m_transform.m_posX, m_transform.m_posY, m_transform.m_sizeW + (float)m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth() + (float)m_weapons[RIGHT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), m_transform.m_sizeH);
 	m_colliderBox->SetOffset((float)-m_weapons[LEFT_WEAPON]->m_weaponType->m_weaponTexture->getWidth(), 0);
 
 	m_coreCollider = new PlayerVehicleBox();
-	m_coreCollider->SetFlags(true, false, false);
+	m_coreCollider->SetFlags(true, false, true);
 	m_coreCollider->SetActor(this);
 	m_coreCollider->SetFunction(&PlayerVehicle::coreColision);
-	m_coreCollider->SetSize(m_transform.m_posX, m_transform.m_posY, (float)m_texture->getWidth() - 10, (float)m_texture->getHeight()- 10);
-	m_coreCollider->SetAutomaticOffset();
+	m_coreCollider->SetSize(m_transform.m_posX, m_transform.m_posY, m_transform.m_sizeW, m_transform.m_sizeH);
+	//m_coreCollider->SetAutomaticOffset();
 	LCF::ColliderManager::GetInstance().RegistrerCollider(m_coreCollider);
 	m_coreCollider->SetOffset(5, 5);
 

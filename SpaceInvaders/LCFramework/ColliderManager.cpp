@@ -32,7 +32,16 @@ namespace LCF
 			{
 				if (m_allColliders[i]->GetEnabled())
 				{
-					LCF::SDL_Manager::GetInstance().RenderBox(m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH());
+					//std::cout << m_allColliders[i]->GetID();
+					//LCF::SDL_Manager::GetInstance().RenderBox(m_allColliders[i]->GetX(), m_allColliders[i]->GetY(), m_allColliders[i]->GetW(), m_allColliders[i]->GetH());
+					LCF::SDL_Manager::GetInstance().RenderLine(m_allColliders[i]->GetLT().m_x, m_allColliders[i]->GetLT().m_y, 
+						m_allColliders[i]->GetRT().m_x, m_allColliders[i]->GetRT().m_y);
+					LCF::SDL_Manager::GetInstance().RenderLine(m_allColliders[i]->GetRT().m_x, m_allColliders[i]->GetRT().m_y, 
+						m_allColliders[i]->GetRB().m_x, m_allColliders[i]->GetRB().m_y);
+					LCF::SDL_Manager::GetInstance().RenderLine(m_allColliders[i]->GetRB().m_x, m_allColliders[i]->GetRB().m_y, 
+						m_allColliders[i]->GetLB().m_x, m_allColliders[i]->GetLB().m_y);
+					LCF::SDL_Manager::GetInstance().RenderLine(m_allColliders[i]->GetLB().m_x, m_allColliders[i]->GetLB().m_y, 
+						m_allColliders[i]->GetLT().m_x, m_allColliders[i]->GetLT().m_y);
 				}
 			}
 		}

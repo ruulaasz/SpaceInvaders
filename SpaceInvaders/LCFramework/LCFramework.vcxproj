@@ -188,6 +188,7 @@
     <ClInclude Include="Audio.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BackgroundTexture.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="ColliderBox.h" />
     <ClInclude Include="ColliderManager.h" />
     <ClInclude Include="Controller.h" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Vector2D.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +216,7 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BackgroundTexture.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="ColliderBox.cpp" />
     <ClCompile Include="ColliderManager.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -226,6 +229,7 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

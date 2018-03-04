@@ -78,11 +78,11 @@ namespace LCF
 
 		if (!_flip)
 		{
-			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, nullptr, &renderQuad, 0, nullptr, SDL_FLIP_NONE);
+			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, nullptr, &renderQuad, _transform.m_angle, nullptr, SDL_FLIP_NONE);
 		}
 		else
 		{
-			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, nullptr, &renderQuad, 0, nullptr, SDL_FLIP_HORIZONTAL);
+			SDL_RenderCopyEx(m_renderer, _texture->m_sdlTexture, nullptr, &renderQuad, _transform.m_angle, nullptr, SDL_FLIP_HORIZONTAL);
 		}
 	}
 

@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include "message.h"
 #include "SDL_Manager.h"
 #include "Transform.h"
-
+#include "Box.h"
+#include "Vector2D.h"
 namespace LCF
 {
 	class Actor;
@@ -11,13 +12,13 @@ namespace LCF
 	class BaseColliderBox
 	{
 	public:
-		virtual float GetLeft() const = 0;
+		virtual Vector2D GetLT() const = 0;
 				
-		virtual float GetRight() const = 0;
-			
-		virtual float GetTop() const = 0;
+		virtual Vector2D GetRT() const = 0;
 				
-		virtual float GetBot() const = 0;
+		virtual Vector2D GetLB() const = 0;
+				
+		virtual Vector2D GetRB() const = 0;
 				
 		virtual float GetX() const = 0;
 				
@@ -66,11 +67,7 @@ namespace LCF
 		bool m_resizeActor;
 		bool m_rotateActor;
 
-		float m_left;
-		float m_right;
-		float m_top;
-		float m_bot;
-
+		Box m_boundingBounds;
 		Transform m_transform;
 
 		Transform m_transformOffset;
@@ -163,7 +160,7 @@ namespace LCF
 				{
 					m_transform.m_angle = m_actor->m_transform.m_angle + m_transformOffset.m_angle;
 				}
-				SetBox();
+				ModifyBox();
 			}
 		}
 
@@ -200,19 +197,7 @@ namespace LCF
 			const ColliderBox<_type>* _target = (const ColliderBox<_type>*)_ColliderBox;
 
 			if (_target == NULL)
-				return MESSAGE_ERROR("the Target Collider is NULL");
-
-			if (m_bot <= _target->GetTop())
-				return MESSAGE_WARNING("Cant find collision");
-
-			if (m_top >= _target->GetBot())
-				return MESSAGE_WARNING("Cant find collision");
-
-			if (m_right <= _target->GetLeft())
-				return MESSAGE_WARNING("Cant find collision");
-
-			if (m_left >= _target->GetRight())
-				return MESSAGE_WARNING("Cant find collision");
+				return MESSAGE_ERROR("The Target Collider is NULL");
 
 			if (m_actor == NULL)
 				return MESSAGE_ERROR("The Actor is NULL");
@@ -222,31 +207,46 @@ namespace LCF
 
 			if (_target->GetActor() == NULL)
 				return MESSAGE_ERROR("The target Actor is NULL");
+			
+			float minX1 = min(min(m_boundingBounds.m_LT.m_x, m_boundingBounds.m_LB.m_x), min(m_boundingBounds.m_RT.m_x, m_boundingBounds.m_RB.m_x));
+			float maxX1 = max(max(m_boundingBounds.m_LT.m_x, m_boundingBounds.m_LB.m_x), max(m_boundingBounds.m_RT.m_x, m_boundingBounds.m_RB.m_x));
+			float minY1 = min(min(m_boundingBounds.m_LT.m_y, m_boundingBounds.m_LB.m_y), min(m_boundingBounds.m_RT.m_y, m_boundingBounds.m_RB.m_y));
+			float maxY1 = max(max(m_boundingBounds.m_LT.m_y, m_boundingBounds.m_LB.m_y), max(m_boundingBounds.m_RT.m_y, m_boundingBounds.m_RB.m_y));
+			
+			float minX2 = min(min(_target->GetLT().m_x, _target->GetRT().m_x), min(_target->GetLB().m_x, _target->GetRB().m_x));
+			float maxX2 = max(max(_target->GetLT().m_x, _target->GetRT().m_x), max(_target->GetLB().m_x, _target->GetRB().m_x));
+			float minY2 = min(min(_target->GetLT().m_y, _target->GetRT().m_y), min(_target->GetLB().m_y, _target->GetRB().m_y));
+			float maxY2 = max(max(_target->GetLT().m_y, _target->GetRT().m_y), max(_target->GetLB().m_y, _target->GetRB().m_y));
 
+			if (maxX1 <= minX2 || minX1 >= maxX2)
+				return MESSAGE_WARNING("Cant find collision");
+
+			if(	maxY1 <= minY2 || minY1 >= maxY2)
+				return MESSAGE_WARNING("Cant find collision");
 
 			(m_actor->*m_function)(_target->GetActor());
 
 			return MESSAGE_SUCCESS("Collision founded");
 		}
 
-		virtual float GetLeft() const
+		virtual Vector2D GetLT() const
 		{
-			return m_left;
+			return m_boundingBounds.m_LT;
 		}
 
-		virtual float GetRight() const
+		virtual Vector2D GetRT() const
 		{
-			return m_right;
+			return m_boundingBounds.m_RT;
 		}
 
-		virtual float GetTop() const
+		virtual Vector2D GetLB() const
 		{
-			return m_top;
+			return m_boundingBounds.m_LB;
 		}
 
-		virtual float GetBot() const
+		virtual Vector2D GetRB() const
 		{
-			return m_bot;
+			return m_boundingBounds.m_RB;
 		}
 
 		virtual Actor* GetActor() const
@@ -307,10 +307,11 @@ namespace LCF
 	protected:
 		void SetBox()
 		{
-			m_left = m_transform.m_posX;
-			m_right = m_transform.m_posX + m_transform.m_sizeW;
-			m_top = m_transform.m_posY;
-			m_bot = m_transform.m_posY + m_transform.m_sizeH;
+			m_boundingBounds.SetBox(m_transform);
+		}
+		void ModifyBox()
+		{
+			m_boundingBounds.ModifyBox(m_transform);
 		}
 
 	public:
