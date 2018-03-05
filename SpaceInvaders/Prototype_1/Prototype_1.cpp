@@ -240,7 +240,7 @@ void initWorld()
 	g_music = reinterpret_cast<LCF::Music*>(LCF::AssetManager::GetInstance().getAsset("background_music"));
 	g_background = reinterpret_cast<LCF::BackgroundTexture*>(LCF::AssetManager::GetInstance().getAsset("background"));
 
-	//g_music->playFadeIn(1500);
+	g_music->playFadeIn(1500);
 	LCF::AudioManager::GetInstance().SetMusicVolume(15);
 	LCF::AudioManager::GetInstance().SetSfxVolume(-1, 25);
 }
@@ -310,28 +310,6 @@ void render()
 	SDL_RenderPresent(g_renderer);
 }
 
-//
-//  FUNCIÓN: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  PROPÓSITO:  procesar mensajes de la ventana principal.
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message)
-	{
-	case WM_COMMAND:
-	{
-
-	}
-	break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-	return 0;
-}
-
 int _tmain(int /*argc*/, char** /*argv*/)
 {
 	init();
@@ -377,5 +355,6 @@ int _tmain(int /*argc*/, char** /*argv*/)
 	
 
 	LCF::SDL_Manager::GetInstance().destroy();
+
 	return 0;
 }
